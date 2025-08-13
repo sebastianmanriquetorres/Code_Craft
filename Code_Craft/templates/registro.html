@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Cambia la ruta del CSS para apuntar a la carpeta templates -->
+  <link rel="stylesheet" href="../templates/css/style.css" />
+  <!-- Librería de iconos animados -->
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <title>Code_Craft Registro</title>
+</head>
+<body>
+
+  <!-- Figuras animadas de fondo -->
+  <div class="fondo-animado">
+    <span style="left: 10%; animation-delay: 0s;"></span>
+    <span style="left: 25%; animation-delay: 5s;"></span>
+    <span style="left: 40%; animation-delay: 10s;"></span>
+    <span style="left: 55%; animation-delay: 15s;"></span>
+    <span style="left: 70%; animation-delay: 20s;"></span>
+    <span style="left: 85%; animation-delay: 36s;"></span>
+  </div>
+
+  <!-- Formulario de registro -->
+ <form method="POST">
+    <fieldset>
+      <legend>Regístrate en Code_Craft</legend>
+
+      <!-- Campo: Nombre Empresa -->
+      <label for="nombre_empresa">
+        <lord-icon
+          src="https://cdn.lordicon.com/zhiiqoue.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#007bff,secondary:#242424"
+          style="width:24px;height:24px">
+        </lord-icon>
+        <span class="label-text">Empresa</span>
+      </label>
+      <input id="nombre_empresa" type="text" placeholder="Nombre de la empresa (Opcional)" name="nombre_empresa" required />
+
+      <!-- Campo: Nombre Completo -->
+      <label for="nombre_completo">
+        <lord-icon
+          src="https://cdn.lordicon.com/bgebyztw.json"
+          trigger="loop"
+          delay="2000"
+          colors="primary:#007bff,secondary:#4030e8"
+          style="width:22px;height:22px;margin-bottom: -6px;">
+        </lord-icon>
+        <span class="label-text">Nombre completo</span>
+      </label>
+      <input id="nombre_completo" type="text" placeholder="Tu nombre completo" name="nombre" required />
+
+      <!-- Campo: Correo -->
+      <label for="correo">
+        <lord-icon
+          src="https://cdn.lordicon.com/vpbspaec.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#3080e8,secondary:#242424"
+          style="width:22px;height:22px">
+        </lord-icon>
+        <span class="label-text">Correo</span>
+      </label>
+      <input id="correo" type="email" placeholder="Correo electrónico" name="correo" required />
+
+      <!-- Campo: Teléfono -->
+      <label for="telefono">
+        <lord-icon
+          src="https://cdn.lordicon.com/jezazvlx.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#3080e8,secondary:#242424"
+          style="width:22px;height:22px">
+        </lord-icon>
+        <span class="label-text">Teléfono</span>
+      </label>
+      <input id="telefono" type="tel" placeholder="Número de teléfono" name="Telefono" required />
+
+      <!-- Campo: Dirección Empresa -->
+      <label for="direccion">
+        <lord-icon
+          src="https://cdn.lordicon.com/rbsqvtgo.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#007bff,secondary:#242424"
+          style="width:22px;height:22px">
+        </lord-icon>
+        <span class="label-text">Dirección empresa</span>
+      </label>
+      <input id="direccion" type="text" placeholder="Dirección de la empresa (Opcional)" name="direccion" required />
+
+      <!-- Campo: Contraseña -->
+      <label for="contrasena">
+        <lord-icon
+          src="https://cdn.lordicon.com/mqgegihh.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#242424,secondary:#007bff"
+          style="width:22px;height:22px">
+        </lord-icon>
+        <span class="label-text">Contraseña</span>
+        <span class="tooltip">
+          <span class="tooltip-text">⚠️ La contraseña debe tener más de 6 caracteres</span>
+        </span>
+      </label>
+      <input id="contrasena" name="contrasena" type="password" placeholder="password" required />
+
+      <!-- Botón de envío -->
+      <input class="enviar" value="Registrarse" type="submit" />
+
+      <!-- Botón extra con enlace -->
+      <div class="extra-buttons">
+        <button type="button" class="btn-link" onclick="window.location.href='login.html'">
+          ¿Ya tienes cuenta? Inicia sesión aquí
+        </button>
+      </div>
+    </fieldset>
+  </form>
+
+  <!-- Estilos internos -->
+  <style>
+    .label-text {
+      font-size: 0.98rem;
+      font-weight: 500;
+      margin-left: 4px;
+      color: #ffa552;
+      letter-spacing: 0.01em;
+    }
+    @media (max-width: 500px) {
+      .label-text {
+        font-size: 0.93rem;
+      }
+    }
+    .extra-buttons {
+      text-align: center;
+      margin-top: 12px;
+    }
+    .btn-link {
+      background: none;
+      border: none;
+      color: #007bff;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .btn-link:hover {
+      color: #0056b3;
+    }
+  </style>
+
+</body>
+</html>
