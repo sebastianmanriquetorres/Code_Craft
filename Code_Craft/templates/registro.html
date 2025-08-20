@@ -24,28 +24,40 @@
     <fieldset>
       <legend>Regístrate en Code_Craft</legend>
 
-      <!-- Campo: Nombre Empresa -->
-      <label for="nombre_empresa">
-        <lord-icon src="https://cdn.lordicon.com/zhiiqoue.json" trigger="loop" delay="20"
-          colors="primary:#007bff,secondary:#242424" style="width:24px;height:24px">
+      <!-- Campo: Nombre -->
+      <label for="nombre">
+        <lord-icon
+          src="https://cdn.lordicon.com/bgebyztw.json"
+          trigger="loop"
+          delay="2000"
+          colors="primary:#007bff,secondary:#4030e8"
+          style="width:22px;height:22px;margin-bottom:-6px;">
         </lord-icon>
-        <span class="label-text">Empresa</span>
+        <span class="label-text">Nombre</span>
       </label>
-      <input id="nombre_empresa" type="text" placeholder="Nombre de la empresa (Opcional)" name="nombre_empresa" required />
+      <input id="nombre" type="text" placeholder="Tu nombre" name="nombre" required />
 
-      <!-- Campo: Nombre Completo -->
-      <label for="nombre_completo">
-        <lord-icon src="https://cdn.lordicon.com/bgebyztw.json" trigger="loop" delay="2000"
-          colors="primary:#007bff,secondary:#4030e8" style="width:22px;height:22px;margin-bottom: -6px;">
+      <!-- Campo: Apellido -->
+      <label for="apellido">
+        <lord-icon
+          src="https://cdn.lordicon.com/bgebyztw.json"
+          trigger="loop"
+          delay="2000"
+          colors="primary:#007bff,secondary:#4030e8"
+          style="width:22px;height:22px;margin-bottom:-6px;">
         </lord-icon>
-        <span class="label-text">Nombre completo</span>
+        <span class="label-text">Apellido</span>
       </label>
-      <input id="nombre_completo" type="text" placeholder="Tu nombre completo" name="nombre" required />
+      <input id="apellido" type="text" placeholder="Tu apellido" name="apellido" required />
 
       <!-- Campo: Correo -->
       <label for="correo">
-        <lord-icon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="20"
-          colors="primary:#3080e8,secondary:#242424" style="width:22px;height:22px">
+        <lord-icon
+          src="https://cdn.lordicon.com/vpbspaec.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#3080e8,secondary:#242424"
+          style="width:22px;height:22px">
         </lord-icon>
         <span class="label-text">Correo</span>
       </label>
@@ -53,26 +65,25 @@
 
       <!-- Campo: Teléfono -->
       <label for="telefono">
-        <lord-icon src="https://cdn.lordicon.com/jezazvlx.json" trigger="loop" delay="20"
-          colors="primary:#3080e8,secondary:#242424" style="width:22px;height:22px">
+        <lord-icon
+          src="https://cdn.lordicon.com/jezazvlx.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#3080e8,secondary:#242424"
+          style="width:22px;height:22px">
         </lord-icon>
         <span class="label-text">Teléfono</span>
       </label>
       <input id="telefono" type="tel" placeholder="Número de teléfono" name="Telefono" required />
 
-      <!-- Campo: Dirección Empresa -->
-      <label for="direccion">
-        <lord-icon src="https://cdn.lordicon.com/rbsqvtgo.json" trigger="loop" delay="20"
-          colors="primary:#007bff,secondary:#242424" style="width:22px;height:22px">
-        </lord-icon>
-        <span class="label-text">Dirección empresa</span>
-      </label>
-      <input id="direccion" type="text" placeholder="Dirección de la empresa (Opcional)" name="direccion" required />
-
       <!-- Campo: Rol -->
       <label for="tipo_cuenta">
-        <lord-icon src="https://cdn.lordicon.com/oezixobx.json" trigger="loop" delay="20"
-          colors="primary:#007bff,secondary:#242424" style="width:22px;height:22px">
+        <lord-icon
+          src="https://cdn.lordicon.com/oezixobx.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#007bff,secondary:#242424"
+          style="width:22px;height:22px">
         </lord-icon>
         <span class="label-text">Rol</span>
       </label>
@@ -85,18 +96,26 @@
       <!-- Campo adicional SOLO para Desarrollador -->
       <div id="extra_desarrollador" style="display:none;">
         <label for="Cargo">
-          <lord-icon src="https://cdn.lordicon.com/wloilxuq.json" trigger="loop" delay="20"
-            colors="primary:#007bff,secondary:#242424" style="width:22px;height:22px">
+          <lord-icon
+            src="https://cdn.lordicon.com/wloilxuq.json"
+            trigger="loop"
+            delay="20"
+            colors="primary:#007bff,secondary:#242424"
+            style="width:22px;height:22px">
           </lord-icon>
           <span class="label-text">Cargo</span>
         </label>
-        <input id="Cargo" type="text" placeholder="Ej:Backend, UI/UX" name="Cargo" />
+        <input id="Cargo" type="text" placeholder="Ej: Backend, UI/UX" name="Cargo" />
       </div>
 
       <!-- Campo: Contraseña -->
       <label for="contrasena">
-        <lord-icon src="https://cdn.lordicon.com/mqgegihh.json" trigger="loop" delay="20"
-          colors="primary:#242424,secondary:#007bff" style="width:22px;height:22px">
+        <lord-icon
+          src="https://cdn.lordicon.com/mqgegihh.json"
+          trigger="loop"
+          delay="20"
+          colors="primary:#242424,secondary:#007bff"
+          style="width:22px;height:22px">
         </lord-icon>
         <span class="label-text">Contraseña</span>
         <span class="tooltip">
@@ -108,13 +127,12 @@
       <!-- Botón de envío -->
       <input class="enviar" value="Registrarse" type="submit" />
 
-    <div class="extra-buttons">
-      <button type="button" class="btn-link">
-        ¿Ya tienes una cuenta? Inicia sesión aquí
-      </button>
-  </div>
-
-
+      <!-- Botón: ir a login -->
+      <div class="extra-buttons">
+        <button type="button" class="btn-link">
+          ¿Ya tienes una cuenta? Inicia sesión aquí
+        </button>
+      </div>
     </fieldset>
   </form>
 
@@ -132,7 +150,7 @@
     });
   </script>
 
-  <!-- Estilos internos -->
+  <!-- Estilos internos mínimos (no cambian tu estilo original) -->
   <style>
     .label-text {
       font-size: 0.98rem;
@@ -142,11 +160,8 @@
       letter-spacing: 0.01em;
     }
     @media (max-width: 500px) {
-      .label-text {
-        font-size: 0.93rem;
-      }
+      .label-text { font-size: 0.93rem; }
     }
-
     select, input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
       width: 100%;
       padding: 10px;
@@ -155,6 +170,12 @@
       border-radius: 8px;
       font-size: 0.95rem;
     }
+    .extra-buttons { text-align: center; margin-top: 12px; }
+    .btn-link {
+      background: none; border: none; color: #007bff;
+      font-size: 0.95rem; cursor: pointer; text-decoration: underline;
+    }
+    .btn-link:hover { color: #0056b3; }
   </style>
 </body>
 </html>
