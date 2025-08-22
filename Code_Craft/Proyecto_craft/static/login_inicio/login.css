@@ -1,0 +1,299 @@
+:root{
+  --bg: #0f1221;
+  --card: #151936;
+  --accent: #6c63ff;
+  --accent-2: #00e5ff;
+  --text: #e9ecff;
+  --muted: #b7bee8;
+  --error: #ff5d6c;
+  --success: #23d18b;
+  --shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(108,99,255,.2), transparent 60%),
+              radial-gradient(900px 500px at 90% 90%, rgba(0,229,255,.18), transparent 60%),
+              var(--bg);
+  color: var(--text);
+}
+
+.auth{
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth__card{
+  position: relative;
+  width: min(100%, 980px);
+  min-height: 560px;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)) , var(--card);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 880px){
+  .auth__card{
+    grid-template-columns: 1fr;
+    min-height: 760px;
+  }
+}
+
+/* Columna izquierda (formularios) */
+.auth__forms{
+  position: relative;
+  padding: 48px 40px;
+  overflow-y: auto;          /* ⬅ permite scroll si no cabe */
+}
+
+/* Grid interno para el registro: reduce altura total */
+.form__grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+.form__grid .input{ margin:0; } /* el gap ya marca el espaciado */
+@media (max-width: 560px){
+  .form__grid{ grid-template-columns: 1fr; }
+}
+
+.form{
+  max-width: 420px;
+  margin-inline: auto;
+  transition: transform .7s cubic-bezier(.2,.7,.3,1),
+              opacity .4s ease;
+  will-change: transform, opacity;
+}
+
+.form__title{
+  margin: 0 0 16px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+.form__actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0 18px;
+}
+
+.checkbox{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .9rem;
+  color: var(--muted);
+}
+.checkbox input{ accent-color: var(--accent); }
+
+.link{
+  color: var(--accent-2);
+  text-decoration: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+.link:hover{ text-decoration: underline; }
+.link--btn{ font-weight: 600; }
+
+/* Inputs */
+.input{
+  position: relative;
+  margin: 18px 0 6px;
+}
+.input input,
+.input select{
+  width: 100%;
+  padding: 14px 14px 14px 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(255,255,255,.02);
+  color: var(--text);
+  outline: none;
+  transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  box-shadow: inset 0 0 0 transparent;
+  appearance: none;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.input input::placeholder{ color: #9aa3d1; }
+.input input:focus,
+.input select:focus{
+  border-color: rgba(108,99,255,.65);
+  background: rgba(108,99,255,.06);
+  box-shadow: 0 0 0 4px rgba(108,99,255,.15);
+}
+
+.input label{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+  transition: all .2s ease;
+  background: transparent;
+  padding: 0 4px;
+}
+
+/* Flotar label para inputs */
+.input input:focus + label,
+.input input:not(:placeholder-shown) + label{
+  top: -8px;
+  font-size: .75rem;
+  color: var(--accent-2);
+  background: var(--card);
+}
+
+/* Flotar label para select (usando :has) */
+.input:has(select:focus) > label,
+.input:has(select option:checked:not([value=""])) > label{
+  top: -8px;
+  font-size: .75rem;
+  color: var(--accent-2);
+  background: var(--card);
+}
+
+/* Barra inferior */
+.input__bar{
+  position: absolute;
+  left: 12px; right: 12px; bottom: 8px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.input input:focus ~ .input__bar,
+.input:has(select:focus) .input__bar{ transform: scaleX(1); }
+
+/* Toggle password eye */
+.input__toggle{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.04);
+  cursor: pointer;
+}
+.input__toggle::before{
+  content: "👁️";
+  display: grid; place-items: center;
+  font-size: 16px;
+}
+
+/* Botones */
+.btn{
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #0d0f1e;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform .05s ease, box-shadow .2s ease, filter .2s ease;
+  box-shadow: 0 12px 24px rgba(108,99,255,.25);
+}
+.btn:hover{ filter: brightness(1.05); }
+.btn:active{ transform: translateY(1px) scale(.99); }
+
+.btn--outline{
+  width: auto;
+  background: transparent;
+  color: var(--text);
+  border: 2px solid rgba(255,255,255,.2);
+  box-shadow: none;
+}
+
+/* Panel deslizante */
+.auth__panel{
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(400px 300px at 30% 20%, rgba(108,99,255,.28), transparent 50%),
+    radial-gradient(400px 300px at 80% 80%, rgba(0,229,255,.22), transparent 50%),
+    linear-gradient(160deg, #1b2048, #121633);
+  display: grid;
+  place-items: center;
+}
+
+.panel__inner{
+  position: absolute;
+  inset: 0;
+  padding: 48px 40px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 12px;
+  transition: transform .7s cubic-bezier(.2,.7,.3,1), opacity .6s ease;
+}
+
+.panel__inner h3{
+  margin: 0 0 8px;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+}
+.panel__inner p{
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+/* Estados por defecto (login visible) */
+.form--login{ transform: translateX(0); opacity: 1; }
+.form--signup{ position: absolute; inset: 48px 40px; transform: translateX(40px); opacity: 0; pointer-events: none; }
+
+/* Cuando se activa SIGNUP */
+.auth__card.is-signup .form--login{ transform: translateX(-40px); opacity: 0; pointer-events: none; }
+.auth__card.is-signup .form--signup{ transform: translateX(0); opacity: 1; pointer-events: all; }
+
+/* Paneles: parallax */
+.panel__inner--login{ transform: translateX(0); opacity: 1; }
+.panel__inner--signup{ transform: translateX(40px); opacity: 0; }
+.auth__card.is-signup .panel__inner--login{ transform: translateX(-40px); opacity: 0; }
+.auth__card.is-signup .panel__inner--signup{ transform: translateX(0); opacity: 1; }
+
+/* Móvil */
+@media (max-width: 880px){
+  .auth__panel{ order: -1; min-height: 260px; }
+  .panel__inner{ position: relative; inset: auto; }
+}
+
+select {
+  background-color: #1a1a2e; /* Fondo oscuro elegante */
+  color: #ffffff; /* Texto blanco */
+  border: 1px solid #00f7ff; /* Borde neón para que combine */
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Opciones dentro del menú */
+select option {
+  background-color: #1a1a2e; /* Fondo oscuro */
+  color: #ffffff; /* Texto blanco */
+}
+
+/* Opciones al pasar el mouse */
+select option:hover {
+  background-color: #00f7ff; /* Azul brillante */
+  color: #000000; /* Texto negro */
+}
