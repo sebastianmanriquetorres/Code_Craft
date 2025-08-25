@@ -1,0 +1,86 @@
+/* Fondo degradado animado estilo ZIP */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(-45deg, #0f0f1a, #1a1a2e, #16213e, #0f3460);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.form-container {
+  background: rgba(20, 20, 40, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #00f7ff;
+  width: 320px;
+  text-align: center;
+}
+
+.form-title {
+  color: #00f7ff;
+  margin-bottom: 20px;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffffffcc;
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #00f7ff;
+  border-radius: 8px;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #ff0080;
+  box-shadow: 0 0 8px #ff0080;
+  outline: none;
+}
+
+/* Botón estilo ZIP */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: #00f7ff;
+  color: #1a1a2e;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-submit:hover {
+  background: #ff0080;
+  color: #fff;
+  box-shadow: 0 0 12px #ff0080;
+}
+
+.btn-submit:active {
+  transform: scale(0.97);
+}
