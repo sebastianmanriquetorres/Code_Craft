@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Desarrollador</title></head>
+<body>
+  <h1>Hola {{ usuario }} (Desarrollador)</h1>
+  <p><b>Cargo:</b> {{ cargo }}</p>
+  <p><a href="/logout">Cerrar sesión</a></p>
+
+  <h2>Tu progreso</h2>
+  <ul>
+    {% for d, a, f in progresos %}
+      <li>{{ d }} — {{ a }}% — {{ f }}</li>
+    {% else %}
+      <li>Sin registros aún.</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Agregar progreso</h3>
+  <form method="POST" action="/progreso/agregar">
+    <input type="text" name="descripcion" placeholder="Descripción" required>
+    <input type="number" name="avance" min="0" max="100" value="0">
+    <button type="submit">Guardar</button>
+  </form>
+</body>
+</html>

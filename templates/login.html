@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login & Registro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="auth">
+    <div class="auth__card" id="authCard">
+      <!-- Columna: formularios -->
+      <div class="auth__forms">
+        <!-- Login -->
+        <form method="POST" action="/login" class="form form--login" id="loginForm" autocomplete="on">
+          <h2 class="form__title">Iniciar sesión</h2>
+
+          <div class="input">
+            <input type="text" name="usuario" id="loginUsuario" required />
+            <label for="loginUsuario">Usuario o Correo</label>
+            <span class="input__bar"></span>
+          </div>
+
+          <div class="input">
+            <input type="password" name="password" id="loginPassword" minlength="6" required />
+            <label for="loginPassword">Contraseña</label>
+            <span class="input__bar"></span>
+            <button class="input__toggle" type="button" aria-label="Mostrar/ocultar contraseña"></button>
+          </div>
+
+          <div class="form__actions">
+            <label class="checkbox">
+              <input type="checkbox" id="recuerdame" />
+              <span>Recuérdame</span>
+            </label>
+            <a href="#" class="link">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button class="btn" type="submit">Entrar</button>
+
+          <p class="form__switch">
+            ¿No tienes cuenta?
+            <button class="link link--btn" type="button" data-switch="signup">Crear cuenta</button>
+          </p>
+        </form>
+
+        <!-- Registro -->
+        <form method="POST" action="/registro" class="form form--signup" id="signupForm" autocomplete="on">
+          <h2 class="form__title">Crear cuenta</h2>
+
+          <!-- Grid -->
+          <div class="form__grid">
+            <div class="input">
+              <input type="text" name="nombre" id="signupFirstName" minlength="2" required />
+              <label for="signupFirstName">Nombre</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="text" name="apellido" id="signupLastName" minlength="2" required />
+              <label for="signupLastName">Apellido</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="email" name="correo" id="signupEmail" required />
+              <label for="signupEmail">Correo</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="tel" name="telefono" id="signupPhone" pattern="[0-9]{7,15}" />
+              <label for="signupPhone">Teléfono</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <!-- Rol -->
+            <div class="input">
+              <select id="signupRole" name="rol" required>
+                <option value="" selected></option>
+                <option value="cliente">Cliente</option>
+                <option value="desarrollador">Desarrollador</option>
+              </select>
+              <label for="signupRole">Rol</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <!-- Cargo -->
+            <div class="input" id="cargoField" style="display:none;">
+              <input type="text" name="cargo" id="signupCargo" minlength="2" />
+              <label for="signupCargo">Cargo (solo desarrollador)</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="password" name="password" id="signupPassword" minlength="6" required />
+              <label for="signupPassword">Contraseña</label>
+              <span class="input__bar"></span>
+              <button class="input__toggle" type="button" aria-label="Mostrar/ocultar contraseña"></button>
+            </div>
+          </div>
+
+          <button class="btn" type="submit">Registrarme</button>
+
+          <p class="form__switch">
+            ¿Ya tienes cuenta?
+            <button class="link link--btn" type="button" data-switch="login">Inicia sesión</button>
+          </p>
+        </form>
+      </div>
+
+      <!-- Columna: panel -->
+      <div class="auth__panel">
+        <div class="panel__inner panel__inner--login">
+          <h3>¡Bienvenido!</h3>
+          <p>Ingresa con tus datos.</p>
+          <button class="btn btn--outline" type="button" data-switch="login">Iniciar sesión</button>
+        </div>
+        <div class="panel__inner panel__inner--signup">
+          <h3>¿Nuevo por aquí?</h3>
+          <p>Crea una cuenta para disfrutar de todas las funciones.</p>
+          <button class="btn btn--outline" type="submit" data-switch="signup">Crear cuenta</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+  <script>
+    // Mostrar/ocultar campo "cargo"
+    const rol = document.getElementById('signupRole');
+    const cargoField = document.getElementById('cargoField');
+    rol.addEventListener('change', () => {
+      cargoField.style.display = rol.value === 'desarrollador' ? 'block' : 'none';
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+</body>
+</html>

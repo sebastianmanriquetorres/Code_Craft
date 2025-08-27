@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Registro</title></head>
+<body>
+  <h1>Registro (Cliente / Desarrollador)</h1>
+  <form method="POST" action="/registro">
+    <input name="nombre" placeholder="Nombre" required>
+    <input name="apellido" placeholder="Apellido" required>
+    <input name="correo" type="email" placeholder="Correo" required>
+    <input name="telefono" placeholder="Teléfono">
+    <select name="rol" id="rol" required>
+      <option value="cliente">Cliente</option>
+      <option value="desarrollador">Desarrollador</option>
+    </select>
+    <input name="cargo" id="cargo" placeholder="Cargo (solo desarrollador)">
+    <input name="password" type="password" placeholder="Contraseña" required>
+    <button type="submit">Crear cuenta</button>
+  </form>
+
+  <p><a href="/">Volver al login</a></p>
+
+  <script>
+    // Muestra/oculta "cargo" según el rol
+    const rol = document.getElementById('rol');
+    const cargo = document.getElementById('cargo');
+    function toggleCargo(){
+      cargo.style.display = rol.value === 'desarrollador' ? 'block' : 'none';
+      if (rol.value !== 'desarrollador') cargo.value = '';
+    }
+    rol.addEventListener('change', toggleCargo);
+    toggleCargo();
+  </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Panel de Administración">
+    <meta name="author" content="">
+
+    <title>Administrador - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for('static', filename='admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('static', filename='admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Gestión
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#tablaProgreso">
+                    <i class="fas fa-fw fa-tasks"></i>
+                    <span>Control Usuarios</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <!-- User Info -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ usuario }} (Administrador)</span>
+                                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='admin/img/undraw_profile.svg') }}">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="/logout">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Panel de Administración</h1>
+                    </div>
+
+                    <!-- Tabla de progreso -->
+                    <div class="card shadow mb-4" id="tablaProgreso">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">Control de todos los usuarios</h6>
+
+                            <!-- Filtro por Rol (VALORES EN MINÚSCULAS) -->
+                            <div class="d-flex align-items-center">
+                                <label for="filtroRol" class="mr-2 mb-0 small text-gray-600">Filtrar:</label>
+                                <select id="filtroRol" class="form-control w-auto">
+                                    <option value="todos">Todos</option>
+                                    <option value="cliente">Clientes</option>
+                                    <option value="desarrollador">Desarrolladores</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="tablaUsuarios" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Clientes</th>
+                                            <th>Rol</th>
+                                            <th>Descripción</th>
+                                            <th>Avance</th>
+                                            <th>Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for u, r, d, a, f in datos %}
+                                            <!-- Normalizamos el atributo data-rol a minúsculas -->
+                                            <tr data-rol="{{ r|lower }}">
+                                                <td>{{ u }}</td>
+                                                <td>{{ r }}</td>
+                                                <td>{{ d }}</td>
+                                                <td>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                             style="width: {{ a|default(0) }}%;"
+                                                             aria-valuenow="{{ a|default(0) }}" aria-valuemin="0" aria-valuemax="100">
+                                                            {{ a|default(0) }}%
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ f }}</td>
+                                            </tr>
+                                        {% else %}
+                                            <tr><td colspan="5" class="text-center">Sin registros aún.</td></tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Contador (usuarios únicos visibles por rol + total filas visibles) -->
+                            <div id="contador" class="mt-3 text-primary font-weight-bold"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Tu App 2025</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='admin/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ url_for('static', filename='admin/js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Script de Filtro y Conteo (robusto y case-insensitive) -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filtroSelect = document.getElementById('filtroRol');
+        const contadorDiv = document.getElementById('contador');
+
+        function actualizarConteo() {
+            const filtro = filtroSelect.value.toLowerCase(); // 'todos', 'cliente', 'desarrollador'
+            const filas = document.querySelectorAll('#tablaUsuarios tbody tr');
+
+            const clientesSet = new Set();
+            const desarrolladoresSet = new Set();
+            let filasVisibles = 0;
+
+            filas.forEach(fila => {
+                // Ignorar filas que no tienen celdas (por ejemplo la fila "Sin registros aún.")
+                const celdas = fila.querySelectorAll('td');
+                if (!celdas || celdas.length < 2) return;
+
+                const nombre = celdas[0].innerText.trim();
+                // Preferimos el atributo data-rol (ya normalizado a minúsculas)
+                let rol = (fila.getAttribute('data-rol') || '').toString().toLowerCase();
+                if (!rol) {
+                    rol = celdas[1].innerText.trim().toLowerCase();
+                }
+
+                const coincide = (filtro === 'todos') || (rol === filtro);
+                if (coincide) {
+                    fila.style.display = '';
+                    filasVisibles++;
+                    if (rol === 'cliente') clientesSet.add(nombre);
+                    if (rol === 'desarrollador') desarrolladoresSet.add(nombre);
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+
+            const clientes = clientesSet.size;
+            const desarrolladores = desarrolladoresSet.size;
+
+            contadorDiv.innerHTML = `Clientes (usuarios únicos): ${clientes} &nbsp;|&nbsp; Desarrolladores (usuarios únicos): ${desarrolladores} &nbsp;|&nbsp; Filas visibles: ${filasVisibles}`;
+        }
+
+        // Actualiza al cambiar el filtro
+        filtroSelect.addEventListener('change', actualizarConteo);
+
+        // Ejecutar al cargar para inicializar conteo y estado
+        actualizarConteo();
+    });
+    </script>
+</body>
+</html>
