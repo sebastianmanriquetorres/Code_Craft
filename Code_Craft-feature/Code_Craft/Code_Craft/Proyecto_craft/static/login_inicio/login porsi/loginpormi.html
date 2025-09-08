@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Inicio de Sesión</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Fondo animado -->
+  <div class="fondo-animado">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <form>
+    <fieldset>
+      <legend>Iniciar Sesión</legend>
+
+      <label for="correo">Correo:</label>
+      <input type="email" id="correo" name="correo" placeholder="Ingresa tu correo" required>
+
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+
+      <button type="submit" class="enviar">Ingresar</button>
+
+      <!-- Botones extra -->
+      <div class="extra-buttons">
+        <button type="button" class="btn-link"><a href="recuperarcontra.html">Recuperar contraseña</a></button>
+        <button type="button" class="btn-link">¿No tienes cuenta? Regístrate aquí</button>
+      </div>
+
+      <!-- Separador -->
+      <div class="separator">
+        <span></span>
+        <p>O iniciar sesión con</p>
+        <span></span>
+      </div>
+
+      <!-- Logos -->
+
+      <div class="social-login">
+        <img src="img/logo1.png" alt="Logo 1">
+        <img src="img/logo2.png" alt="Logo 2">
+        <img src="img/logo3.png" alt="Logo 3">
+      </div>
+
+
+    </fieldset>
+  </form>
+
+</body>
+</html>

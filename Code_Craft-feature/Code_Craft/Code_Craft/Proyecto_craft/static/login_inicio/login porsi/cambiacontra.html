@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Inicio de Sesión</title>
+  <link rel="stylesheet" href="cambiarcontra.css">
+   <style>
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      display: none;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo animado -->
+  <div class="fondo-animado">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <form>
+    <fieldset>
+      <legend>«Restablecimiento de contraseña»</legend>
+
+      <div class="subtitulo">Contraseña nueva</div>
+        
+        <label for="correo">Contraseña nueva</label>
+        <input type="password" id="password" name="correo" placeholder="Ingresa contraseña nueva" required>
+
+        <h6>utilize nuemeros y letras para su contraseña</h6>
+
+        <label for="correo">Repetir contraseña</label>
+        <input type="password" id="confirmPassword" name="correo" placeholder="Repita contraseña" required>
+      
+        <br><br>
+        <p><center>Exitoso cambio de contraseña vuelve a ingresar e inicia sesion.</center></p>
+        <br>
+      
+
+      <!-- Botones -->
+      <div class="botones">
+       <a href="loginpormi.html"><button type="button" class="cancelar">Cancelar</button></a>
+       <a href="loginpormi.html"><button type="submit" class="siguiente">confirmar</button></a>
+      </div>
+
+
+    </fieldset>
+  </form>
+
+  <script>
+    const form = document.getElementById('formContra');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const errorMensaje = document.getElementById('errorMensaje');
+
+    form.addEventListener('submit', function(event) {
+      if (password.value !== confirmPassword.value) {
+        event.preventDefault(); // Evita que se envíe
+        errorMensaje.style.display = 'block';
+      } else {
+        errorMensaje.style.display = 'none';
+      }
+    });
+  </script>
+  
+
+</body>
+</html>

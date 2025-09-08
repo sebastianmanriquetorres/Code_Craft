@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login & Registro Animado</title>
+  <link rel="stylesheet" href="login.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="auth">
+    <div class="auth__card" id="authCard">
+      <!-- Columna: formularios -->
+      <div class="auth__forms">
+        <!-- Login -->
+        <form class="form form--login" id="loginForm" autocomplete="on" novalidate>
+          <h2 class="form__title">Iniciar sesión</h2>
+
+          <div class="input">
+            <input type="email" name="email" id="loginEmail" required />
+            <label for="loginEmail">Correo</label>
+            <span class="input__bar"></span>
+          </div>
+
+          <div class="input">
+            <input type="password" name="password" id="loginPassword" minlength="6" required />
+            <label for="loginPassword">Contraseña</label>
+            <span class="input__bar"></span>
+            <button class="input__toggle" type="button" aria-label="Mostrar/ocultar contraseña"></button>
+          </div>
+
+          <div class="form__actions">
+            <label class="checkbox">
+              <input type="checkbox" id="recuerdame" />
+              <span>Recuérdame</span>
+            </label>
+            <a href="../smsrecup/sms.html" class="link">¿Olvidaste tu contraseña?</a>
+          </div>
+
+
+          <button class="btn" type="submit">Entrar</button>
+
+          <p class="form__switch">
+            ¿No tienes cuenta?
+            <button class="link link--btn" type="button" data-switch="signup">Crear cuenta</button>
+          </p>
+        </form>
+
+        <!-- Registro -->
+        <form class="form form--signup" id="signupForm" autocomplete="on" novalidate>
+          <h2 class="form__title">Crear cuenta</h2>
+
+          <!-- Grid para optimizar alto -->
+          <div class="form__grid">
+            <div class="input">
+              <input type="text" name="firstName" id="signupFirstName" minlength="2" required />
+              <label for="signupFirstName">Nombre</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="text" name="lastName" id="signupLastName" minlength="2" required />
+              <label for="signupLastName">Apellido</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="email" name="email" id="signupEmail" required />
+              <label for="signupEmail">Correo</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="tel" name="phone" id="signupPhone" pattern="[0-9]{7,15}" required />
+              <label for="signupPhone">Teléfono</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <div class="input">
+              <input type="password" name="password" id="signupPassword" minlength="6" required />
+              <label for="signupPassword">Contraseña (mín. 6)</label>
+              <span class="input__bar"></span>
+              <button class="input__toggle" type="button" aria-label="Mostrar/ocultar contraseña"></button>
+            </div>
+
+            <div class="input">
+              <input type="password" name="confirm" id="signupConfirm" minlength="6" required />
+              <label for="signupConfirm">Confirmar contraseña</label>
+              <span class="input__bar"></span>
+              <button class="input__toggle" type="button" aria-label="Mostrar/ocultar contraseña"></button>
+            </div>
+
+            <!-- Rol (select antes que label para flotar igual que los inputs) -->
+            <div class="input">
+              <select id="signupRole" name="role" required>
+                <option value="" selected>Selecciona un rol</option>
+                <option value="cliente">Cliente</option>
+                <option value="desarrollador">Desarrollador</option>
+              </select>
+              <label for="signupRole">Rol</label>
+              <span class="input__bar"></span>
+            </div>
+
+            <!-- Cargo (aparece solo si Rol = Desarrollador) -->
+            <div class="input" id="cargoField" style="display:none;">
+              <input type="text" name="cargo" id="signupCargo" minlength="2" />
+              <label for="signupCargo">Cargo</label>
+              <span class="input__bar"></span>
+            </div>
+          </div>
+
+          <button class="btn" type="submit">Registrarme</button>
+
+          <p class="form__switch">
+            ¿Ya tienes cuenta?
+            <button class="link link--btn" type="button" data-switch="login">Inicia sesión</button>
+          </p>
+        </form>
+      </div>
+
+      <!-- Columna: panel deslizante -->
+      <div class="auth__panel">
+        <div class="panel__inner panel__inner--login">
+          <h3>¡Bienvenido!</h3>
+          <p>Ingresa con tus datos y vuelve a lo que estabas haciendo.</p>
+          <button class="btn btn--outline" type="button" data-switch="login">Iniciar sesión</button>
+        </div>
+        <div class="panel__inner panel__inner--signup">
+          <h3>¿Nuevo por aquí?</h3>
+          <p>Crea una cuenta para disfrutar de todas las funciones.</p>
+          <button class="btn btn--outline" type="button" data-switch="signup">Crear cuenta</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="login.js"></script>
+</body>
+</html>
