@@ -1,0 +1,70 @@
+body {
+  overflow-x: hidden;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px; /* grosor */
+}
+
+::-webkit-scrollbar-track {
+  background: #111; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; 
+}
+
+
+
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+#splash .container {
+  text-align: center; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100%; 
+}
+
+#splash img.bombillo {
+  width: 120px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: transform 700ms ease, opacity 700ms ease;
+  display: inline-block;
+}
+#splash .texto {
+  margin-top: 10px;
+  color: white;
+  font-size: 1.3rem;
+  font-family: monospace;
+  opacity: 0;
+  border-right: 2px solid rgba(255,255,255,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  display: inline-block;
+  text-align: center;
+}
+@keyframes escribirYBorrar {
+  0% { width: 0; opacity: 1; }
+  40% { width: 13ch; opacity: 1; }
+  70% { width: 11ch; opacity: 1; }
+  100% { width: 0; opacity: 0; }
+}

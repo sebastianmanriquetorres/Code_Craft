@@ -8,12 +8,25 @@
     <link rel="stylesheet" href="principal.css">
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../Animacion2.0/splash.css">
 </head>
 <body>
 
-    <!-- ====== PRINCIPAL ====== -->
+    <!-- ANIMACIÓN -->
+    <div id="splash">
+    <div class="container">
+        <img id="bombillo" class="bombillo" src="../Animacion2.0/bombillo-apagado.png" alt="">
+        <div id="texto" class="texto">&lt;Code_Craft&gt;</div>
+    </div>
+    </div>
+
+
+
+    <!-- ====== Barra de navegación ====== -->
     <header class="header">
-        <a href="#" class="logo">menu</a>
+        <a href="#" class="logo">
+            <img src="imagenes/logo.jpeg" alt="logo">
+        </a>
 
         <nav class="navbar">
             <a href="#" class="activate">home</a>
@@ -23,6 +36,7 @@
             <a href="#">contacto</a>
         </nav>
     </header>
+
 
     <section class="home">
         <div class="home-content">
@@ -45,11 +59,7 @@
     </section>
 
     <!-- ====== INDEX (DEBAJO) ====== -->
-    <header>
-        <nav class="topbar">
-            <div class="logo"><img src="imagenes/logo.png" alt="logo"></div>
-        </nav>
-    </header>
+
     <div class="carousel">
         <div class="list">
             <div class="item">
@@ -148,6 +158,8 @@
         <div class="time"></div>
     </div>
 
+    <script src="../Animacion2.0/splash.js"></script>
     <script src="app.js"></script>
+
 </body>
 </html>

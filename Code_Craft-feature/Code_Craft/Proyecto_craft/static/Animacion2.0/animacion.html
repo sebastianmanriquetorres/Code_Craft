@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animación Code Craft</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    
+    <img src="bombillo-apagado.png" class="bombillo" id="bombillo">
+    
+    <div class="texto" id="texto">&lt;Code_Craft&gt;</div>
+</div>
+
+<script>
+window.onload = () => {
+  const bombillo = document.getElementById("bombillo");
+  const texto = document.getElementById("texto");
+  
+  bombillo.classList.add("encender");
+
+  setTimeout(() => {
+    texto.style.animation = "escribirYBorrar 6s steps(13) forwards";
+  }, 2500);
+
+  setTimeout(() => {
+    window.location.href = "static/index/index.html"; 
+  }, 9000);
+};
+</script>
+
+</body>
+</html>

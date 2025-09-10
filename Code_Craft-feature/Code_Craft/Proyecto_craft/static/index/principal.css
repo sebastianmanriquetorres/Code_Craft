@@ -8,8 +8,8 @@
 body {
     background: #081b29; 
     color: #ededed;
+    overflow-x: hidden; /* evita scroll horizontal */
 }
-
 
 .header{
     position: fixed;
@@ -268,4 +268,59 @@ body {
     100%{
         width: 0;
     }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .home-content h1 {
+    font-size: 40px;
+  }
+  .home-content h3 {
+    font-size: 24px;
+  }
+  .home-content .btn-box {
+    width: 100%;
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 5%;
+  }
+  .navbar a {
+    margin-left: 15px;
+    font-size: 16px;
+  }
+  .home {
+    padding: 0 5%;
+    text-align: center;
+  }
+  .home-content {
+    max-width: 100%;
+  }
+  .home-sci {
+    position: static;
+    margin-top: 20px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-content h1 {
+    font-size: 28px;
+  }
+  .home-content h3 {
+    font-size: 18px;
+  }
+  .btn-box a {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+  .home-imgHover {
+    display: none;
+  }
 }
