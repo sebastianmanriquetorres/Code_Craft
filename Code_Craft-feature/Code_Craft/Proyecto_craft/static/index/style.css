@@ -16,51 +16,59 @@ a{
 }
 
 .header {
-    width: 100%;
-    max-width: 100%;
-    padding: 0 20px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #000;
-    z-index: 1000;
-    box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  background: rgba(0, 12, 78, 0.6); /* tu color original */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
 }
 
 .header .logo img {
-    height: 70px;
-    max-height: 100%;
-    width: auto;
-    object-fit: contain;
-    display: block;
+  height: 50px;  
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transform: scale(1.5);  
 }
 
-header a{
-    color: #eee;
-    margin-right: 40px;
 
-.header .logo img {
-    height: 50px;   
-    width: auto;
-    display: block;
+
+
+.navbar a {
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  margin-left: 35px;
+  transition: 0.3s;
 }
 
+.navbar a:hover {
+  color: #ff3c3c;
 }
+
+#menu-icon {
+  font-size: 36px;
+  color: #fff;
+  display: none;
+  cursor: pointer;
+}
+
+
+
 .topbar{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.logo img{
-    height: 100px;
-    width: 100px;
-    display: block;
-}
+
 .menu{
     display: flex;
     align-items: center;
@@ -360,4 +368,34 @@ header a{
   animation: appear linear;
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
+}
+
+/* menú hamburguesa oculto en desktop */
+#menu-icon {
+  font-size: 36px;
+  color: #fff;
+  display: none;
+  cursor: pointer;
+}
+
+/* estilos para móviles */
+@media screen and (max-width: 768px) {
+  .navbar {
+    display: none; 
+    flex-direction: column;
+    background: rgba(0, 12, 78, 0.95);
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    padding: 20px;
+  }
+
+  .navbar.active {
+    display: flex; 
+  }
+
+  #menu-icon {
+    display: block; 
+  }
 }

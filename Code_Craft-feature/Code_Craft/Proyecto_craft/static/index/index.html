@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../Animacion2.0/splash.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body>
 
@@ -22,12 +24,12 @@
 
 
 
-    <!-- ====== Barra de navegación ====== -->
+
     <header class="header">
         <a href="#" class="logo">
-            <img src="imagenes/logo.jpeg" alt="logo">
+            <img src="imagenes/logo.png" alt="logo">
         </a>
-
+        <i class='bx bx-menu' id="menu-icon"></i>
         <nav class="navbar">
             <a href="#" class="activate">home</a>
             <a href="#">about</a>
@@ -36,6 +38,8 @@
             <a href="#">contacto</a>
         </nav>
     </header>
+
+
 
 
     <section class="home animate-on-scroll">
@@ -160,6 +164,18 @@
 
     <script src="../Animacion2.0/splash.js"></script>
     <script src="app.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        const menuIcon = document.querySelector("#menu-icon");
+        const navbar = document.querySelector(".navbar");
+
+        menuIcon.addEventListener("click", () => {
+            navbar.classList.toggle("active");
+        });
+    </script>
+
+
 
 </body>
 </html>
