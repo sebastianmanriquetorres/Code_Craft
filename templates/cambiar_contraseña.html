@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Contraseña</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1d3557, #457b9d);
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #1d3557;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 0.5rem 0 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #1d3557;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #457b9d;
+        }
+
+        .success, .error {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Cambiar Contraseña</h2>
+        <form method="POST" action="/cambiar_contraseña">
+            <input type="email" name="correo" placeholder="Correo electrónico" required>
+            <input type="password" name="nueva_contraseña" placeholder="Nueva contraseña" required>
+            <button type="submit">Cambiar Contraseña</button>
+        </form>
+
+        {% if mensaje %}
+        <p class="{{ 'success' if exito else 'error' }}">{{ mensaje }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

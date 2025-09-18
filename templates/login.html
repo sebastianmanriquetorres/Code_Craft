@@ -8,6 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* (opcional) estilo para deshabilitar el botón mientras bloqueado */
+    .btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+  </style>
 </head>
 <body>
   <main class="auth">
@@ -24,34 +30,77 @@
             <span class="input__bar"></span>
           </div>
 
-          <div class="input">
-            <input type="password" name="password" id="loginPassword" minlength="6" required />
-            <label for="loginPassword">Contraseña</label>
-            <span class="input__bar"></span>
-            <button class="input__toggle" type="button" aria-label="Mostrar/ocultar contraseña"></button>
-          </div>
+       <div class="input" style="position: relative;">
+  <input type="password" name="password" id="loginPassword" minlength="6" required />
+  <label for="loginPassword">Contraseña</label>
+  <span class="input__bar"></span>
 
-          <div class="form__actions">
-            <label class="checkbox">
-              <input type="checkbox" id="recuerdame" />
-              <span>Recuérdame</span>
-            </label>
-            <a href="#" class="link">¿Olvidaste tu contraseña?</a>
-          </div>
+  <!-- Botón del ojo -->
+  <button
+    type="button"
+    id="togglePassword"
+    aria-pressed="false"
+    aria-label="Mostrar contraseña"
+    title="Mostrar contraseña"
+    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+           background: none; border: none; padding: 0; cursor: pointer; display: inline-flex; align-items:center;">
+    <!-- Ojo abierto (visible por defecto) -->
+    <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+         style="display: block; pointer-events: none;">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="12" cy="12" r="3" fill="none" stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
 
-          <button class="btn" type="submit">Entrar</button>
+    <!-- Ojo cerrado (oculto por defecto) -->
+    <svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+         style="display: none; pointer-events: none;">
+      <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.82 21.82 0 0 1 5.17-6.88" fill="none" stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" fill="none" stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="1" y1="1" x2="23" y2="23" stroke="#666" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+
+
+
+
+
+          <button class="btn" type="submit" id="loginBtn">Entrar</button>
 
           <p class="form__switch">
             ¿No tienes cuenta?
             <button class="link link--btn" type="button" data-switch="signup">Crear cuenta</button>
           </p>
+ <hr class="linea-bonita">
+<style>
+  .linea-bonita {
+  border: none; /* quitamos el borde por defecto */
+  height: 3px; /* grosor de la línea */
+  background: linear-gradient(to right, #4f46e5, #06b6d4); /* degradado bonito */
+  border-radius: 5px; /* esquinas redondeadas */
+  margin: 20px 0; /* espacio arriba y abajo */
+}
+
+</style>
+          <p class="form__switch">
+            ¿Olvidaste tu contraseña?
+          <!-- Botón que redirige -->
+          <button class="link link--btn" type="button" id="btnCambiarPass">
+            Cambiar contraseña
+          </button>
+          </p>
+
+<script>
+  // Script para redirigir al hacer clic
+  document.getElementById("btnCambiarPass").addEventListener("click", () => {
+    window.location.href = "/cambiar_contraseña";
+  });
+</script>
         </form>
 
-        <!-- Registro -->
+        <!-- Registro (sin cambios importantes) -->
         <form method="POST" action="/registro" class="form form--signup" id="signupForm" autocomplete="on">
           <h2 class="form__title">Crear cuenta</h2>
-
-          <!-- Grid -->
           <div class="form__grid">
             <div class="input">
               <input type="text" name="nombre" id="signupFirstName" minlength="2" required />
@@ -77,7 +126,6 @@
               <span class="input__bar"></span>
             </div>
 
-            <!-- Rol -->
             <div class="input">
               <select id="signupRole" name="rol" required>
                 <option value="" selected></option>
@@ -88,7 +136,6 @@
               <span class="input__bar"></span>
             </div>
 
-            <!-- Cargo -->
             <div class="input" id="cargoField" style="display:none;">
               <input type="text" name="cargo" id="signupCargo" minlength="2" />
               <label for="signupCargo">Cargo (solo desarrollador)</label>
@@ -128,17 +175,221 @@
     </div>
   </main>
 
+  <!-- Tu script de login.js si tiene lógica visual/animaciones -->
   <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+  <!-- Script nuevo: control de intentos y bloqueo con SweetAlert2 + redirección fiable -->
   <script>
-    // Mostrar/ocultar campo "cargo"
-    const rol = document.getElementById('signupRole');
-    const cargoField = document.getElementById('cargoField');
-    rol.addEventListener('change', () => {
-      cargoField.style.display = rol.value === 'desarrollador' ? 'block' : 'none';
+    // ---------- Config ----------
+    const MAX_ATTEMPTS = 5;
+    const BASE_BLOCK_MINUTES = 5; // 1er bloqueo = 5 min, luego se duplica (cliente mantiene blockCount)
+    const STORAGE_PREFIX = "loginState_"; // clave en localStorage
+
+    // ---------- Helpers ----------
+    function stateKey(user) { return STORAGE_PREFIX + user.toLowerCase(); }
+
+    function loadState(user) {
+      if (!user) return { attempts: 0, blockCount: 0, blockedUntil: 0 };
+      const raw = localStorage.getItem(stateKey(user));
+      return raw ? JSON.parse(raw) : { attempts: 0, blockCount: 0, blockedUntil: 0 };
+    }
+
+    function saveState(user, state) { localStorage.setItem(stateKey(user), JSON.stringify(state)); }
+
+    function clearState(user) { localStorage.removeItem(stateKey(user)); }
+
+    function computeBlockMinutes(blockCount) {
+      return BASE_BLOCK_MINUTES * Math.pow(2, blockCount || 0);
+    }
+
+    function msToTime(ms) {
+      const totalSec = Math.max(0, Math.floor(ms / 1000));
+      const min = Math.floor(totalSec / 60);
+      const sec = totalSec % 60;
+      return `${min}m ${sec}s`;
+    }
+
+    // ---------- UI & lógica ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginForm = document.getElementById("loginForm");
+      const loginUsuario = document.getElementById("loginUsuario");
+      const loginPassword = document.getElementById("loginPassword");
+      const loginBtn = document.getElementById("loginBtn");
+      const togglePass = document.getElementById("togglePassword");
+
+      // Mostrar/ocultar contraseña simple
+      togglePass?.addEventListener("click", () => {
+        if (loginPassword.type === "password") {
+          loginPassword.type = "text";
+          togglePass.textContent = "🙈";
+        } else {
+          loginPassword.type = "password";
+          togglePass.textContent = "👁";
+        }
+      });
+
+      // Si el usuario tiene bloqueo activo al cargar (si ya escribió su usuario)
+      loginUsuario.addEventListener("blur", () => {
+        const user = loginUsuario.value.trim();
+        if (!user) return;
+        const st = loadState(user);
+        if (st.blockedUntil && Date.now() < st.blockedUntil) {
+          const remaining = st.blockedUntil - Date.now();
+          Swal.fire({
+            icon: "error",
+            title: "Cuenta bloqueada",
+            html: `Esta cuenta está bloqueada. Tiempo restante: <b>${msToTime(remaining)}</b>.`,
+          });
+          loginBtn.disabled = true;
+        } else {
+          loginBtn.disabled = false;
+        }
+      });
+
+      (function checkOnLoad() {
+        const user = loginUsuario.value.trim();
+        if (!user) return;
+        const st = loadState(user);
+        if (st.blockedUntil && Date.now() < st.blockedUntil) {
+          const remaining = st.blockedUntil - Date.now();
+          Swal.fire({
+            icon: "error",
+            title: "Cuenta bloqueada",
+            html: `Esta cuenta está bloqueada. Tiempo restante: <b>${msToTime(remaining)}</b>.`,
+          });
+          loginBtn.disabled = true;
+        }
+      })();
+
+      // Submit manejado con fetch (AJAX) para obtener respuesta y redirigir correctamente
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const user = loginUsuario.value.trim();
+        const pass = loginPassword.value;
+
+        if (!user) {
+          Swal.fire("Error", "Ingresa tu usuario o correo", "warning");
+          return;
+        }
+
+        const st = loadState(user);
+        // Si está bloqueado en localStorage
+        if (st.blockedUntil && Date.now() < st.blockedUntil) {
+          const remaining = st.blockedUntil - Date.now();
+          Swal.fire("Cuenta bloqueada", `Tiempo restante: ${msToTime(remaining)}`, "error");
+          return;
+        }
+
+        // deshabilitar botón mientras se procesa
+        loginBtn.disabled = true;
+        loginBtn.textContent = "Validando...";
+
+        try {
+          // Enviamos como form-urlencoded y marcamos X-Requested-With 
+          const body = new URLSearchParams();
+          body.append("usuario", user);
+          body.append("password", pass);
+
+          const res = await fetch("/login", {
+            method: "POST",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body.toString(),
+            credentials: 'same-origin' // importante para que la cookie de sesión se guarde
+          });
+
+          // 1) Si el servidor realizó redirección (Flask -> redirect)
+          // fetch sigue el redirect automáticamente; res.redirected será true si hubo redirección
+          if (res.redirected) {
+            // res.url contiene la URL final (ej. http://127.0.0.1:5000/cliente)
+            await Swal.fire({ icon: "success", title: "¡Bienvenido!", text: "Inicio de sesión exitoso", confirmButtonText: "Continuar" });
+            window.location.href = res.url;
+            return;
+          }
+
+          // 2) Si no hubo redirección, intentamos leer JSON (caso en que tu backend devuelva JSON para AJAX)
+          const ct = res.headers.get("content-type") || "";
+          if (ct.includes("application/json")) {
+            const data = await res.json();
+            if (data.status === "success") {
+              clearState(user);
+              await Swal.fire({ icon: "success", title: "¡Bienvenido!", showConfirmButton: false, timer: 900 });
+              // preferir redirect que envíe el servidor, si viene
+              window.location.href = data.redirect || "/";
+              return;
+            }
+
+            if (data.status === "blocked") {
+              // sincronizar bloqueo en cliente
+              const blockedUntil = data.blocked_until ? new Date(data.blocked_until).getTime() : (Date.now() + BASE_BLOCK_MINUTES * 60000);
+              st.blockedUntil = blockedUntil;
+              saveState(user, st);
+              const remaining = blockedUntil - Date.now();
+              Swal.fire("Cuenta bloqueada", `Bloqueo hasta: <b>${new Date(blockedUntil).toLocaleString()}</b><br>Tiempo restante: <b>${msToTime(remaining)}</b>`, "error");
+              setTimeout(()=> location.reload(), 1200);
+              return;
+            }
+
+            // si llegamos aquí, data.status === 'error'
+            st.attempts = (st.attempts || 0) + 1;
+            if (st.attempts >= MAX_ATTEMPTS) {
+              const durationMin = computeBlockMinutes(st.blockCount || 0);
+              st.blockCount = (st.blockCount || 0) + 1;
+              st.blockedUntil = Date.now() + durationMin * 60 * 1000;
+              st.attempts = 0;
+              saveState(user, st);
+              Swal.fire({ icon: "error", title: "Demasiados intentos", html: `Has superado ${MAX_ATTEMPTS} intentos. Tu cuenta quedará bloqueada por <b>${durationMin} minutos</b>.` }).then(()=> location.reload());
+              return;
+            } else {
+              saveState(user, st);
+              const left = MAX_ATTEMPTS - st.attempts;
+              Swal.fire({ icon: "warning", title: "Inicio de sesión fallido", html: `${data.message || "Usuario o contraseña incorrectos."} <br>Te quedan <b>${left}</b> intento(s).` });
+              return;
+            }
+          }
+
+          // 3) Fallback: no redirect, no JSON -> probablemente HTML con mensaje. Leer texto y mostrarlo.
+          const txt = await res.text();
+          // si el texto incluye la cadena de error que usas en backend, mostrarla
+          if (txt && (txt.includes("Usuario o contraseña incorrectos") || txt.toLowerCase().includes("incorrect"))) {
+            st.attempts = (st.attempts || 0) + 1;
+            if (st.attempts >= MAX_ATTEMPTS) {
+              const durationMin = computeBlockMinutes(st.blockCount || 0);
+              st.blockCount = (st.blockCount || 0) + 1;
+              st.blockedUntil = Date.now() + durationMin * 60 * 1000;
+              st.attempts = 0;
+              saveState(user, st);
+              Swal.fire({ icon: "error", title: "Demasiados intentos", html: `Has superado ${MAX_ATTEMPTS} intentos. Tu cuenta quedará bloqueada por <b>${durationMin} minutos</b>.` }).then(()=> location.reload());
+            } else {
+              saveState(user, st);
+              const left = MAX_ATTEMPTS - st.attempts;
+              Swal.fire({ icon: "warning", title: "Inicio de sesión fallido", html: `Usuario o contraseña incorrectos. <br>Te quedan <b>${left}</b> intento(s).` });
+            }
+          } else {
+            // Mensaje inesperado: mostrar texto o mensaje genérico
+            Swal.fire({ icon: "error", title: "Error", text: txt || "Respuesta inesperada del servidor" });
+          }
+
+        } catch (err) {
+          console.error(err);
+          Swal.fire("Error", "Ocurrió un error de conexión. Intenta de nuevo.", "error");
+        } finally {
+          loginBtn.disabled = false;
+          loginBtn.textContent = "Entrar";
+        }
+      });
     });
   </script>
 
-  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
-
+  <!-- Mostrar/ocultar 'cargo' en signup -->
+  <script>
+    const rol = document.getElementById('signupRole');
+    const cargoField = document.getElementById('cargoField');
+    rol?.addEventListener('change', () => {
+      cargoField.style.display = rol.value === 'desarrollador' ? 'block' : 'none';
+    });
+  </script>
 </body>
 </html>

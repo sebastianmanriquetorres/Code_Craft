@@ -1,244 +1,773 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Panel de Administración">
-    <meta name="author" content="">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Administrador - Dashboard</title>
 
-    <title>Administrador - Dashboard</title>
+  <!-- CSS -->
+  <link href="{{ url_for('static', filename='admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ url_for('static', filename='admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Custom styles for this template-->
-    <link href="{{ url_for('static', filename='admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+  <!--Chart js-->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  <style>
+    /* ====== Estilos tarjetas métricas ====== */
+    .metric-col { display: flex; }
+    .metric-card {
+      position: relative;
+      border: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      width: 100%;
+      height: 170px; /* MISMO TAMAÑO */
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      color:#fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .metric-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,.24); }
+
+    .metric-bg { position:absolute; inset:0; background-size:cover; background-position:center; z-index:0; }
+    .metric-overlay { position:absolute; inset:0; z-index:1; }
+    .metric-bubbles { position:absolute; inset:0; z-index:2; pointer-events:none; overflow:hidden; }
+    .metric-content { position:relative; z-index:3; padding:16px 18px; }
+    .metric-title { font-weight:700; font-size:1.15rem; }
+    .metric-value { font-weight:800; font-size:2rem; margin-top:8px; }
+
+    .edit-btn {
+      margin-top:10px; padding:4px 10px; font-size:.9rem; border-radius:999px;
+      background: rgba(255,255,255,.22); color:#fff; cursor:pointer; display:inline-block;
+    }
+    .edit-btn:hover { background: rgba(255,255,255,.32); }
+
+    /* Burbujas */
+    .bubble {
+      position:absolute; bottom:-100px; border-radius:50%;
+      background: rgba(255,255,255,0.25);
+      animation: rise linear infinite;
+      filter: blur(0.3px);
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity:1; }
+      100% { transform: translateY(-500px) scale(1.2); opacity:0; }
+    }
+
+    .img-preview { width:100%; max-height:140px; object-fit:cover; border-radius:8px; box-shadow: 0 6px 16px rgba(0,0,0,.12); }
+    .progress { height:.8rem; }
+    .progress-bar { font-size:.75rem; }
+
+    @media (max-width:576px){ .metric-value { font-size:1.4rem; } }
+  </style>
 </head>
-
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<!-- WRAPPER -->
+<div id="wrapper">
+  <!-- SIDEBAR -->
+  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+      <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+      <div class="sidebar-brand-text mx-3">Admin</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active">
+      <a class="nav-link" href="#tablaProgreso"><i class="fas fa-fw fa-tachometer-alt"></i><span>Vista Total</span></a>
+    </li>
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('vista_desarrolladores') }}">
+        <i class="fas fa-user-cog"></i>
+        <span>Control Desarrolladores</span>
+    </a>
+    </li>
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <hr class="sidebar-divider d-none d-md-block">
+     <li class="nav-item active">
+      <a class="nav-link" href="#tablaProgreso"><i class="fas fa-fw fa-tachometer-alt"></i><span>Control Proyectos</span></a>
+    </li>
+  </ul>
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Admin</div>
+  <!-- CONTENT WRAPPER -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <!-- TOPBAR -->
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+        <ul class="navbar-nav ml-auto">
+          <div class="topbar-divider d-none d-sm-block"></div>
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ usuario }}</span>
+              <img class="img-profile rounded-circle" src="{{ url_for('static', filename='admin/img/undraw_profile.svg') }}">
             </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                Gestión
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
+              <a class="dropdown-item" href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Cerrar sesión
+              </a>
             </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#tablaProgreso">
-                    <i class="fas fa-fw fa-tasks"></i>
-                    <span>Control Usuarios</span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+          </li>
         </ul>
-        <!-- End of Sidebar -->
+      </nav>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <ul class="navbar-nav ml-auto">
-                        <!-- User Info -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ usuario }} (Administrador)</span>
-                                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='admin/img/undraw_profile.svg') }}">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="/logout">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cerrar sesión
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Panel de Administración</h1>
-                    </div>
-
-                    <!-- Tabla de progreso -->
-                    <div class="card shadow mb-4" id="tablaProgreso">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Control de todos los usuarios</h6>
-
-                            <!-- Filtro por Rol (VALORES EN MINÚSCULAS) -->
-                            <div class="d-flex align-items-center">
-                                <label for="filtroRol" class="mr-2 mb-0 small text-gray-600">Filtrar:</label>
-                                <select id="filtroRol" class="form-control w-auto">
-                                    <option value="todos">Todos</option>
-                                    <option value="cliente">Clientes</option>
-                                    <option value="desarrollador">Desarrolladores</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tablaUsuarios" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Clientes</th>
-                                            <th>Rol</th>
-                                            <th>Descripción</th>
-                                            <th>Avance</th>
-                                            <th>Fecha</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for u, r, d, a, f in datos %}
-                                            <!-- Normalizamos el atributo data-rol a minúsculas -->
-                                            <tr data-rol="{{ r|lower }}">
-                                                <td>{{ u }}</td>
-                                                <td>{{ r }}</td>
-                                                <td>{{ d }}</td>
-                                                <td>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                             style="width: {{ a|default(0) }}%;"
-                                                             aria-valuenow="{{ a|default(0) }}" aria-valuemin="0" aria-valuemax="100">
-                                                            {{ a|default(0) }}%
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ f }}</td>
-                                            </tr>
-                                        {% else %}
-                                            <tr><td colspan="5" class="text-center">Sin registros aún.</td></tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- Contador (usuarios únicos visibles por rol + total filas visibles) -->
-                            <div id="contador" class="mt-3 text-primary font-weight-bold"></div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Tu App 2025</span>
-                    </div>
-                </div>
-            </footer>
+      <!-- PAGE CONTENT -->
+      <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Panel de Administración</h1>
         </div>
+
+        <!-- METRIC CARDS -->
+        <div class="row" id="tarjetasDashboard">
+          <!-- Clientes -->
+          <div class="col-lg-4 col-md-6 mb-4 metric-col">
+            <div class="metric-card" id="cardClientes">
+              <div class="metric-bg" style="background-image: linear-gradient(135deg,#36d1dc,#5b86e5);"></div>
+              <div class="metric-overlay" id="ovClientes"></div>
+              <div class="metric-bubbles" id="bubblesClientes"></div>
+              <div class="metric-content">
+                <div class="metric-title">Clientes</div>
+                <div class="metric-value" id="conteoClientes">0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desarrolladores -->
+          <div class="col-lg-4 col-md-6 mb-4 metric-col">
+            <div class="metric-card" id="cardDesarrolladores">
+              <div class="metric-bg" style="background-image: linear-gradient(135deg,#ff9a9e,#fad0c4);"></div>
+              <div class="metric-overlay" id="ovDevs"></div>
+              <div class="metric-bubbles" id="bubblesDevs"></div>
+              <div class="metric-content">
+                <div class="metric-title">Desarrolladores</div>
+                <div class="metric-value" id="conteoDesarrolladores">0</div>
+              </div>
+            </div>
+          </div>
+          <!-- dinámicas se insertan después -->
+        </div>
+
+        <!-- Botón agregar -->
+        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalAgregarTarjeta"><i class="fas fa-plus"></i> Agregar Tarjeta</button>
+
+        <!-- MODAL: AGREGAR -->
+        <div class="modal fade" id="modalAgregarTarjeta" tabindex="-1">
+          <div class="modal-dialog"><div class="modal-content">
+            <form id="formNuevaTarjeta">
+              <div class="modal-header"><h5 class="modal-title">Agregar Nueva Tarjeta</h5></div>
+              <div class="modal-body">
+                <div class="form-group"><label>Título</label><input id="tituloTarjeta" class="form-control" required></div>
+                <div class="form-group"><label>Valor</label><input id="valorTarjeta" type="number" class="form-control" required></div>
+                <div class="form-group"><label>Color (overlay)</label><input id="colorTarjeta" type="color" class="form-control" value="#5b86e5"></div>
+                <div class="form-group"><label>Opacidad</label><input id="opTarjeta" type="range" min="20" max="95" value="70" class="form-control-range"></div>
+
+                <div class="form-check mb-2">
+                  <input type="checkbox" class="form-check-input" id="burbujasNueva">
+                  <label class="form-check-label">Activar burbujas</label>
+                </div>
+
+                <div class="form-group">
+                  <label>Imagen de fondo (opcional)</label>
+                  <input id="imagenTarjeta" type="file" accept="image/*" class="form-control">
+                  <div class="mt-2"><img id="previewNueva" class="img-preview d-none" alt="Preview"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-success" type="submit">Guardar</button>
+              </div>
+            </form>
+          </div></div>
+        </div>
+
+        <!-- MODAL: EDITAR -->
+        <div class="modal fade" id="modalEditarTarjeta" tabindex="-1">
+          <div class="modal-dialog"><div class="modal-content">
+            <form id="formEditarTarjeta">
+              <div class="modal-header"><h5 class="modal-title">Editar Tarjeta</h5></div>
+              <div class="modal-body">
+                <input type="hidden" id="editIndex">
+                <div class="form-group"><label>Título</label><input id="editTitulo" class="form-control" required></div>
+                <div class="form-group"><label>Valor</label><input id="editValor" type="number" class="form-control" required></div>
+                <div class="form-group"><label>Color (overlay)</label><input id="editColor" type="color" class="form-control"></div>
+                <div class="form-group"><label>Opacidad</label><input id="editOp" type="range" min="20" max="95" value="70" class="form-control-range"></div>
+
+                <div class="form-check mb-2">
+                  <input type="checkbox" class="form-check-input" id="editBurbuja">
+                  <label class="form-check-label">Activar burbujas</label>
+                </div>
+
+                <div class="form-group">
+                  <label>Imagen de fondo</label>
+                  <input id="editImagen" type="file" accept="image/*" class="form-control">
+                  <div class="mt-2"><img id="previewEditar" class="img-preview d-none" alt="Preview"></div>
+                  <button type="button" id="btnQuitarImagen" class="btn btn-outline-danger btn-sm mt-2">Quitar imagen</button>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-danger" type="button" id="btnEliminarTarjeta">Eliminar</button>
+                <button class="btn btn-primary" type="submit">Guardar cambios</button>
+              </div>
+            </form>
+          </div></div>
+        </div>
+
+<!-- ===== GRÁFICAS ===== -->
+
+<h1>Graficas</h1>
+
+<div class="row justify-content-center">
+  <!-- Gráfica de Barras -->
+  <div class="col-lg-6 mb-4 d-flex justify-content-center">
+    <div class="chart-card w-100">
+      <h5 class="text-center mb-3 font-weight-bold text-primary">Usuarios por Rol</h5>
+      <div class="chart-container d-flex justify-content-center align-items-center">
+        <canvas id="graficaBarras"></canvas>
+      </div>
     </div>
-    <!-- End of Page Wrapper -->
+  </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ url_for('static', filename='admin/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- Gráfica Circular -->
+  <div class="col-lg-6 mb-4 d-flex justify-content-center">
+    <div class="chart-card w-100">
+      <h5 class="text-center mb-3 font-weight-bold text-success">Distribución de Roles</h5>
+      <div class="chart-container d-flex justify-content-center align-items-center">
+        <canvas id="graficaCircular"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ url_for('static', filename='admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<!-- ===== CSS Bonito ===== -->
+<style>
+  .chart-card {
+    border-radius: 16px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    transition: transform .2s ease, box-shadow .2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .chart-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+  }
+  .chart-container {
+    position: relative;
+    height: 320px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  canvas {
+    max-width: 90% !important;
+    max-height: 90% !important;
+  }
+</style>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ url_for('static', filename='admin/js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Script de Filtro y Conteo (robusto y case-insensitive) -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const filtroSelect = document.getElementById('filtroRol');
-        const contadorDiv = document.getElementById('contador');
+<!-- ===== CHART.JS CDN ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        function actualizarConteo() {
-            const filtro = filtroSelect.value.toLowerCase(); // 'todos', 'cliente', 'desarrollador'
-            const filas = document.querySelectorAll('#tablaUsuarios tbody tr');
+<!-- ===== SCRIPT CHARTS ===== -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const clientes = {{ conteo_clientes | tojson }};
+    const desarrolladores = {{ conteo_devs | tojson }};
 
-            const clientesSet = new Set();
-            const desarrolladoresSet = new Set();
-            let filasVisibles = 0;
-
-            filas.forEach(fila => {
-                // Ignorar filas que no tienen celdas (por ejemplo la fila "Sin registros aún.")
-                const celdas = fila.querySelectorAll('td');
-                if (!celdas || celdas.length < 2) return;
-
-                const nombre = celdas[0].innerText.trim();
-                // Preferimos el atributo data-rol (ya normalizado a minúsculas)
-                let rol = (fila.getAttribute('data-rol') || '').toString().toLowerCase();
-                if (!rol) {
-                    rol = celdas[1].innerText.trim().toLowerCase();
-                }
-
-                const coincide = (filtro === 'todos') || (rol === filtro);
-                if (coincide) {
-                    fila.style.display = '';
-                    filasVisibles++;
-                    if (rol === 'cliente') clientesSet.add(nombre);
-                    if (rol === 'desarrollador') desarrolladoresSet.add(nombre);
-                } else {
-                    fila.style.display = 'none';
-                }
-            });
-
-            const clientes = clientesSet.size;
-            const desarrolladores = desarrolladoresSet.size;
-
-            contadorDiv.innerHTML = `Clientes (usuarios únicos): ${clientes} &nbsp;|&nbsp; Desarrolladores (usuarios únicos): ${desarrolladores} &nbsp;|&nbsp; Filas visibles: ${filasVisibles}`;
+    // === Gráfica de Barras ===
+    new Chart(document.getElementById("graficaBarras"), {
+      type: "bar",
+      data: {
+        labels: ["Clientes", "Desarrolladores"],
+        datasets: [{
+          label: "Cantidad de usuarios",
+          data: [clientes, desarrolladores],
+          backgroundColor: ["#36a2eb", "#ff6384"],
+          borderRadius: 12,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { 
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => `${ctx.parsed.y} usuarios` } }
+        },
+        scales: {
+          y: { 
+            beginAtZero: true,
+            ticks: { stepSize: 1, color: "#555" },
+            grid: { color: "rgba(0,0,0,0.05)" }
+          },
+          x: {
+            ticks: { color: "#555" },
+            grid: { display: false }
+          }
         }
-
-        // Actualiza al cambiar el filtro
-        filtroSelect.addEventListener('change', actualizarConteo);
-
-        // Ejecutar al cargar para inicializar conteo y estado
-        actualizarConteo();
+      }
     });
-    </script>
+
+    // === Gráfica Circular ===
+    new Chart(document.getElementById("graficaCircular"), {
+      type: "doughnut",
+      data: {
+        labels: ["Clientes", "Desarrolladores"],
+        datasets: [{
+          data: [clientes, desarrolladores],
+          backgroundColor: ["#36a2eb", "#ff6384"],
+          hoverOffset: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { 
+            position: "bottom", 
+            labels: { font: { size: 14 }, color: "#333" }
+          },
+          tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed} usuarios` } }
+        }
+      }
+    });
+  });
+</script>
+
+
+
+        <!-- Desarollo y diseño de toda la tabla -->
+
+        <h1>Tabla Avance</h1>
+
+        <!-- TABLA PROGRESO -->
+        <div class="card shadow mb-4" id="tablaProgreso">
+          <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Control de todos los usuarios</h6>
+            <div class="d-flex align-items-center">
+              <label class="mr-2 mb-0 small text-gray-600">Filtrar:</label>
+              <select id="filtroRol" class="form-control w-auto">
+                <option value="todos">Todos</option>
+                <option value="cliente">Clientes</option>
+                <option value="desarrollador">Desarrolladores</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="tablaUsuarios">
+                <thead>
+                  <tr><th>Clientes</th><th>Rol</th><th>Descripción</th><th>Avance</th><th>Fecha</th></tr>
+                </thead>
+                <tbody>
+                  {% for u, r, d, a, f in datos %}
+                  <tr data-rol="{{ r|lower }}">
+                    <td>{{ u }}</td>
+                    <td>{{ r }}</td>
+                    <td>{{ d }}</td>
+                    <td>
+                      <div class="progress"><div class="progress-bar bg-info"
+                        role="progressbar" style="width: {{ a|default(0) }}%;"
+                        aria-valuenow="{{ a|default(0) }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ a|default(0) }}%</div></div>
+                    </td>
+                    <td>{{ f }}</td>
+                  </tr>
+                  {% else %}
+                    <tr><td colspan="5" class="text-center">Sin registros aún.</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <div id="contador" class="mt-3 text-primary font-weight-bold"></div>
+          </div>
+        </div>
+
+      </div><!-- /.container-fluid -->
+    </div>
+  </div>
+</div>
+<!-- END WRAPPER -->
+
+<!-- SCRIPTS -->
+<script src="{{ url_for('static', filename='admin/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/js/sb-admin-2.min.js') }}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- Helpers ---------- */
+  const LS_KEY = 'admin_cards_v3';
+  const hexToRgb = (hex) => {
+    const c = hex.replace('#',''); const n = parseInt(c,16);
+    return {r:(n>>16)&255, g:(n>>8)&255, b:n & 255};
+  };
+  const overlayCSS = (hex, op=70) => {
+    const {r,g,b} = hexToRgb(hex || '#5b86e5');
+    const a = Math.max(0, Math.min(100, +op))/100;
+    const a2 = Math.max(0, a - 0.15);
+    return `linear-gradient(135deg, rgba(${r},${g},${b},${a}), rgba(${r},${g},${b},${a2}))`;
+  };
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  /* ---------- Main elements ---------- */
+  const tarjetasDashboard = document.getElementById('tarjetasDashboard');
+  const conteoClientes = document.getElementById('conteoClientes');
+  const conteoDesarrolladores = document.getElementById('conteoDesarrolladores');
+  const contadorDiv = document.getElementById('contador');
+  const filtroSelect = document.getElementById('filtroRol');
+
+  /* ---------- Bubbles for fixed cards ---------- */
+  function addBubblesToContainer(container, count=10) {
+    container.innerHTML = '';
+    for (let i=0;i<count;i++){
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const size = Math.floor(Math.random() * 40) + 16;
+      b.style.width = size + 'px';
+      b.style.height = size + 'px';
+      b.style.left = (Math.random() * 85) + '%';
+      b.style.animationDuration = (8 + Math.random() * 8) + 's';
+      b.style.opacity = 0.35 + Math.random()*0.6;
+      container.appendChild(b);
+    }
+  }
+  // add to main fixed cards
+  addBubblesToContainer(document.getElementById('bubblesClientes'), 12);
+  addBubblesToContainer(document.getElementById('bubblesDevs'), 12);
+
+  // Set overlays for fixed cards (soft)
+  document.getElementById('ovClientes').style.background = overlayCSS('#36d1dc', 70);
+  document.getElementById('ovDevs').style.background = overlayCSS('#ff9a9e', 70);
+
+  /* ---------- TABLE COUNTS & FILTER ---------- */
+  function computeCountsFromTable() {
+    const rows = Array.from(document.querySelectorAll('#tablaUsuarios tbody tr'));
+    const setCli = new Set(), setDev = new Set();
+    rows.forEach(tr => {
+      const rol = (tr.dataset.rol || '').toLowerCase().trim();
+      if (!rol) return;
+      const nombre = tr.cells[0]?.innerText.trim() || '';
+      if (rol === 'cliente') setCli.add(nombre);
+      if (rol === 'desarrollador') setDev.add(nombre);
+    });
+    return {clientes: setCli.size, desarrolladores: setDev.size};
+  }
+
+  // update main cards with totals (from whole table)
+  function updateMainCards() {
+    const c = computeCountsFromTable();
+    conteoClientes.textContent = c.clientes;
+    conteoDesarrolladores.textContent = c.desarrolladores;
+  }
+
+  // filter table rows and update visible counter and unique visible counts
+  function updateFilterAndCounters() {
+    const filtro = filtroSelect.value;
+    const rows = Array.from(document.querySelectorAll('#tablaUsuarios tbody tr'));
+    let visibles = 0; const setCli = new Set(), setDev = new Set();
+    rows.forEach(tr => {
+      const rol = (tr.dataset.rol || '').toLowerCase().trim();
+      if (!rol) {
+        tr.style.display = (filtro === 'todos') ? '' : 'none';
+        return;
+      }
+      const match = (filtro === 'todos') || (rol === filtro);
+      if (match) { tr.style.display = ''; visibles++; const nombre = tr.cells[0]?.innerText.trim(); if (rol==='cliente') setCli.add(nombre); if (rol==='desarrollador') setDev.add(nombre); }
+      else tr.style.display = 'none';
+    });
+    // show unique counts of visible rows in footer
+    contadorDiv.innerHTML = `Clientes (únicos visibles): ${setCli.size} &nbsp;|&nbsp; Desarrolladores (únicos visibles): ${setDev.size} &nbsp;|&nbsp; Filas visibles: ${visibles}`;
+    // update main cards to show totals (overall table) — keep separate; if you want main cards to reflect visible only, change below to set to setCli/setDev
+    updateMainCards();
+  }
+
+  filtroSelect.addEventListener('change', updateFilterAndCounters);
+  updateFilterAndCounters();
+
+  /* ---------- DYNAMIC CARDS (localStorage) ---------- */
+  let tarjetas = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+
+  function saveTarjetas(){ localStorage.setItem(LS_KEY, JSON.stringify(tarjetas)); }
+
+  function renderTarjetas(){
+    // remove existing dinamics
+    document.querySelectorAll('.tarjeta-dinamica').forEach(el => el.remove());
+    tarjetas.forEach((t, idx) => {
+      const col = document.createElement('div');
+      col.className = 'col-lg-4 col-md-6 mb-4 metric-col tarjeta-dinamica';
+
+      const card = document.createElement('div');
+      card.className = 'metric-card';
+
+      const bg = document.createElement('div'); bg.className = 'metric-bg';
+      const overlay = document.createElement('div'); overlay.className = 'metric-overlay';
+      const bubbles = document.createElement('div'); bubbles.className = 'metric-bubbles';
+      const content = document.createElement('div'); content.className = 'metric-content';
+
+      // background (image or gradient)
+      if (t.image && !t.burbuja) {
+        bg.style.backgroundImage = `url("${t.image}")`;
+      } else {
+        // gradient fallback using color
+        const dark = shadeHex(t.color || '#5b86e5', -30);
+        bg.style.backgroundImage = `linear-gradient(135deg, ${t.color || '#5b86e5'}, ${dark})`;
+      }
+
+      overlay.style.background = overlayCSS(t.color || '#5b86e5', t.overlay || 70);
+
+      // bubbles if enabled: generate
+      if (t.burbuja) {
+        // make some bubbles
+        for (let i=0;i<10;i++){
+          const b = document.createElement('div'); b.className = 'bubble';
+          const size = Math.floor(Math.random()*40)+18;
+          b.style.width = b.style.height = size + 'px';
+          b.style.left = (Math.random()*85)+'%';
+          b.style.animationDuration = (6 + Math.random()*8) + 's';
+          b.style.opacity = (0.2 + Math.random()*0.6);
+          bubbles.appendChild(b);
+        }
+      }
+
+      // content
+      const title = document.createElement('div'); title.className = 'metric-title'; title.textContent = t.title || 'Tarjeta';
+      const value = document.createElement('div'); value.className = 'metric-value'; value.textContent = t.value ?? '';
+      const edit = document.createElement('span'); edit.className = 'edit-btn'; edit.textContent = 'Editar'; edit.dataset.index = idx;
+
+      content.appendChild(title); content.appendChild(value); content.appendChild(edit);
+
+      // append all parts
+      card.appendChild(bg);
+      // if bubbles exist, append them BEFORE overlay so overlay remains on top but partially transparent
+      // but we want bubbles visible: place overlay below bubbles? We'll keep overlay as soft and bubbles z higher so bubbles visible
+      card.appendChild(overlay);
+      card.appendChild(bubbles);
+      card.appendChild(content);
+      col.appendChild(card);
+      tarjetasDashboard.appendChild(col);
+    });
+  }
+  // helper shade function
+  function shadeHex(hex, percent) {
+    if(!hex) return hex;
+    let c = hex.replace('#','');
+    if(c.length === 3) c = c.split('').map(ch=>ch+ch).join('');
+    const num = parseInt(c,16);
+    let r = (num >> 16) + percent;
+    let g = ((num >> 8) & 0x00FF) + percent;
+    let b = (num & 0x0000FF) + percent;
+    r = Math.max(0, Math.min(255, r));
+    g = Math.max(0, Math.min(255, g));
+    b = Math.max(0, Math.min(255, b));
+    return '#' + ( (r<<16) | (g<<8) | b ).toString(16).padStart(6,'0');
+  }
+
+  // initial render
+  renderTarjetas();
+
+  /* ---------- NEW CARD: preview & behavior ---------- */
+  const inputNueva = document.getElementById('imagenTarjeta');
+  const previewNueva = document.getElementById('previewNueva');
+  const burbujasNueva = document.getElementById('burbujasNueva');
+
+  // if trying to pick an image while bubbles enabled -> show sweetalert and clear file selection
+  inputNueva.addEventListener('change', (e) => {
+    if (burbujasNueva.checked) {
+      // prevent upload
+      e.target.value = '';
+      previewNueva.classList.add('d-none');
+      Swal.fire({ icon: 'warning', title: 'Desactiva las burbujas', text: 'Desactiva las burbujas para subir tu imagen' });
+      return;
+    }
+    const f = e.target.files?.[0];
+    if (!f) { previewNueva.classList.add('d-none'); previewNueva.removeAttribute('src'); return; }
+    const reader = new FileReader();
+    reader.onload = ev => { previewNueva.src = ev.target.result; previewNueva.classList.remove('d-none'); };
+    reader.readAsDataURL(f);
+  });
+
+  // if user toggles burbujas on, clear any chosen file
+  burbujasNueva.addEventListener('change', () => {
+    if(burbujasNueva.checked) {
+      inputNueva.value = ''; previewNueva.classList.add('d-none'); previewNueva.removeAttribute('src');
+    }
+  });
+
+  // submit new card
+  document.getElementById('formNuevaTarjeta').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = document.getElementById('tituloTarjeta').value.trim();
+    const value = document.getElementById('valorTarjeta').value;
+    const color = document.getElementById('colorTarjeta').value;
+    const overlay = +document.getElementById('opTarjeta').value || 70;
+    const burbuja = !!burbujasNueva.checked;
+    const file = inputNueva.files?.[0];
+
+    function pushAndClose(dataUrl=null){
+      tarjetas.push({ id: Date.now(), title, value, color, overlay, image: dataUrl, burbuja });
+      saveTarjetas(); renderTarjetas(); $('#modalAgregarTarjeta').modal('hide');
+      // reset modal
+      document.getElementById('formNuevaTarjeta').reset();
+      previewNueva.classList.add('d-none'); previewNueva.removeAttribute('src');
+    }
+
+    if (burbuja) {
+      // ignore file, just push
+      pushAndClose(null);
+      return;
+    }
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = ev => pushAndClose(ev.target.result);
+      reader.readAsDataURL(file);
+    } else {
+      pushAndClose(null);
+    }
+  });
+
+  /* ---------- EDIT: open modal ---------- */
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.edit-btn');
+    if (!btn) return;
+    const idx = +btn.dataset.index;
+    if (isNaN(idx)) return;
+    const t = tarjetas[idx];
+    document.getElementById('editIndex').value = idx;
+    document.getElementById('editTitulo').value = t.title || '';
+    document.getElementById('editValor').value = t.value || '';
+    document.getElementById('editColor').value = t.color || '#5b86e5';
+    document.getElementById('editOp').value = t.overlay || 70;
+    document.getElementById('editBurbuja').checked = !!t.burbuja;
+    // preview
+    const prevE = document.getElementById('previewEditar');
+    if (t.image) { prevE.src = t.image; prevE.classList.remove('d-none'); } else { prevE.classList.add('d-none'); prevE.removeAttribute('src'); }
+    // open modal
+    $('#modalEditarTarjeta').modal('show');
+  });
+
+  /* ---------- edit image behavior & preview ---------- */
+  const inputEditar = document.getElementById('editImagen');
+  const previewEditar = document.getElementById('previewEditar');
+  const editBurbuja = document.getElementById('editBurbuja');
+
+  inputEditar.addEventListener('change', (e) => {
+    if (editBurbuja.checked) {
+      // show sweetalert and clear selection
+      e.target.value = '';
+      previewEditar.classList.add('d-none'); previewEditar.removeAttribute('src');
+      Swal.fire({ icon: 'warning', title: 'Desactiva las burbujas', text: 'Desactiva las burbujas para subir tu imagen' });
+      return;
+    }
+    const f = e.target.files?.[0];
+    if (!f) { previewEditar.classList.add('d-none'); previewEditar.removeAttribute('src'); return; }
+    const reader = new FileReader();
+    reader.onload = ev => { previewEditar.src = ev.target.result; previewEditar.classList.remove('d-none'); };
+    reader.readAsDataURL(f);
+  });
+
+  // toggling burbujas while editing should clear any chosen image preview
+  editBurbuja.addEventListener('change', () => {
+    if (editBurbuja.checked) {
+      inputEditar.value = ''; previewEditar.classList.add('d-none'); previewEditar.removeAttribute('src');
+    }
+  });
+
+  /* ---------- quitar imagen en edición ---------- */
+  document.getElementById('btnQuitarImagen').addEventListener('click', () => {
+    const idx = +document.getElementById('editIndex').value;
+    if (!Number.isInteger(idx) || !tarjetas[idx]) return;
+    tarjetas[idx].image = null;
+    saveTarjetas();
+    renderTarjetas();
+    // update modal preview UI
+    previewEditar.classList.add('d-none'); previewEditar.removeAttribute('src');
+  });
+
+  /* ---------- eliminar tarjeta ---------- */
+  document.getElementById('btnEliminarTarjeta').addEventListener('click', () => {
+    const idx = +document.getElementById('editIndex').value;
+    if (!Number.isInteger(idx) || !tarjetas[idx]) return;
+    if (!confirm('¿Eliminar esta tarjeta?')) return;
+    tarjetas.splice(idx, 1);
+    saveTarjetas();
+    renderTarjetas();
+    $('#modalEditarTarjeta').modal('hide');
+  });
+
+  /* ---------- guardar edición ---------- */
+  document.getElementById('formEditarTarjeta').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const idx = +document.getElementById('editIndex').value;
+    if (!Number.isInteger(idx) || !tarjetas[idx]) return;
+    const t = tarjetas[idx];
+    t.title = document.getElementById('editTitulo').value.trim();
+    t.value = document.getElementById('editValor').value;
+    t.color = document.getElementById('editColor').value;
+    t.overlay = +document.getElementById('editOp').value || 70;
+    t.burbuja = !!document.getElementById('editBurbuja').checked;
+
+    const file = inputEditar.files?.[0];
+
+    const finish = (dataUrl=null) => {
+      // if burbuja activated, ensure image null
+      if (t.burbuja) t.image = null;
+      else if (dataUrl !== null) t.image = dataUrl;
+      // else keep previous image if no new file uploaded and burbuja false
+      saveTarjetas(); renderTarjetas(); $('#modalEditarTarjeta').modal('hide');
+      // reset preview & input
+      inputEditar.value = ''; previewEditar.classList.add('d-none'); previewEditar.removeAttribute('src');
+    };
+
+    if (t.burbuja) {
+      // directly finish (image removed)
+      finish(null);
+    } else if (file) {
+      const reader = new FileReader();
+      reader.onload = ev => finish(ev.target.result);
+      reader.readAsDataURL(file);
+    } else {
+      // no new file, keep existing image
+      finish(null);
+    }
+  });
+
+  /* ---------- functions helper: when dynamic changes should we update table counters? ---------- */
+  // dynamic cards do not affect table counts (table is the source). But we update visuals if needed
+  function refreshEverything() {
+    renderTarjetas();
+    updateFilterAndCounters(); // refresh visible counts & main cards
+  }
+
+  // Ensure initial counters reflect server data
+  updateMainCards();
+  updateFilterAndCounters();
+
+  // Re-render if localStorage changed externally (another tab)
+  window.addEventListener('storage', (e) => {
+    if (e.key === LS_KEY) {
+      tarjetas = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      refreshEverything();
+    }
+  });
+
+  // expose some functions for debugging if needed (optional)
+  window.__admin_cards = { get: () => tarjetas, save: () => saveTarjetas(), render: () => renderTarjetas() };
+
+}); // DOMContentLoaded
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 </html>

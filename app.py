@@ -1,5 +1,10 @@
 from flask import Flask, request, redirect, url_for, render_template, session
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import sqlite3
+import bcrypt
+import secrets
 from pathlib import Path
 
 app = Flask(__name__)
@@ -18,6 +23,35 @@ def q(sql, params=(), one=False):
     con.commit()
     con.close()
     return data
+
+def hash_password(password):
+    """Genera un hash seguro con bcrypt"""
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+def check_password(password, hashed):
+    """Verifica si una contraseña coincide con su hash"""
+    try:
+        return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
+    except Exception:
+        return False
+
+def is_bcrypt_hash(s):
+    """Detecta si un string ya es un hash bcrypt válido"""
+    return isinstance(s, str) and (s.startswith("$2a$") or s.startswith("$2b$") or s.startswith("$2y$"))
+
+def migrate_passwords():
+    """Convierte contraseñas en texto plano en la tabla registro a bcrypt"""
+    registros = q("SELECT id, password FROM registro")
+    for uid, pwd in registros:
+        if pwd and not is_bcrypt_hash(pwd):
+            hashed = hash_password(pwd)
+            q("UPDATE registro SET password=? WHERE id=?", (hashed, uid))
+
+    users = q("SELECT id, password FROM users")
+    for uid, pwd in users:
+        if pwd and not is_bcrypt_hash(pwd):
+            hashed = hash_password(pwd)
+            q("UPDATE users SET password=? WHERE id=?", (hashed, uid))
 
 def ensure_tables():
     # crea tablas si no existen
@@ -45,11 +79,15 @@ def ensure_tables():
            fecha TEXT DEFAULT (datetime('now','localtime'))
          )""")
 
-    # admin por defecto
+    # admin por defecto (ahora con contraseña encriptada)
     admin = q("SELECT id FROM users WHERE username=?", ("admin",), one=True)
     if not admin:
+        hashed_admin_pass = hash_password("admin123")
         q("INSERT INTO users(username,password,rol) VALUES(?,?,?)",
-          ("admin","admin123","administrador"))
+          ("admin", hashed_admin_pass, "administrador"))
+
+    # migrar contraseñas antiguas
+    migrate_passwords()
 
 @app.before_request
 def _before():
@@ -69,27 +107,26 @@ def login():
     password = request.form.get("password", "").strip()
 
     # 1) ¿Es admin?
-    row = q("SELECT id, username, rol FROM users WHERE username=? AND password=?",
-            (usuario, password), one=True)
+    row = q("SELECT id, username, password, rol FROM users WHERE username=?", (usuario,), one=True)
     if row:
-        _, uname, rol = row
-        session.clear()
-        session["usuario_id"] = None
-        session["nombre"] = uname
-        session["rol"] = rol
-        return redirect(url_for("admin"))
+        uid, uname, hashed, rol = row
+        if check_password(password, hashed):
+            session.clear()
+            session["usuario_id"] = uid
+            session["nombre"] = uname
+            session["rol"] = rol
+            return redirect(url_for("admin"))
 
     # 2) ¿Cliente o desarrollador?
-    row = q("""SELECT id, nombre, apellido, rol
-               FROM registro
-               WHERE correo=? AND password=?""", (usuario, password), one=True)
+    row = q("SELECT id, nombre, apellido, rol, password FROM registro WHERE correo=?", (usuario,), one=True)
     if row:
-        uid, nombre, apellido, rol = row
-        session.clear()
-        session["usuario_id"] = uid
-        session["nombre"] = f"{nombre} {apellido}"
-        session["rol"] = rol
-        return redirect(url_for(rol))  # redirige a cliente o desarrollador
+        uid, nombre, apellido, rol, hashed = row
+        if check_password(password, hashed):
+            session.clear()
+            session["usuario_id"] = uid
+            session["nombre"] = f"{nombre} {apellido}"
+            session["rol"] = rol
+            return redirect(url_for(rol))
 
     return "Usuario o contraseña incorrectos"
 
@@ -107,13 +144,116 @@ def registro():
     if not (nombre and apellido and correo and rol and password):
         return "Faltan campos obligatorios"
 
+    hashed_pass = hash_password(password)
+
     try:
         q("INSERT INTO registro(nombre, apellido, correo, telefono, rol, cargo, password) VALUES(?,?,?,?,?,?,?)",
-          (nombre, apellido, correo, telefono, rol, cargo, password))
+          (nombre, apellido, correo, telefono, rol, cargo, hashed_pass))
     except Exception as e:
         return f"Error al registrar: {e}"
 
     return redirect(url_for("home"))
+
+
+# ---------- Lógica para cambiar contraseña ----------
+@app.route("/cambiar_contraseña", methods=["GET", "POST"])
+def cambiar_contraseña():
+    mensaje = None
+    exito = False
+
+    if request.method == "POST":
+        correo = request.form["correo"]
+        nueva_contraseña = request.form["nueva_contraseña"]
+
+        con = sqlite3.connect(DB_PATH)
+        cur = con.cursor()
+
+        # Verificar si el correo existe en la tabla correcta
+        cur.execute("SELECT id FROM registro WHERE correo = ?", (correo,))
+        usuario = cur.fetchone()
+
+        if usuario:
+            # YA NO ACTUALIZAMOS AQUÍ LA CONTRASEÑA ❌
+            # Solo enviamos correo con token de confirmación
+            con.close()
+
+            enviar_correo_confirmacion(correo, nueva_contraseña)
+            mensaje = "Se ha enviado un enlace a tu correo para confirmar el cambio de contraseña."
+            exito = True
+        else:
+            mensaje = "El correo no está registrado en el sistema."
+            exito = False
+
+    return render_template("cambiar_contraseña.html", mensaje=mensaje, exito=exito)
+
+
+def enviar_correo_confirmacion(destinatario, nueva_contraseña):
+    remitente = "proyectcodecraft@gmail.com"
+    contraseña = "vtfpwhvpsryjocne"
+
+
+    token = secrets.token_urlsafe(32)
+
+    # Guardar token y nueva contraseña en la tabla temporal
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    cur.execute("""
+        INSERT INTO cambios_pendientes (correo, nueva_contraseña, token, creado_en)
+        VALUES (?, ?, ?, datetime('now'))
+    """, (destinatario, nueva_contraseña, token))
+    con.commit()
+    con.close()
+
+    enlace_activacion = url_for("activar_contraseña", token=token, _external=True)
+
+    cuerpo = f"""
+    Hola,
+
+    Has solicitado un cambio de contraseña.
+    Para confirmar y activar tu nueva contraseña, haz clic en el siguiente enlace:
+
+    {enlace_activacion}
+
+    Si no solicitaste este cambio, ignora este mensaje.
+    """
+
+    mensaje = MIMEMultipart()
+    mensaje["From"] = remitente
+    mensaje["To"] = destinatario
+    mensaje["Subject"] = "Confirmación de Cambio de Contraseña"
+    mensaje.attach(MIMEText(cuerpo, "plain"))
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as servidor:
+            servidor.starttls()
+            servidor.login(remitente, contraseña)
+            servidor.sendmail(remitente, destinatario, mensaje.as_string())
+    except Exception as e:
+        print(f"Error enviando correo: {e}")
+
+
+# ---------- Activar nueva contraseña ----------
+@app.route("/activar_contraseña")
+def activar_contraseña():
+    token = request.args.get("token")
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    cur.execute("""
+        SELECT correo, nueva_contraseña FROM cambios_pendientes
+        WHERE token = ? AND datetime(creado_en) >= datetime('now', '-15 minutes')
+    """, (token,))
+    registro = cur.fetchone()
+
+    if registro:
+        correo, nueva_contraseña = registro
+        # Ahora sí actualizamos la contraseña en la tabla correcta
+        cur.execute("UPDATE registro SET password = ? WHERE correo = ?", (nueva_contraseña, correo))
+        cur.execute("DELETE FROM cambios_pendientes WHERE token = ?", (token,))
+        con.commit()
+        con.close()
+        return "✅ Tu contraseña ha sido activada correctamente."
+    else:
+        return "❌ El enlace es inválido o ha expirado."
 
 # ---------- Logout ----------
 @app.route("/logout")
@@ -162,6 +302,8 @@ def progreso_agregar():
 def admin():
     if "rol" not in session or session["rol"] != "administrador":
         return redirect(url_for("home"))
+
+    # datos de progreso
     datos = q("""
       SELECT r.nombre || ' ' || r.apellido AS usuario,
              r.rol,
@@ -172,7 +314,41 @@ def admin():
       JOIN registro r ON r.id = p.usuario_id
       ORDER BY p.id DESC
     """)
-    return render_template("admin.html", usuario=session["nombre"], datos=datos)
+
+    # conteos para gráficas
+    conteo_clientes = q("SELECT COUNT(*) FROM registro WHERE rol='cliente'", one=True)[0]
+    conteo_devs = q("SELECT COUNT(*) FROM registro WHERE rol='desarrollador'", one=True)[0]
+
+    return render_template(
+        "admin.html",
+        usuario=session["nombre"],
+        datos=datos,
+        conteo_clientes=conteo_clientes,
+        conteo_devs=conteo_devs
+    )
+
+# ---------- Control desarrolladores ----------
+@app.route("/control_desarrolladores")
+def vista_desarrolladores():
+    if "rol" not in session or session["rol"] != "administrador":
+        return redirect(url_for("home"))
+
+    desarrolladores = q("""
+        SELECT r.id,
+               r.nombre || ' ' || r.apellido AS nombre,
+               COALESCE(AVG(p.avance),0) AS avance_promedio
+        FROM registro r
+        LEFT JOIN progreso p ON r.id = p.usuario_id
+        WHERE r.rol='desarrollador'
+        GROUP BY r.id
+    """)
+
+    return render_template("control_desarrolladores.html", usuario=session["nombre"], desarrolladores=desarrolladores)
+
+# ---------- Control usuarios ----------
+@app.route("/control_usuarios")
+def vista_usuarios():
+    return render_template("control_usuarios.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

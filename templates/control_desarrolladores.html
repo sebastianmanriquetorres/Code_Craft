@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Administrador - Control Desarrolladores</title>
+
+  <!-- CSS -->
+  <link href="{{ url_for('static', filename='admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+  <link href="{{ url_for('static', filename='admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+  <style>
+    /* Sidebar active personalizado */
+    .sidebar .nav-item.active .nav-link {
+      color: #fff !important;
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 8px;
+    }
+    .sidebar .nav-item .nav-link {
+      color: rgba(255,255,255,0.7);
+      transition: all .3s ease;
+    }
+    .sidebar .nav-item .nav-link:hover {
+      color: #fff;
+    }
+    /* Progress bar más elegante */
+    .progress {
+      height: 20px;
+      border-radius: 10px;
+    }
+    .progress-bar {
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body id="page-top">
+
+<!-- WRAPPER -->
+<div id="wrapper">
+  <!-- SIDEBAR -->
+  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+      <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+      <div class="sidebar-brand-text mx-3">Admin</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+
+    <!-- Vista Total -->
+    <li class="nav-item {% if request.endpoint == 'admin' %}active{% endif %}">
+      <a class="nav-link" href="{{ url_for('admin') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Vista Total</span>
+      </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Control Desarrolladores -->
+    <li class="nav-item {% if request.endpoint == 'vista_desarrolladores' %}active{% endif %}">
+      <a class="nav-link" href="{{ url_for('vista_desarrolladores') }}">
+        <i class="fas fa-user-cog"></i>
+        <span>Control Desarrolladores</span>
+      </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Control Usuarios -->
+    <li class="nav-item {% if request.endpoint == 'vista_usuarios' %}active{% endif %}">
+      <a class="nav-link" href="{{ url_for('vista_usuarios') }}">
+        <i class="fas fa-users"></i>
+        <span>Control Proyectos</span>
+      </a>
+    </li>
+  </ul>
+
+  <!-- CONTENT WRAPPER -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <!-- TOPBAR -->
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ usuario }}</span>
+              <img class="img-profile rounded-circle" src="{{ url_for('static', filename='admin/img/undraw_profile.svg') }}">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
+              <a class="dropdown-item" href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Cerrar sesión
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- PAGE CONTENT -->
+      <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Gestión de Desarrolladores</h1>
+        </div>
+
+        <!-- CARD LISTADO DE DESARROLLADORES -->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Avances de Desarrolladores</h6>
+          </div>
+          <div class="card-body">
+            {% for dev in desarrolladores %}
+              {% set avance = dev[2] or 0 %}
+              
+              <h4 class="small font-weight-bold">
+                {{ dev[1] }}
+                <span class="float-right">{{ avance|round(0) }}%</span>
+              </h4>
+
+              <div class="progress mb-2">
+                <div class="progress-bar 
+                            {% if avance < 40 %}bg-danger
+                            {% elif avance < 70 %}bg-warning
+                            {% else %}bg-success{% endif %}" 
+                     role="progressbar"
+                     style="width: {{ avance|round(0) }}%"
+                     aria-valuenow="{{ avance|round(0) }}" aria-valuemin="0" aria-valuemax="100">
+                     {{ avance|round(0) }}%
+                </div>
+              </div>
+
+              <p class="text-muted">Avance actual de {{ dev[1] }} en sus proyectos.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END WRAPPER -->
+
+<!-- SCRIPTS -->
+<script src="{{ url_for('static', filename='admin/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/js/sb-admin-2.min.js') }}"></script>
+
+</body>
+</html>
