@@ -1,4 +1,5 @@
-from flask import Flask, request, redirect, url_for, render_template, session
+from flask import Flask, request, redirect, url_for, render_template, session, flash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -11,6 +12,54 @@ app = Flask(__name__)
 app.secret_key = "clave_super_secreta"  # necesaria para session
 
 DB_PATH = "DB/usuario.db"
+
+# ----------------------------
+# Flask-Login setup
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "home"  # ruta a la que redirige si no está logueado
+
+class User(UserMixin):
+    """
+    User object para flask-login.
+    id -> string con prefijo: "u:<id>" (tabla users) o "r:<id>" (tabla registro)
+    name -> nombre para mostrar
+    username -> username o correo
+    role -> rol (administrador/cliente/desarrollador)
+    """
+    def __init__(self, uid, name, username, role):
+        self.id = uid
+        self.name = name
+        self.username = username
+        self.role = role
+
+    # UserMixin ya provee is_authenticated, etc.
+
+@login_manager.user_loader
+def load_user(user_id):
+    """
+    user_id es la cadena que guardamos con login_user (ej. "u:1" o "r:42").
+    Devolver User() si existe, si no -> None
+    """
+    if not user_id:
+        return None
+    try:
+        prefix, num = user_id.split(":", 1)
+    except ValueError:
+        return None
+
+    if prefix == "u":  # tabla users
+        row = q("SELECT id, username, rol FROM users WHERE id=?", (num,), one=True)
+        if row:
+            uid, username, role = row
+            return User(f"u:{uid}", username, username, role)
+    elif prefix == "r":  # tabla registro
+        row = q("SELECT id, nombre, apellido, correo, rol FROM registro WHERE id=?", (num,), one=True)
+        if row:
+            uid, nombre, apellido, correo, role = row
+            nombre_completo = f"{nombre} {apellido}"
+            return User(f"r:{uid}", nombre_completo, correo, role)
+    return None
 
 # ----------------------------
 # Helpers
@@ -40,7 +89,7 @@ def is_bcrypt_hash(s):
     return isinstance(s, str) and (s.startswith("$2a$") or s.startswith("$2b$") or s.startswith("$2y$"))
 
 def migrate_passwords():
-    """Convierte contraseñas en texto plano en la tabla registro a bcrypt"""
+    """Convierte contraseñas en texto plano en la tabla registro y users a bcrypt"""
     registros = q("SELECT id, password FROM registro")
     for uid, pwd in registros:
         if pwd and not is_bcrypt_hash(pwd):
@@ -79,6 +128,15 @@ def ensure_tables():
            fecha TEXT DEFAULT (datetime('now','localtime'))
          )""")
 
+    # tabla para cambios pendientes de contraseña (token)
+    q("""CREATE TABLE IF NOT EXISTS cambios_pendientes(
+           id INTEGER PRIMARY KEY AUTOINCREMENT,
+           correo TEXT NOT NULL,
+           nueva_contraseña_hash TEXT NOT NULL,
+           token TEXT UNIQUE NOT NULL,
+           creado_en TEXT DEFAULT (datetime('now','localtime'))
+         )""")
+
     # admin por defecto (ahora con contraseña encriptada)
     admin = q("SELECT id FROM users WHERE username=?", ("admin",), one=True)
     if not admin:
@@ -95,9 +153,16 @@ def _before():
 
 # ----------------------------
 # Rutas
-# ----------------------------
 @app.route("/")
 def home():
+    # si ya está logueado, redirigir por rol (opcional)
+    if current_user.is_authenticated:
+        if current_user.role == "administrador":
+            return redirect(url_for("admin"))
+        if current_user.role == "cliente":
+            return redirect(url_for("cliente"))
+        if current_user.role == "desarrollador":
+            return redirect(url_for("desarrollador"))
     return render_template("login.html")
 
 # ---------- Login ----------
@@ -106,28 +171,34 @@ def login():
     usuario = request.form.get("usuario", "").strip()
     password = request.form.get("password", "").strip()
 
-    # 1) ¿Es admin?
+    # 1) ¿Es admin? => tabla users (username)
     row = q("SELECT id, username, password, rol FROM users WHERE username=?", (usuario,), one=True)
     if row:
         uid, uname, hashed, rol = row
         if check_password(password, hashed):
-            session.clear()
+            # crear User y loguear
+            user_obj = User(f"u:{uid}", uname, uname, rol)
+            login_user(user_obj)
+            # también guardo en session para compatibilidad con el resto del código
             session["usuario_id"] = uid
             session["nombre"] = uname
             session["rol"] = rol
             return redirect(url_for("admin"))
 
-    # 2) ¿Cliente o desarrollador?
+    # 2) ¿Cliente o desarrollador? => tabla registro (correo)
     row = q("SELECT id, nombre, apellido, rol, password FROM registro WHERE correo=?", (usuario,), one=True)
     if row:
         uid, nombre, apellido, rol, hashed = row
         if check_password(password, hashed):
-            session.clear()
+            nombre_completo = f"{nombre} {apellido}"
+            user_obj = User(f"r:{uid}", nombre_completo, usuario, rol)
+            login_user(user_obj)
             session["usuario_id"] = uid
-            session["nombre"] = f"{nombre} {apellido}"
+            session["nombre"] = nombre_completo
             session["rol"] = rol
             return redirect(url_for(rol))
 
+    # fallo
     return "Usuario o contraseña incorrectos"
 
 # ---------- Registro ----------
@@ -154,7 +225,6 @@ def registro():
 
     return redirect(url_for("home"))
 
-
 # ---------- Lógica para cambiar contraseña ----------
 @app.route("/cambiar_contraseña", methods=["GET", "POST"])
 def cambiar_contraseña():
@@ -171,12 +241,10 @@ def cambiar_contraseña():
         # Verificar si el correo existe en la tabla correcta
         cur.execute("SELECT id FROM registro WHERE correo = ?", (correo,))
         usuario = cur.fetchone()
+        con.close()
 
         if usuario:
-            # YA NO ACTUALIZAMOS AQUÍ LA CONTRASEÑA ❌
-            # Solo enviamos correo con token de confirmación
-            con.close()
-
+            # NO actualizamos aún. Guardamos token y el HASH de la nueva contraseña
             enviar_correo_confirmacion(correo, nueva_contraseña)
             mensaje = "Se ha enviado un enlace a tu correo para confirmar el cambio de contraseña."
             exito = True
@@ -186,36 +254,35 @@ def cambiar_contraseña():
 
     return render_template("cambiar_contraseña.html", mensaje=mensaje, exito=exito)
 
-
-def enviar_correo_confirmacion(destinatario, nueva_contraseña):
+def enviar_correo_confirmacion(destinatario, nueva_contraseña_plain):
     remitente = "proyectcodecraft@gmail.com"
-    contraseña = "vtfpwhvpsryjocne"
-
+    contraseña = "vtfpwhvpsryjocne"  # tu contraseña de aplicación
 
     token = secrets.token_urlsafe(32)
+    nueva_hash = hash_password(nueva_contraseña_plain)
 
-    # Guardar token y nueva contraseña en la tabla temporal
+    # Guardar token y nueva contraseña (HASH) en la tabla temporal
     con = sqlite3.connect(DB_PATH)
     cur = con.cursor()
     cur.execute("""
-        INSERT INTO cambios_pendientes (correo, nueva_contraseña, token, creado_en)
+        INSERT INTO cambios_pendientes (correo, nueva_contraseña_hash, token, creado_en)
         VALUES (?, ?, ?, datetime('now'))
-    """, (destinatario, nueva_contraseña, token))
+    """, (destinatario, nueva_hash, token))
     con.commit()
     con.close()
 
     enlace_activacion = url_for("activar_contraseña", token=token, _external=True)
 
     cuerpo = f"""
-    Hola,
+Hola,
 
-    Has solicitado un cambio de contraseña.
-    Para confirmar y activar tu nueva contraseña, haz clic en el siguiente enlace:
+Has solicitado un cambio de contraseña en tu cuenta de Code_Craft.
+Para confirmar y activar tu nueva contraseña, haz clic en el siguiente enlace:
 
-    {enlace_activacion}
+{enlace_activacion}
 
-    Si no solicitaste este cambio, ignora este mensaje.
-    """
+Si no solicitaste este cambio, ignora este mensaje.
+"""
 
     mensaje = MIMEMultipart()
     mensaje["From"] = remitente
@@ -231,7 +298,6 @@ def enviar_correo_confirmacion(destinatario, nueva_contraseña):
     except Exception as e:
         print(f"Error enviando correo: {e}")
 
-
 # ---------- Activar nueva contraseña ----------
 @app.route("/activar_contraseña")
 def activar_contraseña():
@@ -239,54 +305,92 @@ def activar_contraseña():
     con = sqlite3.connect(DB_PATH)
     cur = con.cursor()
     cur.execute("""
-        SELECT correo, nueva_contraseña FROM cambios_pendientes
+        SELECT correo, nueva_contraseña_hash FROM cambios_pendientes
         WHERE token = ? AND datetime(creado_en) >= datetime('now', '-15 minutes')
     """, (token,))
     registro = cur.fetchone()
 
     if registro:
-        correo, nueva_contraseña = registro
-        # Ahora sí actualizamos la contraseña en la tabla correcta
-        cur.execute("UPDATE registro SET password = ? WHERE correo = ?", (nueva_contraseña, correo))
+        correo, nueva_contraseña_hash = registro
+        # Actualizamos la contraseña (HASH) en la tabla registro
+        cur.execute("UPDATE registro SET password = ? WHERE correo = ?", (nueva_contraseña_hash, correo))
         cur.execute("DELETE FROM cambios_pendientes WHERE token = ?", (token,))
         con.commit()
         con.close()
         return "✅ Tu contraseña ha sido activada correctamente."
     else:
+        con.close()
         return "❌ El enlace es inválido o ha expirado."
 
 # ---------- Logout ----------
 @app.route("/logout")
 def logout():
+    logout_user()
     session.clear()
     return redirect(url_for("home"))
 
 # ---------- Cliente ----------
 @app.route("/cliente")
+@login_required
 def cliente():
-    if "rol" not in session or session["rol"] != "cliente":
+    # Verificamos que el usuario tenga rol "cliente"
+    if not getattr(current_user, "role", None) or current_user.role != "cliente":
         return redirect(url_for("home"))
-    uid = session["usuario_id"]
-    progresos = q("SELECT descripcion, avance, fecha FROM progreso WHERE usuario_id=? ORDER BY id DESC", (uid,))
-    return render_template("cliente.html", usuario=session["nombre"], progresos=progresos)
+
+    # Si user id es del tipo r:<id> obtenemos el número
+    try:
+        _, uid_str = current_user.get_id().split(":", 1)
+        uid = int(uid_str)
+    except Exception:
+        return redirect(url_for("home"))
+
+    progresos = q("""
+        SELECT descripcion, avance, fecha 
+        FROM progreso 
+        WHERE usuario_id=? 
+        ORDER BY id DESC
+    """, (uid,))
+
+    conteo_clientes = q("SELECT COUNT(*) FROM registro WHERE rol='cliente'", one=True)[0]
+    conteo_devs = q("SELECT COUNT(*) FROM registro WHERE rol='desarrollador'", one=True)[0]
+
+    # Renderizar template Argon para cliente (usa current_user disponible en templates)
+    return render_template(
+        "clientes_admin/index.html",
+        usuario=current_user.name,
+        datos=progresos,
+        conteo_clientes=conteo_clientes,
+        conteo_devs=conteo_devs
+    )
 
 # ---------- Desarrollador ----------
 @app.route("/desarrollador")
+@login_required
 def desarrollador():
-    if "rol" not in session or session["rol"] != "desarrollador":
+    if not getattr(current_user, "role", None) or current_user.role != "desarrollador":
         return redirect(url_for("home"))
-    uid = session["usuario_id"]
+    try:
+        _, uid_str = current_user.get_id().split(":", 1)
+        uid = int(uid_str)
+    except Exception:
+        return redirect(url_for("home"))
+
     progresos = q("SELECT descripcion, avance, fecha FROM progreso WHERE usuario_id=? ORDER BY id DESC", (uid,))
     cargo_row = q("SELECT cargo FROM registro WHERE id=?", (uid,), one=True)
     cargo = cargo_row[0] if cargo_row else ""
-    return render_template("desarrollador.html", usuario=session["nombre"], cargo=cargo, progresos=progresos)
+    return render_template("desarrollador.html", usuario=current_user.name, cargo=cargo, progresos=progresos)
 
 # ---------- Agregar progreso ----------
 @app.route("/progreso/agregar", methods=["POST"])
+@login_required
 def progreso_agregar():
-    if "usuario_id" not in session or session["usuario_id"] is None:
+    # Solo usuarios logueados (cliente/desarrollador)
+    try:
+        prefix, uid_str = current_user.get_id().split(":", 1)
+        uid = int(uid_str)
+    except Exception:
         return redirect(url_for("home"))
-    uid = session["usuario_id"]
+
     desc = request.form.get("descripcion", "").strip()
     try:
         avance = int(request.form.get("avance", "0"))
@@ -295,15 +399,16 @@ def progreso_agregar():
     avance = max(0, min(100, avance))
     if desc:
         q("INSERT INTO progreso(usuario_id, descripcion, avance) VALUES(?,?,?)", (uid, desc, avance))
-    return redirect(url_for(session["rol"]))
+    # redirigir a su rol (cliente/desarrollador)
+    return redirect(url_for(current_user.role))
 
 # ---------- Admin ----------
 @app.route("/admin")
+@login_required
 def admin():
-    if "rol" not in session or session["rol"] != "administrador":
+    if not getattr(current_user, "role", None) or current_user.role != "administrador":
         return redirect(url_for("home"))
 
-    # datos de progreso
     datos = q("""
       SELECT r.nombre || ' ' || r.apellido AS usuario,
              r.rol,
@@ -315,13 +420,12 @@ def admin():
       ORDER BY p.id DESC
     """)
 
-    # conteos para gráficas
     conteo_clientes = q("SELECT COUNT(*) FROM registro WHERE rol='cliente'", one=True)[0]
     conteo_devs = q("SELECT COUNT(*) FROM registro WHERE rol='desarrollador'", one=True)[0]
 
     return render_template(
         "admin.html",
-        usuario=session["nombre"],
+        usuario=current_user.name,
         datos=datos,
         conteo_clientes=conteo_clientes,
         conteo_devs=conteo_devs
@@ -329,8 +433,9 @@ def admin():
 
 # ---------- Control desarrolladores ----------
 @app.route("/control_desarrolladores")
+@login_required
 def vista_desarrolladores():
-    if "rol" not in session or session["rol"] != "administrador":
+    if not getattr(current_user, "role", None) or current_user.role != "administrador":
         return redirect(url_for("home"))
 
     desarrolladores = q("""
@@ -343,12 +448,15 @@ def vista_desarrolladores():
         GROUP BY r.id
     """)
 
-    return render_template("control_desarrolladores.html", usuario=session["nombre"], desarrolladores=desarrolladores)
+    return render_template("control_desarrolladores.html", usuario=current_user.name, desarrolladores=desarrolladores)
 
 # ---------- Control usuarios ----------
 @app.route("/control_usuarios")
+@login_required
 def vista_usuarios():
-    return render_template("control_usuarios.html")
+    if not getattr(current_user, "role", None) or current_user.role != "administrador":
+        return redirect(url_for("home"))
+    return render_template("control_usuarios.html", usuario=current_user.name)
 
 if __name__ == "__main__":
     app.run(debug=True)
