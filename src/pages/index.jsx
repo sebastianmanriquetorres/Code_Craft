@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Index.css'; 
 // Importar el nuevo componente del carrusel
-import Carousel from '../components/Carousel';
+import Carousel from '../components/carousel';
 
 const Index = () => {
     // 1. Estado para manejar el menú responsive (reemplaza script.js)
