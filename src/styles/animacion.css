@@ -1,0 +1,55 @@
+/* Contenido de Animacion.css (Basado en tu style.css y splash.css) */
+.animacion-splash {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 1;
+  /* La transición es clave para el efecto de desvanecimiento */
+  transition: opacity .6s ease; 
+}
+
+.animacion-splash.fade-out {
+    opacity: 0;
+    pointer-events: none; /* Asegura que no se pueda hacer clic al desaparecer */
+}
+
+/* El resto de tus estilos para el contenedor, bombillo y texto */
+.animacion-splash .container {
+  text-align: center; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100%; 
+}
+
+.animacion-splash img.bombillo {
+  width: 120px;
+  opacity: 1;
+  transform: scale(0.8);
+  transition: transform 700ms ease, opacity 700ms ease;
+  display: inline-block;
+}
+.animacion-splash .texto {
+  margin-top: 10px;
+  color: white;
+  font-size: 1.3rem;
+  font-family: monospace;
+  opacity: 0;
+  border-right: 2px solid rgba(255,255,255,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  display: inline-block;
+  text-align: center;
+}
+@keyframes escribirYBorrar {
+  0% { width: 0; opacity: 1; }
+  40% { width: 13ch; opacity: 1; }
+  70% { width: 11ch; opacity: 1; }
+  100% { width: 0; opacity: 0; }
+}
