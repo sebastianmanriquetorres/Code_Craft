@@ -2,9 +2,9 @@ name: CI - Code Craft
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "feature" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "feature" ]
 
 jobs:
   build-test-lint:
