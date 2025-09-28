@@ -10,10 +10,16 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../Animacion2.0/splash.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="imagenes/logo_pestaña.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="imagenes/logo_pestaña32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="imagenes/logo_pestaña64.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="imagenes/logo_pestaña128.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagenes/logo_pestaña180.png">
+
 
 </head>
-<body>
 
+<body id="top">
     <!-- ANIMACIÓN -->
     <div id="splash">
     <div class="container">
@@ -25,42 +31,55 @@
 
 
 
-    <header class="header">
-        <a href="#" class="logo">
-            <img src="imagenes/logo.png" alt="logo">
-        </a>
-        <i class='bx bx-menu' id="menu-icon"></i>
-        <nav class="navbar">
-            <a href="#" class="activate">home</a>
-            <a href="#">about</a>
-            <a href="#">services</a>
-            <a href="#">portafolio</a>
-            <a href="#">contacto</a>
-        </nav>
-    </header>
+<header class="header">
+    <a href="#" class="logo" id="logo">
+        <img src="imagenes/logo.png" alt="logo">
+    </a>
 
-
-
-
-    <section class="home animate-on-scroll">
-        <div class="home-content">
-            <h1>Code_Craft</h1>
-            <h3>Aqui encontraras todo lo que necesitas</h3>
-            <p>Empieza ahora o inicia sesión con tu cuenta ya creada!</p>
-            <div class="btn-box">
-                <a href="../login_registro/login.html">Iniciar sesión</a>
-                <a href="#">Registrarse</a>
-            </div>
+    <nav class="navbar">
+        <div class="box">
+            <input type="text" placeholder="Buscar...">
+            <a href="#">
+                <i class="bx bx-search" style="color: #00abf0;"></i>
+            </a>
         </div>
-
-        <div class="home-sci">
-            <a href="#"><i class='bx bxl-facebook'></i></a>
-            <a href="#"><i class='bx bxl-twitter'></i></a>
-            <a href="#"><i class='bx bxl-linkedin'></i></a>
+        <div class="links">
+            <a href="#top" class="activate">home</a>
+            <a href="#about">about</a>
+            <a href="#services">services</a>
+            <a href="#portafolio">portafolio</a>
+            <a href="#contacto">contacto</a>
         </div>
+    </nav>
 
-        <span class="home-imgHover"></span>
+    <i class='bx bx-menu' id="menu-icon"></i>
+</header>
+
+
+
+
+    <div class="hero-section">
+    <div class="hero-content">
+        <h1>Bienvenido a<span> Code_Craft</span></h1>
+        <p>Aquí encontrarás todo lo que necesitas para tu proyecto digital.</p>
+        <div class="btn-box">
+        <a href="../login_registro/login.html">Iniciar sesión</a>
+        <a href="#">Registrarse</a>
+        </div>
+    </div>
+    <div class="hero-img">
+        <img src="imagenes/logo.png" alt="hero">
+    </div>
+    </div>
+    <section>
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+        <div class="wave wave4"></div>
     </section>
+    <div class="wave-shadow"></div>
+
+
 
     <!-- ====== INDEX (DEBAJO) ====== -->
 
@@ -162,6 +181,16 @@
         <div class="time"></div>
     </div>
 
+        <div class="bombillos">
+        <img src="imagenes/logoapagado.png">
+        <img src="imagenes/logoapagado.png">
+        <img src="imagenes/logoapagado.png">
+        <img src="imagenes/logoapagado.png">
+        <img src="imagenes/logoapagado.png">
+        <img src="imagenes/logoapagado.png">
+        <img src="imagenes/logoapagado.png">
+    </div>
+
     <script src="../Animacion2.0/splash.js"></script>
     <script src="app.js"></script>
     <script src="script.js"></script>
@@ -174,8 +203,53 @@
             navbar.classList.toggle("active");
         });
     </script>
+    <script>
+    document.querySelector('.logo').addEventListener('click', function (e) {
+        e.preventDefault(); 
+        document.querySelector('#top').scrollIntoView({
+        behavior: 'smooth'
+        });
+    });
+    </script>
 
+    <!-- Contenido principal -->
+    <main>
+        <!-- Aquí va el contenido principal de la página -->
+    </main>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Contactanos</h3>
+                <p>Email: Proyectcode_craft@gmail.com</p>
+                <p>Phone: +121 56556 565556</p>
+                <p>Address: Your Address 123 street</p>
+            </div>
+            <div class="footer-content">
+                <h3>Enlaces rapidos</h3>
+                <ul class="list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-content">
+                <h3>Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href=""><i class="fab fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fab fa-instagram"></i></a></li>
+                    <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <p>&copy; 2025 Code_Craft. Todos los derechos reservados</p>
+        </div>
+    </footer>
 
 </body>
 </html>

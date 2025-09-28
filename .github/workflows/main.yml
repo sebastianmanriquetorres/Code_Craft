@@ -1,0 +1,38 @@
+name: CI - Code Craft
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descarga el código
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configura Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Validar compilación (build)
+      - name: Build project
+        run: npm run build --if-present
+
+      # 5. Ejecutar pruebas unitarias
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+      # 6. Validar estilo de código con ESLint
+      - name: Run linter
+        run: npm run lint

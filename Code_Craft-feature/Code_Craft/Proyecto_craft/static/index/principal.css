@@ -58,15 +58,15 @@ body {
     color: #00abf0;
 }
 
-.home{
-    height: 100vh;
-    background: url('imagenes/fondologo.png') no-repeat;
-    background-size: cover;
-    background-position: center;
+.home {
+    min-height: 100vh; 
+    height: auto;      
+    background: url('imagenes/fondologo.png') no-repeat center/cover;
     display: flex;
     align-items: center;
     padding: 0 10%;
 }
+
 
 .home-content{
     max-width: 600px;
@@ -179,7 +179,7 @@ body {
 }
 
 .btn-box a:nth-child(2):hover {
-    color: #081b29;
+    color: #00abf0;
 }
 
 .btn-box a:nth-child(2)::before{
@@ -193,7 +193,7 @@ body {
     left: 0;
     width: 0;
     height: 100%;
-    background: #081b29;
+    background: #00abf0;
     z-index: -1;
     transition: .5s;
 }
@@ -323,4 +323,82 @@ body {
   .home-imgHover {
     display: none;
   }
+}
+
+
+.hero-section {
+  width: 100%;
+  min-height: 100vh;
+  padding: 100px 100px 100px 100px; /* Más espacio arriba y abajo */
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #969696;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1400px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0,12,78,0.40) 0%,
+    rgba(0,12,78,0.28) 35%,
+    rgba(0,12,78,0.16) 75%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-section h1 {
+  font-weight: 400;
+  font-size: 80px;
+  width: 800px;
+  text-transform: capitalize;
+  color: #fff; /* Mantener tus colores */
+}
+
+.hero-section span {
+  color: #3a4bbd; /* Azul acento más claro */
+}
+
+.hero-section p {
+  font-weight: 400;
+  font-size: 24px;
+  width: 309px;
+  padding: 30px 0px;
+  color: #fff; /* Texto claro */
+}
+
+.hero-section .btn-box {
+  display: flex;
+  gap: 15px;
+}
+
+.hero-section .btn-box a {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 22px;
+  color: #fff;
+  padding: 26px 65px;
+  border-radius: 50px 0px 50px 0px;
+  background-color: #3a4bbdcc;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.hero-section .btn-box a:hover {
+  background-color: #6b8cff; /* El color que quieras para ambos botones al hacer hover */
+  color: #fff; /* O el color de texto que prefieras */
+}
+
+.hero-section .hero-img img {
+  max-width: 600px;
+  height: auto;
 }
