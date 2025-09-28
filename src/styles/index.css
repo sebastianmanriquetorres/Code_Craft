@@ -1,0 +1,540 @@
+/* ---------------------------------------------------------------------- */
+/* ESTILOS GLOBALES */
+/* ---------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #081b29; /* Fondo oscuro de principal.css */
+    color: #ededed;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ---------------------------------------------------------------------- */
+/* HEADER / NAVBAR */
+/* ---------------------------------------------------------------------- */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 5%; 
+    /* CAMBIO: Fondo azul transparente */
+    background: rgba(1, 28, 71, 0.7); /* Azul oscuro con 70% de opacidad (#011c47 es el color de la caja del logo) */
+    backdrop-filter: blur(5px); /* Añade un poco de desenfoque al fondo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* El logo ya está bien, solo es necesario reducir el padding del header */
+
+/* Contenedor del Logo con animación 'showRight' */
+.logo {
+    position: relative;
+    /* El logo en sí no debe tener texto, sino que debe contener la imagen */
+    transition: transform 0.3s ease;
+}
+
+.logo img {
+    height: 70px;  
+    width: auto;
+    object-fit: contain;
+    display: block;
+    position: relative;
+    z-index: 10;
+}
+
+/* Añadimos el efecto de caja deslizante de tu principal.css */
+.logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #011c47; /* Color de caja azul */
+    animation: showRight 1s ease forwards; /* Aplicamos la animación */
+    animation-delay: .4s;
+}
+
+.logo:hover img {
+    transform: scale(1.1);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    transition: all 0.5s ease;
+}
+
+.navbar a {
+    font-size: 18px;
+    color: #ededed;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: #00eeff; /* Color de acento para hover/activo */
+}
+
+/* Ícono de menú para móvil - invisible en desktop */
+#menu-icon {
+    font-size: 36px;
+    color: #ededed;
+    cursor: pointer;
+    display: none; 
+}
+
+/* KEYFRAME DE ANIMACIÓN PARA EL LOGO (importante para showRight) */
+@keyframes showRight {
+    100% {
+        width: 0;
+    }
+}
+
+/* ---------------------------------------------------------------------- */
+/* MENÚ RESPONSIVE (MÓVIL) */
+/* ---------------------------------------------------------------------- */
+.nav-bg {
+    display: none; 
+}
+
+@media (max-width: 992px) {
+    .header {
+        padding: 15px 5%; 
+    }
+
+    #menu-icon {
+        display: block; 
+    }
+
+    .nav-bg {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0); 
+        backdrop-filter: blur(0);
+        transition: background 0.5s, backdrop-filter 0.5s;
+        pointer-events: none;
+        z-index: 999;
+    }
+    .nav-bg.active {
+        background: rgba(0, 0, 0, 0.6);
+        pointer-events: all;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 100%; 
+        right: -100%; 
+        width: 250px;
+        height: 100vh;
+        background: #001f3f; 
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px;
+        transition: right 0.4s ease-in-out;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    .navbar.active {
+        right: 0; 
+    }
+
+    .navbar a {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .navbar .box {
+        display: none;
+    }
+}
+
+/* ---------------------------------------------------------------------- */
+/* SECCIÓN HERO (Ajuste de Fondo y Texto) */
+/* ---------------------------------------------------------------------- */
+
+.hero-section {
+    min-height: 50vh;
+    margin-top: 1350px;
+    padding: 5px 10%; 
+    /* CAMBIOS: Usar Flexbox para el diseño de dos columnas */
+    display: flex;
+    flex-direction: row; /* Coloca los hijos en fila */
+    align-items: center; /* Centrado vertical */
+    justify-content: space-between; /* Espacio entre los bloques */
+    
+    /* ... (restos de estilos como background y ::before) ... */
+    background: url('#') no-repeat center center/cover;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Nuevo contenedor para el texto/botones de la izquierda (Punto 5 y 6) */
+.hero-content {
+    flex: 1; /* Ocupa el espacio disponible */
+    max-width: 50%; /* Limita el ancho del texto */
+    position: relative;
+    z-index: 2;
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+.hero-section h1,
+.hero-section p {
+    /* Quitamos estos estilos ya que ahora están en .hero-content */
+    /* position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: none;
+    color: #ededed;
+    text-align: left; */
+    width: 100%;
+    text-align: left; /* Asegura la alineación a la izquierda */
+}
+
+/* Estilos de Botones (Punto 6) */
+.hero-buttons {
+    display: flex;
+    gap: 20px; /* Separación entre los dos botones */
+    margin-top: 30px;
+}
+
+/* Basado en la imagen de los botones, ajustaremos sus estilos */
+.hero-buttons button {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ededed;
+    background: #3a4bbd; /* Color base del botón */
+    border: none;
+    padding: 15px 30px;
+    border-radius: 15px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    /* Añadimos un pseudo-elemento para el efecto de la banda azul clara */
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-buttons button.inicio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px; /* Ancho de la barra */
+    height: 100%;
+    background: #1e0997; /* Color de acento azul claro */
+    z-index: 1;
+}*/
+
+.hero-buttons button:hover {
+    background: #2a3a9d; /* Color más oscuro al hacer hover */
+    transform: translateY(-2px);
+}
+
+
+/* Contenedor de la Imagen Derecha (Punto 7) */
+.hero-image-container {
+    flex: 1; /* Ocupa el resto del espacio */
+    max-width: 45%; 
+    position: relative;
+    z-index: 2;
+    display: flex; /* Para centrar la imagen dentro de su contenedor */
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    /* Estilos basados en tu imagen (sombra, brillo, etc.) */
+    /*border-radius: 0px;*/
+}
+
+
+/* Ajustes responsive para el hero */
+@media (max-width: 992px) {
+    .hero-section {
+        flex-direction: column; /* Apilar en móvil */
+        padding: 100px 5%;
+        text-align: center;
+    }
+    .hero-content {
+        max-width: 100%;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+    .hero-section h1 {
+        font-size: 50px;
+    }
+    .hero-section p {
+        font-size: 16px;
+    }
+    .hero-image-container {
+        max-width: 80%; /* Hacer la imagen más grande en móvil */
+        margin-top: 20px;
+    }
+    .hero-buttons {
+        justify-content: center; /* Centrar los botones en móvil */
+    }
+    .hero-buttons button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* FOOTER (Migrado de index.html y style.css) */
+/* ---------------------------------------------------------------------- */
+
+footer {
+    background: #000;
+    color: #fff;
+    padding: 40px 0 0; 
+}
+
+footer .container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    padding: 0 10%;
+    margin-bottom: 20px;
+}
+
+.footer-content {
+    width: 30%; 
+    min-width: 250px; 
+    margin-bottom: 20px;
+}
+
+.footer-content h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #00eeff; 
+}
+
+.footer-content p {
+    text-align: center;
+    padding: 5px;
+    margin: 0 auto 5px;
+    max-width: 80%;
+}
+
+.list {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.list li {
+    padding: 7px;
+    position: relative;
+}
+
+.list li a {
+    color: white;
+    transition: color 0.3s;
+}
+
+.list li:hover a {
+    color: #f18930; 
+}
+
+.list li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #f18930;
+    transition: width 0.3s;
+    margin: 0 auto;
+}
+.list li a:hover::after {
+    width: 50px;
+}
+
+
+.social-icons {
+    text-align: center;
+    padding: 0;
+    list-style: none;
+}
+
+.social-icons li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+.social-icons a:hover {
+    color: #00eeff;
+}
+
+.bottom-bar {
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+/* Ajuste responsive para footer */
+@media (max-width: 768px) {
+    .footer-content {
+        width: 100%;
+        max-width: 350px; 
+        margin: 0 auto 30px;
+    }
+    footer .container {
+        padding: 0 5%;
+    }
+}
+
+/* ---------------------------------------------------------------------- */
+/* BOTÓN DE BÚSQUEDA CON EXPANSIÓN */
+/* ---------------------------------------------------------------------- */
+.search-container {
+    position: relative;
+    margin-left: 20px; /* Separación de la navbar */
+}
+
+.search-input {
+    width: 40px; /* Ancho inicial: solo el icono */
+    height: 40px; 
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    font-size: 16px;
+    background: #00eeff; /* Color de acento para la caja de búsqueda */
+    color: #081b29; /* Color de texto dentro del input */
+    transition: width 0.4s ease, background 0.4s ease;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 238, 255, 0.5); /* Sombra para resaltar */
+}
+
+.search-input::placeholder {
+    color: transparent; /* Oculta el placeholder inicialmente */
+}
+
+/* Expansión al pasar el cursor */
+.search-container:hover .search-input {
+    width: 250px; /* Ancho ampliado */
+    background: #ededed; /* Color blanco al expandirse */
+    cursor: text;
+}
+/* Muestra el placeholder al expandirse */
+.search-container:hover .search-input::placeholder {
+    color: rgba(8, 27, 41, 0.7); 
+}
+
+/* Icono de Lupa: Usamos un pseudo-elemento para posicionarlo */
+.search-container .bx-search-alt {
+    position: absolute;
+    top: 50%;
+    right: 12px; 
+    transform: translateY(-50%);
+    color: #081b29;
+    font-size: 20px;
+    pointer-events: none; /* Ignora el click para que el input funcione */
+    z-index: 5;
+    transition: color 0.4s;
+}
+
+.search-container:hover .bx-search-alt {
+    color: #00eeff; /* Cambia el color del ícono al hacer hover */
+}
+
+/* ---------------------------------------------------------------------- */
+/* SECCIÓN HERO (Ajuste de Fondo y Texto) */
+/* ---------------------------------------------------------------------- */
+
+/* ... (código anterior del .hero-section y .hero-content) ... */
+
+/* Estilos de Botones (Punto 6) */
+.hero-buttons {
+    display: flex;
+    gap: 20px; /* Separación entre los dos botones */
+    margin-top: 30px;
+}
+
+/* Estilos base para AMBOS botones */
+.hero-buttons button {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ededed; /* Color del texto inicial */
+    border: none;
+    padding: 15px 30px;
+    border-radius: 15px; /* Bordes redondeados */
+    cursor: pointer;
+    /* CAMBIO: Transición más compleja para el efecto de color */
+    transition: background 1s ease, color 1s ease, transform 1s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Asegurar que el contenido esté sobre el pseudo-elemento */
+}
+
+/* Estilos ESPECÍFICOS para el botón "Iniciar sesión" (primer botón) */
+.hero-buttons button.inicio {
+    background: #3a4bbd; /* Color base del primer botón (azul oscuro) */
+}
+
+/* Pseudo-elemento para la banda azul claro del botón "Iniciar sesión" */
+.hero-buttons button.inicio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px; /* Ancho de la barra */
+    height: 100%;
+    background: #00eeff; /* Color de acento azul claro */
+    z-index: -1; /* Mover detrás del texto del botón */
+}
+
+/* Estilos ESPECÍFICOS para el botón "Registrarse" (segundo botón) */
+.hero-buttons button.registro {
+    background: #3a4bbd; /* Color base del segundo botón (azul oscuro) */
+}
+
+/* Efecto HOVER para AMBOS botones (el cambio a celeste) */
+.hero-buttons button:hover {
+    background: #00eeff; /* Color celeste al hacer hover */
+    color: #081b29; /* Color de texto oscuro para el botón celeste */
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 238, 255, 0.6); /* Un poco de brillo al hacer hover */
+}
+
+/* CAMBIO ADICIONAL: Eliminar la banda azul al hacer hover en el primer botón */
+.hero-buttons button.inicio:hover::before {
+    width: 0; /* Oculta la banda al hacer hover */
+    transition: width 0.4s ease;
+}
+
+/* ... (resto del código CSS) ... */

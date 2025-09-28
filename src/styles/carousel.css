@@ -1,0 +1,295 @@
+/* ---------------------------------------------------------------------- */
+/* ESTILOS DEL CARRUSEL (Basado en app.js y tu estructura) */
+/* ---------------------------------------------------------------------- */
+
+/* Sección contenedora del carrusel */
+.carousel-section {
+    width: 1350px;
+    height: 100%;
+    padding: 100px 0;
+    background: #1f242d; /* Color de fondo para la sección */
+}
+
+.carousel {
+    width: 1350px;
+    height: 650px;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.carousel .list {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Estilo base para cada ítem principal */
+.carousel .list .item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    transition: transform 1s, opacity 1s, z-index 0s 1s; /* Opacidad lenta */
+}
+
+/* Mueve el ítem "activo" actual para que parezca que desaparece */
+.carousel.next .list .item.active,
+.carousel.prev .list .item.active {
+    /* CAMBIAR A 2s: Para que coincida con TIME_RUNNING */
+    transition: transform 2s, opacity 0.5s 1.5s; /* La opacidad finaliza 0.5s antes */ 
+    opacity: 0;
+    transform: scale(0.8) translateY(-20%);
+}
+
+.carousel .list .item.active {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 20;
+    transition: opacity 0.5s; /* El activo es inmediato */
+}
+
+/* Contenido de texto superpuesto */
+.carousel .list .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel .list .item .content {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    width: 50%;
+    color: #ededed;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    z-index: 21;
+}
+
+.carousel .list .item .title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #00eeff; /* Azul acento */
+}
+.carousel .list .item .topic {
+    font-size: 1.2rem;
+    color: #f18930; /* Naranja acento */
+    margin-bottom: 5px;
+}
+.carousel .list .item .des {
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Busca esta sección */
+.carousel .list .item .buttons button {
+    /* Modificación */
+    background: transparent; /* Fondo transparente */
+    color: white; /* Letra blanca */
+    padding: 10px 20px;
+    border: 1px solid white; /* Borde blanco sutil */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: 600;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.carousel .list .item .buttons button:hover {
+    /* Nuevo estilo de hover */
+    background: rgba(0, 238, 255, 0.8); /* Azul claro con transparencia */
+    color: #1f242d; /* Texto oscuro para contraste */
+    border-color: rgba(0, 238, 255, 0.8);
+}
+
+
+/* ========================================================= */
+/* ANIMACIÓN DE AVANCE (CLASE 'next' y 'prev') */
+/* ========================================================= */
+
+.carousel.next .list .item:nth-child(2) {
+    /* El segundo ítem (el que va a ser el nuevo primero) */
+    animation: transformNext 2s forwards;
+    z-index: 25; /* Asegura que el siguiente entre por encima */
+}
+
+.carousel.prev .list .item:nth-last-child(1) {
+    /* El último ítem (el que va a ser el nuevo primero) */
+    animation: transformPrev 2s forwards;
+    z-index: 25; 
+}
+
+/* Mueve el ítem "activo" actual para que parezca que desaparece */
+.carousel.next .list .item.active,
+.carousel.prev .list .item.active {
+    transition: transform 2s, opacity 0.5s 0.5s; /* Opacidad se aplica después */
+    opacity: 0;
+    transform: scale(0.8) translateY(-20%);
+}
+
+@keyframes transformNext {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes transformPrev {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* ========================================================= */
+/* THUMBNAIL Y CONTROLES (Modificado: Flechas a la izquierda) */
+/* ========================================================= */
+
+.carousel .arrows {
+    /* Nueva posición: Abajo a la izquierda, cerca del thumbnail */
+    position: absolute;
+    bottom: 30px; /* Misma altura que el thumbnail */
+    left: 50px; /* Separación del borde izquierdo */
+    right: unset; /* Quitar la posición derecha anterior */
+    z-index: 30;
+}
+.carousel .arrows button {
+    /* Estilo para los botones (Modificado para ser circular) */
+    background-color: rgba(255, 255, 255, 0.1); /* Blanco transparente */
+    border: 1px solid rgba(255, 255, 255, 0.5); 
+    color: white;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 50%; /* ¡Circular! */
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+.carousel .arrows button:hover {
+    background-color: #00eeff; 
+    color: #1f242d;
+    border-color: #00eeff;
+}
+
+/* Mantenemos el .carousel .thumbnail a la derecha como lo tenías */
+.carousel .thumbnail {
+    position: absolute;
+    bottom: 30px; 
+    right: 50px; 
+    left: unset; 
+    transform: none; 
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+}
+
+.carousel .thumbnail .item {
+    /* Hacemos las miniaturas más altas (Ej: 150px) */
+    width: 150px; /* Ancho ajustado */
+    height: 180px; /* Altura aumentada */
+    background-color: #1f242d; /* Fondo oscuro (similar al activo) */
+    cursor: pointer;
+    opacity: 0.8; /* Menos transparencia para que se vean mejor */
+    transition: opacity 0.3s, border 0.3s, transform 0.5s;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.carousel .thumbnail .item.active {
+    opacity: 1;
+    /* La animación de aumento será manejada por la clase 'active' */
+    transform: scale(1.05); /* Ligeramente más grande al estar activo */
+    border: none; /* Quitamos el borde para un look más limpio */
+}
+
+/* Ajustamos el contenido del thumbnail para el nuevo tamaño */
+.carousel .thumbnail .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6; /* Hacemos la imagen un poco más oscura */
+    transition: opacity 0.5s;
+}
+
+.carousel .thumbnail .item .content {
+    position: absolute;
+    bottom: 10px; /* Posicionamos el contenido abajo */
+    top: unset;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: auto;
+    text-shadow: none;
+    padding: 0 15px;
+    text-align: left;
+}
+.carousel .thumbnail .item .content .title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 5px;
+}
+.carousel .thumbnail .item .content .description {
+    font-size: 0.8rem;
+    color: #ddd;
+}
+/* Ocultamos elementos adicionales si los hubiera */
+.carousel .thumbnail .item.active img {
+    opacity: 1; /* Imagen completa en el thumbnail activo si quieres un contraste */
+}
+
+/* Animación de entrada de texto (Tipo "Colocando una por una") */
+@keyframes textFadeIn {
+    0% {
+        opacity: 0;
+        filter: blur(5px); /* Inicia borroso */
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0); /* Termina nítido */
+        transform: translateY(0);
+    }
+}
+
+/* Aplicar la animación con retraso a cada elemento de contenido */
+.carousel .list .item.active .content .author,
+.carousel .list .item.active .content .topic,
+.carousel .list .item.active .content .title,
+.carousel .list .item.active .content .des,
+.carousel .list .item.active .content .buttons {
+    opacity: 0; /* Aseguramos que empiecen ocultos */
+    animation: textFadeIn 0.8s forwards; /* Aplicamos la animación */
+}
+
+/* Establecer los retrasos (Delay) para que entren uno por uno */
+.carousel .list .item.active .content .author {
+    animation-delay: 0.8s;
+}
+.carousel .list .item.active .content .topic {
+    animation-delay: 1.0s;
+}
+.carousel .list .item.active .content .title {
+    animation-delay: 1.2s;
+}
+.carousel .list .item.active .content .des {
+    animation-delay: 1.4s;
+}
+.carousel .list .item.active .content .buttons {
+    animation-delay: 1.6s;
+}
