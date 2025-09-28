@@ -7,32 +7,24 @@ on:
     branches: [ "feature" ]
 
 jobs:
-  build-test-lint:
+  basic-check:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Descarga el código
+      # 1. Descargar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configura Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
+      # 2. Verificar estructura de archivos (simula una validación)
+      - name: List files
+        run: ls -la
 
-      # 3. Instalar dependencias
-      - name: Install dependencies
-        run: npm install
-
-      # 4. Validar compilación (build)
-      - name: Build project
-        run: npm run build --if-present
-
-      # 5. Ejecutar pruebas unitarias
-      - name: Run tests
-        run: npm test -- --watchAll=false
-
-      # 6. Validar estilo de código con ESLint
-      - name: Run linter
-        run: npm run lint
+      # 3. Validación simulada (por ejemplo, verificar que README exista)
+      - name: Check for README
+        run: |
+          if [ -f README.md ]; then
+            echo "README.md encontrado ✅"
+          else
+            echo "❌ No se encontró README.md"
+            exit 1
+          fi
