@@ -1,0 +1,834 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- Estilos Generales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+body {
+    height: auto;
+    background: #081b29; /* Cambia el fondo a un color oscuro */
+    color: #ededed;
+    overflow-x: hidden; /* Evita el scroll horizontal */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+}
+
+main {
+    flex: 1; /* Hace que el contenido principal ocupe el espacio disponible */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* --- Animaciones Generales --- */
+@keyframes showRight {
+    100%{
+        width: 0;
+    }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    clip-path: inset(100% 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.tu-clase-animada {
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+
+/* --- HEADER y NAV --- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 50px;
+    background: rgba(0, 12, 78, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.header .logo img {
+  height: 70px;  
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.header .logo img:hover {
+  transform: scale(1.2);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Search Box Styles */
+.navbar .box {
+    position: relative; /* Cambiado a relativo para el flujo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.navbar .box:hover,
+.navbar .box.active { /* Clase active para control de React si se necesita */
+    width: 300px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.navbar .box input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+    width: 0; 
+    transition: width 0.3s ease;
+}
+
+.navbar .box:hover input,
+.navbar .box.active input {
+    width: 100%;
+    padding-left: 10px;
+}
+
+.navbar .box a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #333;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.navbar .box a i {
+    font-size: 20px;
+    line-height: 1; 
+}
+
+.navbar .links {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+}
+
+.navbar .links a {
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.navbar .links a:hover {
+    color: #ff3c3c;
+}
+
+/* Toggle Menu Icon */
+#menu-icon {
+  font-size: 36px;
+  color: #fff;
+  display: none;
+  cursor: pointer;
+}
+
+/* --- HERO SECTION --- */
+.hero-section {
+  width: 100%;
+  min-height: 100vh;
+  padding: 100px 100px 100px 100px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #969696;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1400px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0,12,78,0.40) 0%,
+    rgba(0,12,78,0.28) 35%,
+    rgba(0,12,78,0.16) 75%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-section h1 {
+  font-weight: 400;
+  font-size: 80px;
+  width: 800px;
+  text-transform: capitalize;
+  color: #fff; 
+}
+
+.hero-section span {
+  color: #3a4bbd; 
+}
+
+.hero-section p {
+  font-weight: 400;
+  font-size: 24px;
+  width: 309px;
+  padding: 30px 0px;
+  color: #fff; 
+}
+
+.hero-section .btn-box {
+  display: flex;
+  gap: 15px;
+}
+
+.hero-section .btn-box a {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 22px;
+  color: #fff;
+  padding: 26px 65px;
+  border-radius: 50px 0px 50px 0px;
+  background-color: #3a4bbdcc;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.hero-section .btn-box a:hover {
+  background-color: #6b8cff; 
+  color: #fff; 
+}
+
+.hero-section .hero-img img {
+  max-width: 600px;
+  height: auto;
+}
+
+/* --- WAVES ANIMATION --- */
+section {
+    position: relative;
+    width: 100%;
+    height: 12vw;
+    min-height: 70px;
+    max-height: 160px;
+    background: transparent;
+    overflow: hidden;
+    margin-top: -8vw;
+    z-index: 2;
+}
+section .wave {
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(/imagenes/wave.png); /* Usar la ruta relativa */
+    background-size: 1000px 100px;
+    z-index: 20;
+    pointer-events: none;
+}
+section .wave.wave1 {
+    animation: animate 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+}
+section .wave.wave2 {
+    animation: animate2 15s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
+}
+section .wave.wave3 {
+    animation: animate 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15;
+}
+section .wave.wave4 {
+    animation: animate 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 20px;
+}
+
+@keyframes animate {
+    0% { background-position-x: 0; }
+    100% { background-position-x: 1000px; }
+}
+@keyframes animate2 {
+    0% { background-position-x: 0; }
+    100% { background-position-x: -1000px; }
+}
+
+.wave-shadow {
+    width: 100%;
+    height: 15vw;
+    min-height: 100px;
+    max-height: 200px;
+    margin-top: 0px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,1) 0%, 
+        rgba(255,255,255,0.8) 50%,
+        rgba(255,255,255,0.5) 80%,
+        rgba(255,255,255,0) 100%
+    );
+    z-index: 5;
+    position: relative;
+}
+
+/* --- CAROUSEL --- */
+.carousel{
+    height: 100vh;
+    margin-top: -10vw;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+}
+/* Estilos del carrusel, thumbnail, arrows y animaciones... (mantenidos igual) */
+.carousel .list .item{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0 0 0 0;
+}
+.carousel .list .item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.carousel .list .item .content{
+    position: absolute;
+    top: 20%;
+    width: 1140px;
+    max-width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-right: 30%;
+    box-sizing: border-box;
+    color: #fff;
+    text-shadow: 0 5px 10px #0004;
+}
+.carousel .list .item .author{
+    font-weight: bold;
+    letter-spacing: 10px;
+}
+.carousel .list .item .title,
+.carousel .list .item .topic{
+    font-size: 5em;
+    font-weight: bold;
+    line-height: 1.3em;
+}
+.carousel .list .item .topic{
+    color: #f1683a;
+}
+.carousel .list .item .buttons{
+    display: grid;
+    grid-template-columns: repeat(2, 130px);
+    grid-template-rows: 40px;
+    gap: 5px;
+    margin-top: 20px;
+}
+.carousel .list .item .buttons button{
+    border: none;
+    background-color: #eee;
+    letter-spacing: 3px;
+    font-family: Poppins;
+    font-weight: 500;
+}
+.carousel .list .item .buttons button:nth-child(2){
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #eee;
+}
+/* ... otros estilos del carrusel ... */
+.thumbnail{
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    width: max-content;
+    z-index: 100;
+    display: flex;
+    gap: 20px;
+}
+.thumbnail .item{
+    width: 150px;
+    height: 220px;
+    flex-shrink: 0;
+    position: relative;
+}
+.thumbnail .item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+.thumbnail .item .content{
+    color: #fff;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
+.thumbnail .item .content .title{
+    font-weight: 500;
+}
+.thumbnail .item .content .description{
+    font-weight: 300;
+}
+
+.arrows{
+    position: absolute;
+    top: 80%;
+    right: 52%;
+    z-index: 100;
+    width: 300px;
+    max-width: 30%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.arrows button{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eee4;
+    border: none;
+    color: #fff;
+    font-family: monospace;
+    font-weight: bold;
+    transition: .5s;
+    cursor: pointer;
+}
+.arrows button:hover{
+    background-color: #fff;
+    color: #000;
+}
+.carousel .list .item.active{
+    z-index: 1;
+}
+
+/* Clases de animación del carrusel */
+.carousel .list .item.active .content .author,
+.carousel .list .item.active .content .title,
+.carousel .list .item.active .content .topic,
+.carousel .list .item.active .content .des,
+.carousel .list .item.active .content .buttons {
+    transform: translateY(50px);
+    filter: blur(20px);
+    opacity: 0;
+    animation: showContent .5s 1s linear 1 forwards;
+}
+/* ... (otros keyframes y animaciones del carrusel: showContent, showImage, showThumbnail, effectNext, runningTime, outFrame, contentOut) ... */
+@keyframes showContent{
+    to{
+        transform: translateY(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+.carousel .list .item.active .content .title{
+    animation-delay: 1.2s!important;
+}
+.carousel .list .item.active .content .topic{
+    animation-delay: 1.4s!important;
+}
+.carousel .list .item.active .content .des{
+    animation-delay: 1.6s!important;
+}
+.carousel .list .item.active .content .buttons{
+    animation-delay: 1.8s!important;
+}
+.carousel.next .list .item.active img{
+    width: 150px;
+    height: 220px;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    border-radius: 30px;
+    animation: showImage .5s linear 1 forwards;
+}
+@keyframes showImage{
+    to{
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+}
+.carousel.next .thumbnail .item:nth-last-child(1){
+    overflow: hidden;
+    animation: showThumbnail .5s linear 1 forwards;
+}
+@keyframes showThumbnail{
+    from{
+        width: 0;
+        opacity: 0;
+    }
+}
+.carousel.next .thumbnail{
+    animation: effectNext .5s linear 1 forwards;
+}
+@keyframes effectNext{
+    from{
+        transform: translateX(150px);
+    }
+}
+.carousel .time{
+    position: absolute;
+    z-index: 1000;
+    width: 0%;
+    height: 3px;
+    background-color: #f1683a;
+    left: 0;
+    top: 0;
+}
+.carousel.next .time,
+.carousel.prev .time{
+    animation: runningTime 3s linear 1 forwards;
+}
+@keyframes runningTime{
+    from{ width: 100%}
+    to{width: 0}
+}
+.carousel.prev .list .item:nth-child(2){
+    z-index: 2;
+}
+.carousel.prev .list .item:nth-child(2) img{
+    animation: outFrame 0.5s linear 1 forwards;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+@keyframes outFrame{
+    to{
+        width: 150px;
+        height: 220px;
+        bottom: 50px;
+        left: 50%;
+        border-radius: 20px;
+    }
+}
+.carousel.prev .thumbnail .item:nth-child(1){
+    overflow: hidden;
+    opacity: 0;
+    animation: showThumbnail .5s linear 1 forwards;
+}
+.carousel.prev .list .item:nth-child(2) .content .author,
+.carousel.prev .list .item:nth-child(2) .content .title,
+.carousel.prev .list .item:nth-child(2) .content .topic,
+.carousel.prev .list .item:nth-child(2) .content .des,
+.carousel.prev .list .item:nth-child(2) .content .buttons {
+    animation: contentOut 1.5s linear 1 forwards!important;
+}
+@keyframes contentOut{
+    to{
+        transform: translateY(-150px);
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+
+
+/* --- ANIMATED LIGHTBULBS --- */
+.bombillos img{
+    width: 50px;
+    animation: bombillos 7s linear infinite;
+}
+
+.bombillos{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: -70px;
+    /* Ajuste para que la animación de la ola no tape la bombilla si está justo encima */
+    z-index: 1; 
+}
+
+@keyframes bombillos{
+    0%{
+        transform: translateY(0);
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    70%{
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(-80vh);
+        opacity: 0;
+    }
+}
+
+.bombillos img:nth-child(1){ animation-delay: 2s; width: 55px; }
+.bombillos img:nth-child(2){ animation-delay: 1s; width: 70px; }
+.bombillos img:nth-child(3){ animation-delay: 3s; width: 75px; }
+.bombillos img:nth-child(4){ animation-delay: 4.5s; width: 45px; }
+.bombillos img:nth-child(5){ animation-delay: 3s; width: 70px; }
+.bombillos img:nth-child(6){ animation-delay: 6s; width: 80px; }
+.bombillos img:nth-child(7){ animation-delay: 7s; width: 55px; }
+
+
+/* --- FOOTER --- */
+footer {
+    background: #343434;
+    padding-top: 50px;
+    width: 100%;
+}
+
+footer .container {
+    width: 1140px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* ... (otros estilos del footer) ... */
+.footer-content {
+    width: 33.3%;
+}
+
+footer h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #ededed;
+}
+
+.footer-content p {
+    width: 190px;
+    margin: auto;
+    padding: 7px;
+    color: #ededed;
+}
+
+.footer-content ul {
+    text-align: center;
+}
+
+.list {
+    padding: 0;
+}
+
+.list li {
+    width: auto;
+    text-align: center;
+    list-style-type: none;
+    padding: 7px;
+    position: relative;
+}
+
+.list li::before {
+    content: '';
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 100%;
+    width: 0;
+    height: 2px;
+    background: #f18930;
+    transition-duration: .5s;
+}
+
+.list li:hover::before {
+    width: 70px;
+}
+
+.list li a {
+    color: white; 
+}
+
+.list li a:hover {
+    color: rgba(0, 12, 78, 0.6); 
+}
+
+.social-icons {
+    text-align: center;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+}
+
+.social-icons i {
+    color: white;
+    font-size: 25px;
+}
+
+.social-icons i:hover {
+    color: #f18930;
+}
+
+.bottom-bar {
+    background: rgba(0, 12, 78, 0.6); 
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 50px;
+}
+
+.bottom-bar p {
+    color: #ededed; 
+    margin: 0;
+    font-size: 16px;
+    padding: 7px;
+}
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .hero-section h1 {
+    font-size: 40px;
+  }
+  .hero-section p {
+    font-size: 24px;
+    width: auto;
+  }
+  .hero-section .btn-box {
+    width: 100%;
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 5%;
+  }
+  .navbar {
+      flex-direction: column;
+      align-items: center;
+      display: none; 
+      position: absolute;
+      top: 90px;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 12, 78, 0.9);
+      padding: 20px 0;
+  }
+
+  .navbar.active {
+      display: flex; 
+  }
+  #menu-icon {
+    display: block;
+  }
+  .navbar .box {
+    position: relative; /* Ajuste para el flujo de la columna */
+    left: 0;
+  }
+  .navbar .links {
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 0;
+  }
+
+  .hero-section {
+    padding: 100px 5%;
+    text-align: center;
+    flex-direction: column;
+  }
+  .hero-section h1, .hero-section p {
+      width: auto;
+  }
+  .hero-section .hero-img img {
+      max-width: 80%;
+      margin-top: 30px;
+  }
+  /* Carousel responsive */
+    .carousel {
+        height: 50vh;
+        min-height: 300px;
+    }
+    .thumbnail .item {
+        width: 70px;
+        height: 100px;
+    }
+    .carousel .list .item .content {
+        font-size: 14px;
+        padding-right: 10%;
+    }
+}
+
+@media (max-width: 480px) {
+  .hero-section h1 {
+    font-size: 28px;
+  }
+  .hero-section p {
+    font-size: 18px;
+  }
+  .hero-section .btn-box a {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+  .hero-section .hero-img {
+    display: none;
+  }
+  /* Carousel responsive */
+    .carousel {
+        height: 40vh;
+        min-height: 250px;
+    }
+    .thumbnail {
+        gap: 5px;
+    }
+    .thumbnail .item {
+        width: 60px;
+        height: 90px;
+    }
+}

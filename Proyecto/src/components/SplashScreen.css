@@ -1,0 +1,113 @@
+/* --- Estilos de Scrollbar (Generales, puedes ponerlos en index.css si lo prefieres) --- */
+body {
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px; /* grosor */
+}
+::-webkit-scrollbar-track {
+    background: #111; 
+}
+::-webkit-scrollbar-thumb {
+    background: #555; 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #888; 
+}
+
+
+/* --- Estilos del Splash Screen --- */
+#splash {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 1;
+    /* La transición de salida se mantiene para el fin de la animación */
+    transition: opacity .5s ease; 
+}
+/* Estilo para ocultar el splash screen al final */
+#splash.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#splash .container {
+    /* Tu contenedor original era el body. Ahora es un contenedor interno. */
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* --- Estilos y Animación de la Bombilla --- */
+.bombillo {
+    width: 120px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Ajuste inicial basado en el keyframe */
+    transform: translate(-50%, -50%) scale(0.8); 
+    transition: none; /* Desactivamos la transición individual para que la anmación tome control */
+    display: inline-block;
+}
+
+/* La clase 'encender' inicia la animación en el componente */
+.bombillo.encender {
+    animation: encenderBombillo 2.5s forwards;
+}
+
+/* Nota: Los cambios de 'src' (content: url) no funcionan consistentemente en React/navegadores.
+   La lógica de ReactJS (setState) está manejando el cambio de 'src' para asegurar la compatibilidad.
+   Dejamos la parte visual de la animación (opacidad y escala) en el keyframe. */
+@keyframes encenderBombillo {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    30% { opacity: 1; transform: translate(-50%, -50%) scale(1.9); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+/* --- Estilos y Animación del Texto --- */
+.texto {
+    margin-top: 10px;
+    color: white;
+    font-size: 1.3rem;
+    font-family: monospace;
+    opacity: 0;
+    border-right: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    text-align: center;
+    position: absolute;
+    top: calc(50% + 80px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Esta animación es iniciada por el estilo en línea en el componente */
+@keyframes escribirYBorrar {
+    0% { width: 0; opacity: 1; border-right-color: white; }
+    40% { width: 13ch; opacity: 1; border-right-color: white; }
+    70% { width: 11ch; opacity: 1; border-right-color: white; }
+    100% { width: 0; opacity: 0; text-shadow: 0 0 10px black; border-right-color: transparent; }
+}
+
+/* Opcional: El parpadeo del cursor se puede agregar aquí */
+/*
+@keyframes parpadeo {
+    50% { border-color: transparent; }
+}
+.texto.animating {
+    border-right-color: white;
+    animation: escribirYBorrar 6s steps(13) forwards, parpadeo 0.5s step-end infinite;
+}
+*/
