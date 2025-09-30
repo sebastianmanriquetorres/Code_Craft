@@ -29,7 +29,7 @@ const Home = () => (
           <p>Aquí encontrarás todo lo que necesitas para tu proyecto digital.</p>
           <div className="btn-box">
             <Link to="/login">Iniciar sesión</Link>
-            <Link to="/login">Registrarse</Link>
+            <Link to="">Registrarse</Link>
           </div>
         </div>
         <div className="hero-img">
