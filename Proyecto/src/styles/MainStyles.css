@@ -49,9 +49,9 @@ a {
 }
 
 .tu-clase-animada {
-  animation: appear linear;
-  animation-timeline: view();
-  animation-range: entry 0% cover 40%;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
 }
 
 
@@ -70,38 +70,45 @@ a {
 }
 
 .header .logo img {
-  height: 70px;  
-  width: auto;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.3s ease;
+    height: 70px;  
+    width: auto;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
 .header .logo img:hover {
-  transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    gap: 20px;
+    /* Eliminamos el 'gap: 20px;' de aquí ya que lo definiremos entre links y box */
     transition: all 0.3s ease;
 }
 
-/* Search Box Styles */
+/* Search Box Styles: CORREGIDO para fondo blanco y texto oscuro */
 .navbar .box {
-    position: relative; /* Cambiado a relativo para el flujo */
+    position: relative; 
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    background: #fff;
+    
+    /* CORRECCIÓN 1: Fondo del buscador a blanco */
+    background: #fff; 
+    
     border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Ajuste de sombra para el fondo claro */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
     transition: all 0.3s ease;
     width: 40px;
     height: 40px;
     overflow: hidden;
+    
+    /* Separación entre los links y el box */
+    margin-left: 20px; 
 }
 
 .navbar .box:hover,
@@ -112,11 +119,14 @@ a {
 }
 
 .navbar .box input {
+    /* CORRECCIÓN 2: Texto a color oscuro para contraste en fondo blanco */
+    background: transparent; 
     border: none;
     outline: none;
     padding: 5px;
     font-size: 14px;
     width: 0; 
+    color: #333; /* Texto oscuro */
     transition: width 0.3s ease;
 }
 
@@ -132,7 +142,8 @@ a {
     justify-content: center;
     width: 40px;
     height: 40px;
-    color: #333;
+    /* CORRECCIÓN 3: Color de la lupa a oscuro para contraste en fondo blanco */
+    color: #333; 
     text-decoration: none;
     flex-shrink: 0;
 }
@@ -145,7 +156,7 @@ a {
 .navbar .links {
     display: flex;
     gap: 20px;
-    margin-left: auto;
+    /* Mantenido: Los links están a la izquierda del buscador */
 }
 
 .navbar .links a {
@@ -161,89 +172,93 @@ a {
 
 /* Toggle Menu Icon */
 #menu-icon {
-  font-size: 36px;
-  color: #fff;
-  display: none;
-  cursor: pointer;
+    font-size: 36px;
+    color: #fff;
+    display: none;
+    cursor: pointer;
 }
+
+/* --------------------------------------------------------------------------------------------------- */
 
 /* --- HERO SECTION --- */
 .hero-section {
-  width: 100%;
-  min-height: 100vh;
-  padding: 100px 100px 100px 100px; 
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  background: #969696;
-  position: relative;
-  overflow: hidden;
+    width: 100%;
+    min-height: 100vh;
+    padding: 100px 100px 100px 100px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: #969696;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1400px;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(0,12,78,0.40) 0%,
-    rgba(0,12,78,0.28) 35%,
-    rgba(0,12,78,0.16) 75%,
-    transparent 100%
-  );
-  z-index: 1;
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1400px;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(0,12,78,0.40) 0%,
+      rgba(0,12,78,0.28) 35%,
+      rgba(0,12,78,0.16) 75%,
+      transparent 100%
+    );
+    z-index: 1;
+    pointer-events: none;
 }
 
 .hero-section h1 {
-  font-weight: 400;
-  font-size: 80px;
-  width: 800px;
-  text-transform: capitalize;
-  color: #fff; 
+    font-weight: 400;
+    font-size: 80px;
+    width: 800px;
+    text-transform: capitalize;
+    color: #fff; 
 }
 
 .hero-section span {
-  color: #3a4bbd; 
+    color: #3a4bbd; 
 }
 
 .hero-section p {
-  font-weight: 400;
-  font-size: 24px;
-  width: 309px;
-  padding: 30px 0px;
-  color: #fff; 
+    font-weight: 400;
+    font-size: 24px;
+    width: 309px;
+    padding: 30px 0px;
+    color: #fff; 
 }
 
 .hero-section .btn-box {
-  display: flex;
-  gap: 15px;
+    display: flex;
+    gap: 15px;
 }
 
 .hero-section .btn-box a {
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 22px;
-  color: #fff;
-  padding: 26px 65px;
-  border-radius: 50px 0px 50px 0px;
-  background-color: #3a4bbdcc;
-  border: none;
-  transition: background 0.3s ease;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 22px;
+    color: #fff;
+    padding: 26px 65px;
+    border-radius: 50px 0px 50px 0px;
+    background-color: #3a4bbdcc;
+    border: none;
+    transition: background 0.3s ease;
 }
 
 .hero-section .btn-box a:hover {
-  background-color: #6b8cff; 
-  color: #fff; 
+    background-color: #6b8cff; 
+    color: #fff; 
 }
 
 .hero-section .hero-img img {
-  max-width: 600px;
-  height: auto;
+    max-width: 600px;
+    height: auto;
 }
+
+/* --------------------------------------------------------------------------------------------------- */
 
 /* --- WAVES ANIMATION --- */
 section {
@@ -322,6 +337,8 @@ section .wave.wave4 {
     z-index: 5;
     position: relative;
 }
+
+/* --------------------------------------------------------------------------------------------------- */
 
 /* --- CAROUSEL --- */
 .carousel{
@@ -576,6 +593,7 @@ section .wave.wave4 {
     }
 }
 
+/* --------------------------------------------------------------------------------------------------- */
 
 /* --- ANIMATED LIGHTBULBS --- */
 .bombillos img{
@@ -619,6 +637,7 @@ section .wave.wave4 {
 .bombillos img:nth-child(6){ animation-delay: 6s; width: 80px; }
 .bombillos img:nth-child(7){ animation-delay: 7s; width: 55px; }
 
+/* --------------------------------------------------------------------------------------------------- */
 
 /* --- FOOTER --- */
 footer {
@@ -727,108 +746,127 @@ footer h3 {
     padding: 7px;
 }
 
+/* --------------------------------------------------------------------------------------------------- */
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
-  .hero-section h1 {
-    font-size: 40px;
-  }
-  .hero-section p {
-    font-size: 24px;
-    width: auto;
-  }
-  .hero-section .btn-box {
-    width: 100%;
-    flex-direction: column;
-    height: auto;
-    gap: 15px;
-  }
+    .hero-section h1 {
+        font-size: 40px;
+    }
+    .hero-section p {
+        font-size: 24px;
+        width: auto;
+    }
+    .hero-section .btn-box {
+        width: 100%;
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+    }
 }
 
 @media (max-width: 768px) {
-  .header {
-    padding: 15px 5%;
-  }
-  .navbar {
-      flex-direction: column;
-      align-items: center;
-      display: none; 
-      position: absolute;
-      top: 90px;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 12, 78, 0.9);
-      padding: 20px 0;
-  }
+    .header {
+        padding: 15px 5%;
+    }
+    .navbar {
+        /* Ajuste para móvil para mantener el flujo en columna */
+        flex-direction: column;
+        align-items: center;
+        display: none; 
+        position: absolute;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 12, 78, 0.9);
+        padding: 20px 0;
+    }
 
-  .navbar.active {
-      display: flex; 
-  }
-  #menu-icon {
-    display: block;
-  }
-  .navbar .box {
-    position: relative; /* Ajuste para el flujo de la columna */
-    left: 0;
-  }
-  .navbar .links {
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 0;
-  }
+    .navbar.active {
+        display: flex; 
+    }
+    #menu-icon {
+        display: block;
+    }
+    
+    .navbar .links {
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 0;
+    }
+    
+    .navbar .box {
+        /* En móvil, el buscador debe estar debajo de los links */
+        position: relative; 
+        left: 0;
+        margin: 20px 0 0 0; /* Margen para separarlo de los links */
+        width: 80%; /* Le da un ancho razonable en móvil */
+        height: 40px;
+        border-radius: 20px;
+    }
+    
+    .navbar .box:hover,
+    .navbar .box.active {
+        width: 80%; 
+    }
+    
+    .navbar .box input {
+        width: 100%;
+        padding-left: 10px;
+    }
 
-  .hero-section {
-    padding: 100px 5%;
-    text-align: center;
-    flex-direction: column;
-  }
-  .hero-section h1, .hero-section p {
-      width: auto;
-  }
-  .hero-section .hero-img img {
-      max-width: 80%;
-      margin-top: 30px;
-  }
-  /* Carousel responsive */
-    .carousel {
-        height: 50vh;
-        min-height: 300px;
+    .hero-section {
+        padding: 100px 5%;
+        text-align: center;
+        flex-direction: column;
     }
-    .thumbnail .item {
-        width: 70px;
-        height: 100px;
+    .hero-section h1, .hero-section p {
+          width: auto;
     }
-    .carousel .list .item .content {
-        font-size: 14px;
-        padding-right: 10%;
+    .hero-section .hero-img img {
+          max-width: 80%;
+          margin-top: 30px;
     }
+    /* Carousel responsive */
+      .carousel {
+          height: 50vh;
+          min-height: 300px;
+      }
+      .thumbnail .item {
+          width: 70px;
+          height: 100px;
+      }
+      .carousel .list .item .content {
+          font-size: 14px;
+          padding-right: 10%;
+      }
 }
 
 @media (max-width: 480px) {
-  .hero-section h1 {
-    font-size: 28px;
-  }
-  .hero-section p {
-    font-size: 18px;
-  }
-  .hero-section .btn-box a {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-  }
-  .hero-section .hero-img {
-    display: none;
-  }
-  /* Carousel responsive */
-    .carousel {
-        height: 40vh;
-        min-height: 250px;
+    .hero-section h1 {
+        font-size: 28px;
     }
-    .thumbnail {
-        gap: 5px;
+    .hero-section p {
+        font-size: 18px;
     }
-    .thumbnail .item {
-        width: 60px;
-        height: 90px;
+    .hero-section .btn-box a {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
     }
+    .hero-section .hero-img {
+        display: none;
+    }
+    /* Carousel responsive */
+      .carousel {
+          height: 40vh;
+          min-height: 250px;
+      }
+      .thumbnail {
+          gap: 5px;
+      }
+      .thumbnail .item {
+          width: 60px;
+          height: 90px;
+      }
 }

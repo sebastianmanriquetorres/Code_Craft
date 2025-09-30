@@ -7,7 +7,6 @@ import Header from "./components/Header";
 import Carousel from "./components/Carousel";
 import Footer from "./components/Footer";
 
-// Importa Login directamente (ajusta la carpeta según cómo la tengas)
 import Login from "./Pages/Login";
 
 const AnimatedBombillos = () => (
@@ -30,7 +29,7 @@ const Home = () => (
           <p>Aquí encontrarás todo lo que necesitas para tu proyecto digital.</p>
           <div className="btn-box">
             <Link to="/login">Iniciar sesión</Link>
-            <Link to="/registro">Registrarse</Link>
+            <Link to="/login">Registrarse</Link>
           </div>
         </div>
         <div className="hero-img">

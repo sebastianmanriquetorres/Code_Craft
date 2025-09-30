@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 
 const Header = () => {
-    // Estado para controlar si el menú móvil está activo
+    // ... (Tu lógica de estado y funciones se mantiene igual)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
-    // Función para manejar el clic en el ícono del menú
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // Función para hacer scroll al inicio al hacer clic en el logo
     const scrollToTop = (e) => {
         e.preventDefault(); 
         document.getElementById('top').scrollIntoView({
             behavior: 'smooth'
         });
+        if (isMenuOpen) setIsMenuOpen(false);
     };
 
     return (
@@ -24,17 +23,10 @@ const Header = () => {
                 <img src="/imagenes/logo.png" alt="logo" />
             </a>
 
-            {/* Navbar */}
+            {/* Navbar. Se aplica la clase 'active' para móvil. */}
             <nav className={`navbar ${isMenuOpen ? 'active' : ''}`}>
-                {/* Search Box */}
-                <div className="box">
-                    <input type="text" placeholder="Buscar..." />
-                    <a href="#">
-                        <i className="bx bx-search" style={{ color: '#00abf0' }}></i>
-                    </a>
-                </div>
                 
-                {/* Links */}
+                {/* Links - Queremos que estén a la IZQUIERDA del buscador */}
                 <div className="links">
                     <a href="#top" className="activate" onClick={() => setIsMenuOpen(false)}>home</a>
                     <a href="#about" onClick={() => setIsMenuOpen(false)}>about</a>
@@ -42,9 +34,19 @@ const Header = () => {
                     <a href="#portafolio" onClick={() => setIsMenuOpen(false)}>portafolio</a>
                     <a href="#contacto" onClick={() => setIsMenuOpen(false)}>contacto</a>
                 </div>
+
+                {/* Search Box - Queremos que esté a la DERECHA de los enlaces. */}
+                <div className="box">
+                    <input type="text" placeholder="Buscar..." />
+                    <a href="#">
+                        {/* Se mantiene el ícono de búsqueda */}
+                        <i className="bx bx-search" style={{ color: '#00abf0' }}></i>
+                    </a>
+                </div>
+
             </nav>
 
-            {/* Menu Icon (Hamburguesa) */}
+            {/* Icono del Menú (Hamburguesa) */}
             <i 
                 className={`bx ${isMenuOpen ? 'bx-x' : 'bx-menu'}`} 
                 id="menu-icon" 
