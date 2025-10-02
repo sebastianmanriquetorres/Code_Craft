@@ -1,0 +1,231 @@
+/* Contenedor general */
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #0f172a;
+}
+
+.auth__card {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 600px;
+  background: rgba(20, 22, 46, 0.8);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+/* Columna formularios */
+.auth__forms {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.form__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #fff;
+  text-align: center;
+}
+
+.input {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input input {
+  width: 100%;
+  padding: 14px 45px 14px 16px;
+  background: rgb(1, 1, 100);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.input input:focus + label,
+.input input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 0.75rem;
+  color: #00e0ff;
+}
+
+.input__toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+/* Botones */
+.btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #7f5af0, #00e0ff);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 224, 255, 0.4);
+}
+
+.btn--outline {
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #fff;
+}
+
+.btn--outline:hover {
+  background: rgba(4, 224, 88, 0.1);
+}
+
+/* Columna panel derecho */
+.auth__panel {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #2a0079, #0075b9, #000f3f);
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+}
+
+.panel__inner h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.panel__inner p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  color: #e0e0e0;
+  line-height: 1.5;
+}
+
+/* Grid registro */
+.form--signup .form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form__switch {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.link {
+  color: #00e0ff;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.auth__card.is-register {
+ /* Invierte el orden de los elementos hijos (auth__forms y auth__panel) */
+ flex-direction: row-reverse; 
+}
+
+/* Logo en el panel derecho */
+.panel__logo {
+  width:250px;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+/* Selects y campos dinámicos con el mismo estilo que input */
+.input select,
+.input input[type="text"],
+.input input[type="tel"],
+.input input[type="email"],
+.input input[type="password"] {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgb(1, 1, 100);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none; /* quita la flecha fea del select */
+}
+
+.input select:focus,
+.input input:focus {
+  border-color: #00e0ff;
+  box-shadow: 0 0 5px rgba(0, 224, 255, 0.6);
+}
+
+/* Label flotante también en select */
+.input select + label,
+.input input + label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+/* Cuando select tiene valor o está en focus, mueve el label */
+.input select:focus + label,
+.input select:not([value=""]) + label,
+.input input:focus + label,
+.input input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 0.75rem;
+  color: #00e0ff;
+}
+
+/* Flechita custom en select */
+.input select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'%3E%3Cpath fill='white' d='M5.5 7l4.5 5 4.5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
