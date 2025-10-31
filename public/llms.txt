@@ -1,0 +1,4 @@
+## Pages
+- [- CodeCraft](/productdetail): No description available
+- [Email Confirmed - CodeCraft](/emailconfirmation): Your email has been successfully confirmed.
+- [Payment Successful - CodeCraft](/success): Your payment was successful.
