@@ -1,14 +1,14 @@
 <!doctype html>
 <html class="no-js" lang="es" data-content_root="./">
-  <head>
-<meta charset="utf-8">
+  <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="#">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="search.html"><link rel="next" title="3. Instalación y Configuración del Proyecto" href="3_instalacion_configuracion.html"><link rel="prev" title="1. Introducción" href="1_introduccion.html">
         <link rel="prefetch" href="_static/Code_Craft_Img.jpg" as="image">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-<meta name="robots" content="noindex" />
-<title>Búsqueda - Documentación de Code_Craft</title><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+        <title>2. Arquitectura del Sistema - Documentación de Code_Craft</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     
@@ -173,7 +173,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -188,16 +188,16 @@
   
   <span class="sidebar-brand-text">Documentación de Code_Craft</span>
   
-</a><form class="sidebar-search-container" method="get" action="#" role="search">
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Búsqueda" name="q" aria-label="Búsqueda">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guía General</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="1_introduccion.html">1. Introducción</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_arquitectura.html">2. Arquitectura del Sistema</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">2. Arquitectura del Sistema</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_instalacion_configuracion.html">3. Instalación y Configuración del Proyecto</a></li>
 </ul>
 
@@ -218,7 +218,13 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/2_arquitectura.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -226,30 +232,53 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<noscript>
-<div class="admonition error">
-  <p class="admonition-title">Error</p>
-  <p>
-    Please activate JavaScript to enable the search functionality.
-  </p>
-</div>
-</noscript>
-
-<div id="search-results"></div>
+          <section id="arquitectura-del-sistema">
+<h1>2. Arquitectura del Sistema<a class="headerlink" href="#arquitectura-del-sistema" title="Link to this heading">¶</a></h1>
+<p>El proyecto <strong>Code_Craft</strong> se desarrolla bajo una arquitectura <strong>Cliente-Servidor</strong>, compuesta por los siguientes elementos:</p>
+<ul class="simple">
+<li><p><strong>Frontend:</strong> Desarrollado con React.js, encargado de la interfaz de usuario.</p></li>
+<li><p><strong>Backend:</strong> Implementado en Node.js con Express.js, encargado de la lógica del negocio.</p></li>
+<li><p><strong>Base de Datos:</strong> PostgreSQL, base de datos NoSQL que almacena usuarios, proyectos y configuraciones.</p></li>
+<li><p><strong>Control de versiones:</strong> Git y GitHub, usados para el control y despliegue del código.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="modelo-relacional">
+<h2>Modelo Relacional<a class="headerlink" href="#modelo-relacional" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="_images/Modelo_relacional.png"><img alt="Diagrama de casos de uso del sistema Code_Craft" class="align-center" src="_images/Modelo_relacional.png" style="width: 90%;" />
+</a>
+</section>
+</section>
 
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="3_instalacion_configuracion.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">3. Instalación y Configuración del Proyecto</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="1_introduccion.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">1. Introducción</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -268,8 +297,27 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">2. Arquitectura del Sistema</a><ul>
+<li><a class="reference internal" href="#modelo-relacional">Modelo Relacional</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -279,8 +327,5 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="_static/translations.js?v=f85f4cfb"></script>
-    
-<script src="_static/searchtools.js"></script>
-<script src="_static/language_data.js"></script>
-<script src="searchindex.js"></script></body>
+    </body>
 </html>

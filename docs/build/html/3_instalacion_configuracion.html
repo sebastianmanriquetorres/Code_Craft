@@ -1,0 +1,715 @@
+<!doctype html>
+<html class="no-js" lang="es" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="search.html"><link rel="next" title="&lt;no title&gt;" href="4_uso_sistema.html"><link rel="prev" title="2. Arquitectura del Sistema" href="2_arquitectura.html">
+        <link rel="prefetch" href="_static/Code_Craft_Img.jpg" as="image">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>3. Instalación y Configuración del Proyecto - Documentación de Code_Craft</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Documentación de Code_Craft</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/Code_Craft_Img.jpg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Documentación de Code_Craft</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Búsqueda" name="q" aria-label="Búsqueda">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Guía General</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_introduccion.html">1. Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_arquitectura.html">2. Arquitectura del Sistema</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">3. Instalación y Configuración del Proyecto</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/3_instalacion_configuracion.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="instalacion-y-configuracion-del-proyecto">
+<h1>3. Instalación y Configuración del Proyecto<a class="headerlink" href="#instalacion-y-configuracion-del-proyecto" title="Link to this heading">¶</a></h1>
+<p>En este documento se detalla el proceso completo de instalación y ejecución del proyecto <strong>Code Craft</strong>, incluyendo la documentación técnica generada con <strong>Sphinx (Markdown)</strong> y el entorno de desarrollo del <strong>Frontend con Node.js y React</strong>.</p>
+<hr class="docutils" />
+<section id="instalacion-y-ejecucion-de-la-documentacion-sphinx-markdown">
+<h2>1. Instalación y Ejecución de la Documentación (Sphinx + Markdown)<a class="headerlink" href="#instalacion-y-ejecucion-de-la-documentacion-sphinx-markdown" title="Link to this heading">¶</a></h2>
+<section id="requisitos-previos">
+<h3>Requisitos previos<a class="headerlink" href="#requisitos-previos" title="Link to this heading">¶</a></h3>
+<p>Antes de comenzar, asegúrate de tener instalados los siguientes componentes:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Herramienta</p></th>
+<th class="head"><p>Versión Recomendada</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Python</p></td>
+<td><p>3.8 o superior</p></td>
+<td><p>Requerido para ejecutar Sphinx</p></td>
+</tr>
+<tr class="row-odd"><td><p>pip</p></td>
+<td><p>Última versión</p></td>
+<td><p>Administrador de paquetes de Python</p></td>
+</tr>
+<tr class="row-even"><td><p>Sphinx</p></td>
+<td><p>7.0 o superior</p></td>
+<td><p>Generador de documentación</p></td>
+</tr>
+<tr class="row-odd"><td><p>myst-parser</p></td>
+<td><p>Última versión</p></td>
+<td><p>Permite usar Markdown (.md) en Sphinx</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="instalacion-de-python-y-pip">
+<h3>Instalación de Python y pip<a class="headerlink" href="#instalacion-de-python-y-pip" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Windows (CMD o PowerShell)</strong></p></li>
+</ul>
+<ol class="arabic">
+<li><p>Descargar Python desde <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p></li>
+<li><p>Durante la instalación, <strong>activar la casilla</strong>:<br />
+<em>«Add Python to PATH»</em></p></li>
+<li><p>Verificar instalación:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>--version
+pip<span class="w"> </span>--version
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="macos-linux-terminal">
+<h3>macOS / Linux (Terminal)<a class="headerlink" href="#macos-linux-terminal" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip<span class="w"> </span>-y<span class="w"> </span>de<span class="w"> </span><span class="o">(</span>Ubuntu<span class="w"> </span>/<span class="w"> </span>Debian<span class="o">)</span>
+o
+brew<span class="w"> </span>install<span class="w"> </span>python<span class="w"> </span>de<span class="w"> </span><span class="o">(</span>macOS<span class="w"> </span>con<span class="w"> </span>Homebrew<span class="o">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>--version
+pip3<span class="w"> </span>--version
+</pre></div>
+</div>
+</section>
+<section id="creacion-y-activacion-del-entorno-virtual">
+<h3>Creación y Activación del Entorno Virtual<a class="headerlink" href="#creacion-y-activacion-del-entorno-virtual" title="Link to this heading">¶</a></h3>
+<p>Para mantener las dependencias del proyecto aisladas, crea un entorno virtual:</p>
+<ul class="simple">
+<li><p><strong>Windows (CMD o PowerShell):</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>Code_Craft
+<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="w"> </span>venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>macOS / Linux:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>Code_Craft
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Una vez activado, deberías ver algo como:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>venv<span class="o">)</span><span class="w"> </span>C:<span class="se">\U</span>sers<span class="se">\u</span>suario<span class="se">\C</span>ode_Craft&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Nota: Para salir del entorno virtual, ejecuta:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>deactivate
+</pre></div>
+</div>
+</section>
+</section>
+<section id="instalacion-de-sphinx-y-myst-parser">
+<h2>Instalación de Sphinx y MYST Parser<a class="headerlink" href="#instalacion-de-sphinx-y-myst-parser" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Con el entorno virtual activo, instala las dependencias necesarias:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>myst-parser<span class="w"> </span>sphinx_rtd_theme
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Puedes guardar estas dependencias en un archivo para uso futuro:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="creacion-del-entorno-de-documentacion">
+<h2>Creación del entorno de documentación<a class="headerlink" href="#creacion-del-entorno-de-documentacion" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Desde la carpeta raíz del proyecto:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-quickstart<span class="w"> </span>docs
+</pre></div>
+</div>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Durante la configuración, selecciona:</strong></p></li>
+</ul>
+<p>Project name → Code_Craft</p>
+<p>Author name → Equipo Code_Craft</p>
+<p>Separate source and build dirs → y</p>
+<p>Enable autodoc → y</p>
+<p>Enable markdown → n (lo agregaremos manualmente)</p>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Configurar soporte para Markdown:</strong>
+Abre el archivo docs/source/conf.py y agrega:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1"># -- Project information -----------------------------------------------------</span>
+<span class="w"> </span><span class="nv">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Code Craft&#39;</span>
+<span class="w"> </span><span class="nv">author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Equipo Code Craft&#39;</span>
+<span class="w"> </span><span class="nv">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1.0&#39;</span>
+
+<span class="w"> </span><span class="c1"># -- General configuration ---------------------------------------------------</span>
+<span class="w"> </span><span class="nv">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="s1">&#39;myst_parser&#39;</span>
+<span class="w"> </span><span class="o">]</span>
+
+<span class="w"> </span><span class="nv">source_suffix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s1">&#39;.rst&#39;</span>:<span class="w"> </span><span class="s1">&#39;restructuredtext&#39;</span>,
+<span class="w">    </span><span class="s1">&#39;.md&#39;</span>:<span class="w"> </span><span class="s1">&#39;markdown&#39;</span>,
+<span class="w"> </span><span class="o">}</span>
+
+<span class="w"> </span><span class="nv">html_theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;sphinx_rtd_theme&#39;</span>
+
+<span class="w"> </span><span class="c1"># -- Path setup --------------------------------------------------------------</span>
+<span class="w"> </span>import<span class="w"> </span>os
+<span class="w"> </span>import<span class="w"> </span>sys
+<span class="w"> </span>sys.path.insert<span class="o">(</span><span class="m">0</span>,<span class="w"> </span>os.path.abspath<span class="o">(</span><span class="s1">&#39;../..&#39;</span><span class="o">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Enlazar los archivos Markdown en la documentación:</strong>
+Edita docs/source/index.md y agrega:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#  Documentación del Proyecto Code Craft</span>
+
+Bienvenido<span class="w"> </span>a<span class="w"> </span>la<span class="w"> </span>documentación<span class="w"> </span>oficial<span class="w"> </span>del<span class="w"> </span>proyecto<span class="w"> </span>**Code_Craft**.
+
+<span class="sb">```</span><span class="o">{</span>toctree<span class="o">}</span>
+:maxdepth:<span class="w"> </span><span class="m">2</span>
+:caption:<span class="w"> </span>Contenido
+
+1_introduccion.md
+2_arquitectura_sistema.md
+3_instalacion_configuracion.md
+4_manual_usuario.md
+
+
+<span class="c1">###  Compilar y ejecutar la documentación</span>
+
+Para<span class="w"> </span>generar<span class="w"> </span>la<span class="w"> </span>documentación<span class="w"> </span>en<span class="w"> </span>formato<span class="w"> </span>HTML:
+
+<span class="sb">```</span>bash
+<span class="c1"># Desde la raíz del proyecto</span>
+<span class="nb">cd</span><span class="w"> </span>docs
+make<span class="w"> </span>html
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Luego abre el archivo generado:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>_build/html/index.html
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>En Windows (PowerShell)</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>start<span class="w"> </span>_build/html/index.html
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>En macOS / Linux</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>open<span class="w"> </span>_build/html/index.html
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="instalacion-y-ejecucion-del-proyecto-frontend-con-npm">
+<h2>2. Instalación y Ejecución del Proyecto (Frontend con npm)<a class="headerlink" href="#instalacion-y-ejecucion-del-proyecto-frontend-con-npm" title="Link to this heading">¶</a></h2>
+<p>El proyecto Code_Craft fue desarrollado con React.js, por lo que requiere Node.js y npm.</p>
+<section id="id1">
+<h3>Requisitos previos<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Herramienta</p></th>
+<th class="head"><p>Versión Recomendada</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Node.js</p></td>
+<td><p>18 o superior</p></td>
+<td><p>Entorno de ejecución de JavaScript</p></td>
+</tr>
+<tr class="row-odd"><td><p>npm</p></td>
+<td><p>Última versión</p></td>
+<td><p>Administrador de dependencias de Node</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="instalacion-de-node-js-y-npm">
+<h3>Instalación de Node.js y npm<a class="headerlink" href="#instalacion-de-node-js-y-npm" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Windows</strong></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Descargar el instalador desde https://nodejs.org/<a class="reference external" href="https://nodejs.org/">https://nodejs.org/</a></p></li>
+<li><p>Instalar y verificar:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>node<span class="w"> </span>-v
+<span class="w"> </span>npm<span class="w"> </span>-v
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>macOS / Linux</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nodejs<span class="w"> </span>npm<span class="w"> </span>-y<span class="w">  </span>de<span class="w"> </span><span class="o">(</span><span class="w"> </span>Ubuntu<span class="w"> </span>/<span class="w"> </span>Debian<span class="o">)</span>
+<span class="w">  </span>o
+<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>node<span class="w">  </span>de<span class="w"> </span><span class="o">(</span><span class="w"> </span>macOS<span class="w"> </span>con<span class="w"> </span>Homebrew<span class="o">)</span>
+
+<span class="w"> </span>node<span class="w"> </span>-v
+<span class="w"> </span>npm<span class="w"> </span>-v
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Instalación de dependencias del proyecto</strong>
+Ubícate en la carpeta principal del frontend ejemplo:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>codecraft-frontend
+<span class="w"> </span>npm<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Esto descargará todas las dependencias definidas en package.json.</p>
+<ul class="simple">
+<li><p><strong>Ejecución del entorno de desarrollo</strong>
+Para iniciar el servidor local:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>dev
+</pre></div>
+</div>
+<p>Salida esperada</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>VITE<span class="w"> </span>v5.0.0<span class="w">  </span>ready<span class="w"> </span><span class="k">in</span><span class="w"> </span>500ms
+<span class="w"> </span>Local:<span class="w"> </span>http://localhost:5173/
+</pre></div>
+</div>
+<p>Abre esa URL en tu navegador.</p>
+<ul class="simple">
+<li><p><strong>Consejos adicionales</strong>
+Si npm install genera errores:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>npm<span class="w"> </span>cache<span class="w"> </span>clean<span class="w"> </span>--force
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Si el puerto 5173 está ocupado, cámbialo en vite.config.js.</strong></p></li>
+<li><p><strong>Si aparece npm ERR! missing script: dev, revisa que tu package.json tenga:</strong></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="s2">&quot;scripts&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;dev&quot;</span>:<span class="w"> </span><span class="s2">&quot;vite&quot;</span>
+<span class="w"> </span><span class="o">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="errores-comunes-y-soluciones">
+<h2>Errores comunes y soluciones<a class="headerlink" href="#errores-comunes-y-soluciones" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Error</p></th>
+<th class="head"><p>Causa</p></th>
+<th class="head"><p>Solución</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code> en Sphinx</p></td>
+<td><p>Faltan dependencias</p></td>
+<td><p>Ejecuta <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">ERR!</span> <span class="pre">missing</span> <span class="pre">script:</span> <span class="pre">dev</span></code></p></td>
+<td><p>Script no definido</p></td>
+<td><p>Agrega <code class="docutils literal notranslate"><span class="pre">&quot;dev&quot;:</span> <span class="pre">&quot;vite&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pip:</span> <span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code></p></td>
+<td><p>Python no agregado al PATH</p></td>
+<td><p>Reinstala Python con «Add Python to PATH»</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Permission</span> <span class="pre">denied</span></code> en macOS/Linux</p></td>
+<td><p>Falta de permisos</p></td>
+<td><p>Usa <code class="docutils literal notranslate"><span class="pre">sudo</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Port</span> <span class="pre">already</span> <span class="pre">in</span> <span class="pre">use</span> <span class="pre">5173</span></code></p></td>
+<td><p>Otro proceso usa el puerto</p></td>
+<td><p>Cambia el puerto o detén el proceso</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+<hr class="docutils" />
+<section id="verificacion-final">
+<h2>Verificación Final<a class="headerlink" href="#verificacion-final" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Elemento</p></th>
+<th class="head"><p>Comando</p></th>
+<th class="head"><p>Resultado Esperado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Documentación</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code></p></td>
+<td><p>Carpeta <code class="docutils literal notranslate"><span class="pre">_build/html</span></code> generada</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sitio local</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">run</span> <span class="pre">dev</span></code></p></td>
+<td><p>Proyecto accesible en navegador</p></td>
+</tr>
+<tr class="row-even"><td><p>Entorno Python</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">venv</span></code> activado</p></td>
+<td><p>Dependencias aisladas</p></td>
+</tr>
+<tr class="row-odd"><td><p>Versiones</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">--version</span></code>, <code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">-v</span></code>, <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">-v</span></code></p></td>
+<td><p>Versiones correctas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="resultado-final">
+<h2>Resultado final<a class="headerlink" href="#resultado-final" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>La documentación con Sphinx + Markdown se genera correctamente en HTML.</p></li>
+<li><p>El entorno virtual asegura independencia y limpieza del entorno.</p></li>
+<li><p>El proyecto Code Craft se ejecuta correctamente con npm run dev.</p></li>
+<li><p>Compatible con Windows, macOS y Linux.</p></li>
+<li><p>Listo para presentación ante instructores o evaluación técnica.</p></li>
+</ul>
+<p><strong>Autor: Equipo de Desarrollo – Code_Craft</strong>
+Versión del Documento: 2.0.1
+Última actualización: Noviembre 2025</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="4_uso_sistema.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">&lt;no title&gt;</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="2_arquitectura.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">2. Arquitectura del Sistema</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Code_Craft Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">3. Instalación y Configuración del Proyecto</a><ul>
+<li><a class="reference internal" href="#instalacion-y-ejecucion-de-la-documentacion-sphinx-markdown">1. Instalación y Ejecución de la Documentación (Sphinx + Markdown)</a><ul>
+<li><a class="reference internal" href="#requisitos-previos">Requisitos previos</a></li>
+<li><a class="reference internal" href="#instalacion-de-python-y-pip">Instalación de Python y pip</a></li>
+<li><a class="reference internal" href="#macos-linux-terminal">macOS / Linux (Terminal)</a></li>
+<li><a class="reference internal" href="#creacion-y-activacion-del-entorno-virtual">Creación y Activación del Entorno Virtual</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#instalacion-de-sphinx-y-myst-parser">Instalación de Sphinx y MYST Parser</a></li>
+<li><a class="reference internal" href="#creacion-del-entorno-de-documentacion">Creación del entorno de documentación</a></li>
+<li><a class="reference internal" href="#instalacion-y-ejecucion-del-proyecto-frontend-con-npm">2. Instalación y Ejecución del Proyecto (Frontend con npm)</a><ul>
+<li><a class="reference internal" href="#id1">Requisitos previos</a></li>
+<li><a class="reference internal" href="#instalacion-de-node-js-y-npm">Instalación de Node.js y npm</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#errores-comunes-y-soluciones">Errores comunes y soluciones</a></li>
+<li><a class="reference internal" href="#verificacion-final">Verificación Final</a></li>
+<li><a class="reference internal" href="#resultado-final">Resultado final</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=ea25ecff"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/translations.js?v=f85f4cfb"></script>
+    </body>
+</html>

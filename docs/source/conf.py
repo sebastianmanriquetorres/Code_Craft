@@ -1,42 +1,26 @@
-# Configuration file for the Sphinx documentation builder.
-# Documentation: https://www.sphinx-doc.org/en/master/usage/configuration.html
+# -- Configuración básica del proyecto -------------------------------------
 
-# -- Project information -----------------------------------------------------
-project = 'Code Craft'
-copyright = '2025, Code Craft'
-author = 'Equipo Code Craft'
-release = '2.0.1'
+project = 'Documentación de Code_Craft'
+copyright = '2025, Code_Craft Team'
+author = 'Equipo Code_Craft'
+release = '2.0.0'
 
-# -- General configuration ---------------------------------------------------
+# -- Extensiones -----------------------------------------------------------
 extensions = [
-    "myst_parser",  # Permite usar archivos Markdown (.md)
+    'myst_parser',
 ]
 
-# Soporte para Markdown y RST
+# -- Archivos de entrada ---------------------------------------------------
 source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown',
 }
 
-templates_path = ['_templates']
-exclude_patterns = []
-
-language = 'es'
-
-# -- Options for HTML output -------------------------------------------------
-html_theme = 'furo'  # Tema moderno
+# -- Configuración del tema ------------------------------------------------
+html_theme = 'furo'
 html_static_path = ['_static']
+html_logo = '_images/Code_Craft_Img.jpg'  # opcional, si luego agregas un logo
+html_title = "Documentación de Code_Craft"
 
-# -- Personalización opcional ------------------------------------------------
-# Puedes agregar un CSS personalizado (por ejemplo, _static/custom.css)
-html_css_files = [
-    'custom.css',
-]
-
-# -- Configuración de MyST (Markdown) ----------------------------------------
-myst_enable_extensions = [
-    "deflist",
-    "colon_fence",
-    "html_admonition",
-    "html_image",
-]
+# -- Idioma ---------------------------------------------------------------
+language = 'es'
