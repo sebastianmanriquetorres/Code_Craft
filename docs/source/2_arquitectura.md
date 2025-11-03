@@ -12,9 +12,31 @@ El proyecto **Code_Craft** se desarrolla bajo una arquitectura **Cliente-Servido
 ##  Modelo Relacional
 
 ```{image} _static/Modelo_relacional.png
-:alt: Diagrama de casos de uso del sistema Code_Craft
+:alt: Modelo Relacional del sistema Code_Craft
 :align: center
 :width: 90%
+```
+
+---
+
+
+##  Diagrama Casos de uso
+
+```{image} _static/Diagrama_casos_de_uso.png
+:alt: Diagrama Casos de uso del sistema Code_Craft
+:align: center
+:width: 90%
+```
+
+---
+
+
+##  Documentación Adicional
+
+El proyecto **Code_Craft** tiene la siguiente documentación adicional y recursos complementarios disponibles en el siguiente enlace:
+
+[https://drive.google.com/drive/folders/1yxGZUIkIk9nBB4X3CNtboNxz3MmZ-ZBk?usp=drive_link](https://drive.google.com/drive/folders/1yxGZUIkIk9nBB4X3CNtboNxz3MmZ-ZBk?usp=drive_link)
+
 
 
 

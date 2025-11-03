@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="search.html"><link rel="next" title="&lt;no title&gt;" href="5_diseno_uxui.html"><link rel="prev" title="&lt;no title&gt;" href="3_instalacion_configuracion.html">
+<link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="search.html"><link rel="next" title="5. Diseño ux y ui" href="5_dise%C3%B1o_ux_y_ui.html"><link rel="prev" title="3. Instalación y Configuración del Proyecto" href="3_instalacion_configuracion.html">
         <link rel="prefetch" href="_static/Code_Craft_Img.jpg" as="image">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>&lt;no title&gt; - Documentación de Code_Craft</title>
+        <title>4. Uso del Sistema - Documentación de Code_Craft</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -173,7 +173,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -195,8 +195,16 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guía General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="1_introduccion.html">Introducción</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_introduccion.html">1. Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_arquitectura.html">2. Arquitectura del Sistema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_instalacion_configuracion.html">3. Instalación y Configuración del Proyecto</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">4. Uso del Sistema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_dise%C3%B1o_ux_y_ui.html">5. Diseño ux y ui</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_desarrollo_tecnico.html">6. Desarrollo Técnico</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_pruebas_calidad.html">7. Pruebas de Calidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_conclusiones.html">8. Conclusiones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_anexos.html">9. Anexos</a></li>
 </ul>
 
 </div>
@@ -230,23 +238,83 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
+          <section id="uso-del-sistema">
+<h1>4. Uso del Sistema<a class="headerlink" href="#uso-del-sistema" title="Link to this heading">¶</a></h1>
+<p>Esta sección describe cómo interactúan los usuarios con la plataforma <strong>Code_Craft</strong>, desde el inicio de sesión hasta la gestión completa del sistema.</p>
+<hr class="docutils" />
+<section id="inicio-de-sesion">
+<h2>Inicio de Sesión<a class="headerlink" href="#inicio-de-sesion" title="Link to this heading">¶</a></h2>
+<p>Los usuarios deben autenticarse ingresando sus <strong>credenciales</strong> en la pantalla principal.</p>
+<a class="reference internal image-reference" href="_images/Inicio_de_sesion.png"><img alt="Pantalla de inicio de sesión de Code_Craft" class="align-center" src="_images/Inicio_de_sesion.png" style="width: 50%;" />
+</a>
+<ul class="simple">
+<li><p>Ingrese su correo y contraseña.</p></li>
+<li><p>Si los datos son correctos, será redirigido al panel principal.</p></li>
+<li><p>En caso de error, el sistema mostrará un mensaje de validación.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="registro-de-usuario">
+<h2>Registro de Usuario<a class="headerlink" href="#registro-de-usuario" title="Link to this heading">¶</a></h2>
+<p>Si el usuario no posee una cuenta, puede registrarse desde la opción <strong>¿No tienes cuenta? Registrarse”</strong> en la pantalla de inicio.</p>
+<a class="reference internal image-reference" href="_images/Registro.png"><img alt="Pantalla de registro de nuevos usuarios en Code Craft" class="align-center" src="_images/Registro.png" style="width: 50%;" />
+</a>
+<p>Pasos para registrarse:</p>
+<ul class="simple">
+<li><p>Hacer clic en “¿No tienes cuenta? Registrarse”.</p></li>
+<li><p>Completar el formulario con los datos requeridos (nombre, rol, correo y contraseña).</p></li>
+<li><p>Presionar “Registrarse” para finalizar el proceso.</p></li>
+<li><p>Despues te llegara un correo de confirmacion</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/Email.png"><img alt="Pantalla de Email de nuevos usuarios en Code Craft" class="align-center" src="_images/Email.png" style="width: 80%;" />
+</a>
+</section>
+<hr class="docutils" />
+<section id="restablecer-contrasena">
+<h2>Restablecer contraseña<a class="headerlink" href="#restablecer-contrasena" title="Link to this heading">¶</a></h2>
+<p>Si el usuario olvida su contraseña, puede recuperarla fácilmente desde la opción <strong>“¿Olvidaste tu contraseña?”</strong> disponible en la pantalla de inicio de sesión.</p>
+<a class="reference internal image-reference" href="_images/Restablecer_contraseña.png"><img alt="Opción de recuperación de contraseña en Code Craft" class="align-center" src="_images/Restablecer_contrase%C3%B1a.png" style="width: 50%;" />
+</a>
+<p>Pasos para restablecer la contraseña:</p>
+<ul class="simple">
+<li><p>Hacer clic en “¿Olvidaste tu contraseña?”.</p></li>
+<li><p>Ingresar el correo electrónico registrado.</p></li>
+<li><p>El sistema enviará un enlace de recuperación al correo proporcionado.</p></li>
+<li><p>Seguir el enlace y establecer una nueva contraseña segura.</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/email_pasword.png"><img alt="Opción de recuperación de contraseña en Code Craft" class="align-center" src="_images/email_pasword.png" style="width: 80%;" />
+</a>
+</section>
+<hr class="docutils" />
+<section id="panel-cliente">
+<h2>Panel Cliente<a class="headerlink" href="#panel-cliente" title="Link to this heading">¶</a></h2>
+<p>Tras iniciar sesión, el Cliente accede al dashboard, donde puede visualizar sus proyectos, desarrolladores, pagar proyectos, calendario, plantillas, carrito de compras, un icono de luna o sol de tema visual, perfil y salir.</p>
+<a class="reference internal image-reference" href="_images/Panel_cliente.png"><img alt="Opción de recuperación de contraseña en Code Craft" class="align-center" src="_images/Panel_cliente.png" style="width: 80%;" />
+</a>
+<ul class="simple">
+<li><p><strong>Nuevo proyecto:</strong> Donde se le solicitan datos al cliente del proyecto</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/Panel_cliente.png"><img alt="Opción de recuperación de contraseña en Code Craft" class="align-center" src="_images/Panel_cliente.png" style="width: 80%;" />
+</a>
+</section>
+</section>
+
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="5_diseno_uxui.html">
+          <a class="next-page" href="5_dise%C3%B1o_ux_y_ui.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">5. Diseño ux y ui</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -257,7 +325,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">3. Instalación y Configuración del Proyecto</div>
                 
               </div>
             </a>
@@ -279,8 +347,30 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">4. Uso del Sistema</a><ul>
+<li><a class="reference internal" href="#inicio-de-sesion">Inicio de Sesión</a></li>
+<li><a class="reference internal" href="#registro-de-usuario">Registro de Usuario</a></li>
+<li><a class="reference internal" href="#restablecer-contrasena">Restablecer contraseña</a></li>
+<li><a class="reference internal" href="#panel-cliente">Panel Cliente</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

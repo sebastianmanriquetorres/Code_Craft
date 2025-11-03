@@ -44,7 +44,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes componentes:
  ```
 
 
-
+---
 
 
 ### Creación y Activación del Entorno Virtual
@@ -74,6 +74,8 @@ Para mantener las dependencias del proyecto aisladas, crea un entorno virtual:
  deactivate
  ```
 
+---
+
  ##  Instalación de Sphinx y MYST Parser
 
 - **Con el entorno virtual activo, instala las dependencias necesarias:**
@@ -85,6 +87,8 @@ Para mantener las dependencias del proyecto aisladas, crea un entorno virtual:
  ```bash
  pip freeze > requirements.txt
  ```
+
+---
 
 ##  Creación del entorno de documentación
 
@@ -249,6 +253,8 @@ Si npm install genera errores:
 ```
 
 ---
+
+
 ## Errores comunes y soluciones
 
 | Error                              | Causa                      | Solución                                  |
@@ -259,9 +265,10 @@ Si npm install genera errores:
 | `Permission denied` en macOS/Linux | Falta de permisos          | Usa `sudo`                                |
 | `Port already in use 5173`         | Otro proceso usa el puerto | Cambia el puerto o detén el proceso       |
 
----
 
 ---
+
+
 ## Verificación Final
 
 | Elemento       | Comando                                 | Resultado Esperado              |

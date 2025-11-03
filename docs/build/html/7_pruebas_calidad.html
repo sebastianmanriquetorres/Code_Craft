@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="search.html"><link rel="next" title="&lt;no title&gt;" href="8_conclusiones.html"><link rel="prev" title="&lt;no title&gt;" href="6_desarrollo_tecnico.html">
+<link rel="index" title="Índice" href="genindex.html"><link rel="search" title="Búsqueda" href="search.html"><link rel="next" title="8. Conclusiones" href="8_conclusiones.html"><link rel="prev" title="6. Desarrollo Técnico" href="6_desarrollo_tecnico.html">
         <link rel="prefetch" href="_static/Code_Craft_Img.jpg" as="image">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>&lt;no title&gt; - Documentación de Code_Craft</title>
+        <title>7. Pruebas de Calidad - Documentación de Code_Craft</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -173,7 +173,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -195,8 +195,16 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guía General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="1_introduccion.html">Introducción</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_introduccion.html">1. Introducción</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_arquitectura.html">2. Arquitectura del Sistema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_instalacion_configuracion.html">3. Instalación y Configuración del Proyecto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_uso_sistema.html">4. Uso del Sistema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_dise%C3%B1o_ux_y_ui.html">5. Diseño ux y ui</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_desarrollo_tecnico.html">6. Desarrollo Técnico</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">7. Pruebas de Calidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_conclusiones.html">8. Conclusiones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_anexos.html">9. Anexos</a></li>
 </ul>
 
 </div>
@@ -230,12 +238,179 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
+          <section id="pruebas-de-calidad">
+<h1>7. Pruebas de Calidad<a class="headerlink" href="#pruebas-de-calidad" title="Link to this heading">¶</a></h1>
+<p>El proceso de aseguramiento de la calidad (QA) en el proyecto Code_Craft tiene como objetivo garantizar que el sistema cumpla con los requerimientos funcionales, de rendimiento y usabilidad definidos en las etapas de diseño y desarrollo.</p>
+<p>El equipo QA, liderado por Sebastián Manrique, realizó diferentes pruebas funcionales, de interfaz, compatibilidad y rendimiento, documentando los resultados y acciones correctivas necesarias.</p>
+<hr class="docutils" />
+<section id="objetivo-de-las-pruebas">
+<h2>1. Objetivo de las pruebas<a class="headerlink" href="#objetivo-de-las-pruebas" title="Link to this heading">¶</a></h2>
+<p>Comprobar que las funcionalidades del sistema Code_Craft operen correctamente, asegurando una experiencia fluida y sin errores tanto para administradores, desarrolladores y clientes.</p>
+</section>
+<hr class="docutils" />
+<section id="tipos-de-pruebas-realizadas">
+<h2>2. Tipos de Pruebas Realizadas<a class="headerlink" href="#tipos-de-pruebas-realizadas" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tipo de Prueba</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Estado</p></th>
+<th class="head"><p>Resultado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Pruebas Funcionales</strong></p></td>
+<td><p>Validar el correcto funcionamiento de cada módulo (login, registro, creación de proyectos, avances, feedback, etc.).</p></td>
+<td><p>Completadas</p></td>
+<td><p>Sin errores críticos</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Pruebas de Interfaz (UI/UX)</strong></p></td>
+<td><p>Evaluar la usabilidad, coherencia visual, accesibilidad y navegación.</p></td>
+<td><p>Completadas</p></td>
+<td><p>Interfaz intuitiva y responsiva</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Pruebas de Integración</strong></p></td>
+<td><p>Comprobación del flujo entre frontend, backend y base de datos.</p></td>
+<td><p>Completadas</p></td>
+<td><p>Comunicación estable entre servicios</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Pruebas de Seguridad</strong></p></td>
+<td><p>Validación de credenciales, cifrado de contraseñas y manejo de sesiones.</p></td>
+<td><p>Completadas</p></td>
+<td><p>Cumple los estándares básicos de seguridad</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Pruebas de Rendimiento</strong></p></td>
+<td><p>Verificar los tiempos de carga, respuesta de API y optimización de consultas.</p></td>
+<td><p>En proceso</p></td>
+<td><p>Requiere ajustes menores</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Pruebas de Compatibilidad</strong></p></td>
+<td><p>Comprobación del sistema en diferentes navegadores y tamaños de pantalla.</p></td>
+<td><p>Completadas</p></td>
+<td><p>Compatible con Chrome, Edge y Firefox</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="escenarios-de-prueba">
+<h2>3. Escenarios de Prueba<a class="headerlink" href="#escenarios-de-prueba" title="Link to this heading">¶</a></h2>
+<p><strong>Inicio de Sesión</strong></p>
+<ul class="simple">
+<li><p>Objetivo: Validar el acceso mediante correo y contraseña.</p></li>
+</ul>
+<p>Criterios:</p>
+<ul class="simple">
+<li><p>Mostrar mensaje de error si las credenciales son incorrectas.</p></li>
+<li><p>Redirigir correctamente al panel principal.</p></li>
+</ul>
+<p>Resultado:  Correcto – El sistema valida y redirige correctamente.</p>
+<hr class="docutils" />
+<p><strong>Registro de Usuario</strong></p>
+<ul class="simple">
+<li><p>Objetivo: Comprobar el registro de clientes y desarrolladores.</p></li>
+</ul>
+<p>Criterios:</p>
+<ul class="simple">
+<li><p>Validar campos obligatorios.</p></li>
+<li><p>Mostrar mensaje de confirmación.</p></li>
+</ul>
+<p>Resultado:  Correcto – Los usuarios se registran con éxito.</p>
+<hr class="docutils" />
+<p><strong>Creación de Proyecto</strong></p>
+<ul class="simple">
+<li><p>Objetivo: Verificar que el cliente pueda crear proyectos desde el panel.</p></li>
+</ul>
+<p>Criterios:</p>
+<ul class="simple">
+<li><p>Asociar cliente, desarrollador y plantilla.</p></li>
+<li><p>Guardar datos en la base de datos.</p></li>
+</ul>
+<p>Resultado:  Correcto – Se crean y almacenan correctamente los proyectos.</p>
+<hr class="docutils" />
+<p><strong>Actualización de Avances</strong></p>
+<ul class="simple">
+<li><p>Objetivo: Validar que el desarrollador actualice el porcentaje de progreso.</p></li>
+</ul>
+<p>Criterios:</p>
+<ul class="simple">
+<li><p>Registrar fecha y descripción.</p></li>
+<li><p>Actualizar correctamente el porcentaje.</p></li>
+</ul>
+<p>Resultado:  Correcto – Se registran avances y se reflejan en tiempo real.</p>
+<hr class="docutils" />
+<p><strong>Feedback del Cliente</strong></p>
+<ul class="simple">
+<li><p>Objetivo: Verificar que los clientes puedan calificar los proyectos.</p></li>
+</ul>
+<p>Criterios:</p>
+<ul class="simple">
+<li><p>Registrar calificación y comentario.</p></li>
+<li><p>Mostrar el promedio general.</p></li>
+</ul>
+<p>Resultado:  Correcto – Las valoraciones se registran correctamente.</p>
+</section>
+<hr class="docutils" />
+<section id="resultados-generales">
+<h2>4. Resultados Generales<a class="headerlink" href="#resultados-generales" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Categoría</p></th>
+<th class="head"><p>Total Pruebas</p></th>
+<th class="head"><p>Exitosas</p></th>
+<th class="head"><p>Fallidas</p></th>
+<th class="head"><p>Por Mejorar</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Funcionales</p></td>
+<td><p>15</p></td>
+<td><p>14</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interfaz</p></td>
+<td><p>8</p></td>
+<td><p>8</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>Seguridad</p></td>
+<td><p>5</p></td>
+<td><p>5</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rendimiento</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Conclusión:
+El sistema Code_Craft cumple con los estándares de calidad definidos. Solo se requiere optimizar tiempos de respuesta en ciertas consultas de proyectos (mejorando índices o caché en PostgreSQL).</p>
+</section>
+<hr class="docutils" />
+<section id="recomendaciones">
+<h2>5. Recomendaciones<a class="headerlink" href="#recomendaciones" title="Link to this heading">¶</a></h2>
+<p>Implementar pruebas automáticas con Jest o Cypress para el frontend.</p>
+<p>Usar Postman para pruebas de API en entornos de staging.</p>
+<p>Integrar GitHub Actions para ejecutar pruebas automáticas en cada push.</p>
+<p>Documentar los resultados de pruebas en reportes .html dentro del repositorio.</p>
+</section>
+</section>
+
         </article>
       </div>
       <footer>
@@ -246,7 +421,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">8. Conclusiones</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -257,7 +432,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">6. Desarrollo Técnico</div>
                 
               </div>
             </a>
@@ -279,8 +454,31 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">7. Pruebas de Calidad</a><ul>
+<li><a class="reference internal" href="#objetivo-de-las-pruebas">1. Objetivo de las pruebas</a></li>
+<li><a class="reference internal" href="#tipos-de-pruebas-realizadas">2. Tipos de Pruebas Realizadas</a></li>
+<li><a class="reference internal" href="#escenarios-de-prueba">3. Escenarios de Prueba</a></li>
+<li><a class="reference internal" href="#resultados-generales">4. Resultados Generales</a></li>
+<li><a class="reference internal" href="#recomendaciones">5. Recomendaciones</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

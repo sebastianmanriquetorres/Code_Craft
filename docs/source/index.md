@@ -10,12 +10,12 @@ Esta guía describe la arquitectura, instalación, uso, diseño, desarrollo y co
 :maxdepth: 2
 :caption: Guía General
 
-1_introduccion
-2_arquitectura
-3_instalacion_configuracion
-4_uso_sistema
-5_diseno_uxui
-6_desarrollo_tecnico
-7_pruebas_calidad
-8_conclusiones
-9_anexos
+1_introduccion.md
+2_arquitectura.md
+3_instalacion_configuracion.md
+4_uso_sistema.md
+5_diseño_ux_y_ui.md
+6_desarrollo_tecnico.md
+7_pruebas_calidad.md
+8_conclusiones.md
+9_anexos.md
