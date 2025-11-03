@@ -17,13 +17,22 @@ La interfaz fue desarrollada siguiendo buenas prácticas de diseño centrado en 
 
 ##  Paleta de Colores
 
-```{image} _static/paleta_colores.png (Pendiente)
+```{image} _static/paleta_de_color.png
 :alt: Paleta de colores del sistema Code_Craft
 :align: center
 :width: 70%
 ```
 
-La paleta combina tonos oscuros y acentos en color morado y azul, proyectando una identidad moderna y tecnológica.
+La paleta combina tonos oscuros con acentos luminosos, proyectando una identidad moderna, tecnológica y profesional.
+Los colores fueron seleccionados con base en su funcionalidad y simbolismo dentro del sistema:
+
+| Tipo de Color        | Código                | Propósito                                                                              |
+| -------------------- | --------------------- | -------------------------------------------------------------------------------------- |
+| **Fondo Principal**  | `#12121E`             | Crea una base oscura que reduce la fatiga visual y resalta los elementos interactivos. |
+| **Fondo Secundario** | `#1A1B2E` – `#212134` | Añade profundidad en tarjetas y módulos, mejorando la jerarquía visual.                |
+| **Texto Principal**  | `#FFFFFF`             | Garantiza contraste y legibilidad sobre fondos oscuros.                                |
+| **Texto Secundario** | `#A9A9B3`             | Mantiene equilibrio cromático en descripciones o campos menos prioritarios.            |
+
 
 ---
 

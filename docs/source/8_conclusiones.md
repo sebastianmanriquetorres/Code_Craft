@@ -7,7 +7,7 @@ El desarrollo del proyecto Code_Craft permitió aplicar de manera práctica los 
 ## Conclusiones Generales
 
 - Cumplimiento de Objetivos:
-El sistema Code Craft logró cumplir los objetivos planteados, ofreciendo una plataforma funcional para la gestión, seguimiento y desarrollo de proyectos web de manera colaborativa entre clientes y desarrolladores.
+El sistema Code_Craft logró cumplir los objetivos planteados, ofreciendo una plataforma funcional para la gestión, seguimiento y desarrollo de proyectos web de manera colaborativa entre clientes y desarrolladores.
 
 - Arquitectura Eficiente:
 La arquitectura Cliente-Servidor, implementada con React.js en el frontend, Node.js y Express.js en el backend, y PostgreSQL como base de datos, garantizó un entorno escalable, seguro y de fácil mantenimiento.

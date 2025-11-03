@@ -1,6 +1,6 @@
 #  3. Instalación y Configuración del Proyecto
 
-En este documento se detalla el proceso completo de instalación y ejecución del proyecto **Code Craft**, incluyendo la documentación técnica generada con **Sphinx (Markdown)** y el entorno de desarrollo del **Frontend con Node.js y React**.
+En este documento se detalla el proceso completo de instalación y ejecución del proyecto **Code_Craft**, incluyendo la documentación técnica generada con **Sphinx (Markdown)** y el entorno de desarrollo del **Frontend con Node.js y React**.
 
 ---
 
